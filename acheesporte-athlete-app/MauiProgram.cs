@@ -1,4 +1,9 @@
 ﻿using acheesporte_athlete_app.Configuration;
+using acheesporte_athlete_app.Interfaces;
+using acheesporte_athlete_app.Services;
+using acheesporte_athlete_app.ViewModels.Venue;
+using acheesporte_athlete_app.Views;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -24,12 +29,18 @@ namespace acheesporte_athlete_app
             builder.Services.AddSingleton(resolver =>
                 resolver.GetRequiredService<IOptions<ApiSettings>>().Value);
 
+            builder.Services.AddTransient<SelectVenueMapPage>();
+            builder.Services.AddTransient<SelectVenueMapViewModel>();
 
-
-
+            builder.Services.AddHttpClient<IVenueService, VenueService>(client =>
+            {
+                var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
+                client.BaseAddress = new Uri(apiSettings.BaseUrl);
+            });
 
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .UseMauiMaps()
                 .ConfigureFonts(fonts =>
                 {
