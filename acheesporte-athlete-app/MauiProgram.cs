@@ -5,7 +5,6 @@ using acheesporte_athlete_app.ViewModels.Venue;
 using acheesporte_athlete_app.Views;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Reflection;
@@ -19,7 +18,7 @@ namespace acheesporte_athlete_app
             var builder = MauiApp.CreateBuilder();
 
             var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream("AcheesporteAppAthlete.appsettings.json");
+            using var stream = assembly.GetManifestResourceStream("acheesporte_athlete_app.appsettings.json");
             if (stream == null)
                 throw new InvalidOperationException("Embedded resource 'AcheesporteAppAthlete.appsettings.json' not found.");
             var config = new ConfigurationBuilder().AddJsonStream(stream).Build();

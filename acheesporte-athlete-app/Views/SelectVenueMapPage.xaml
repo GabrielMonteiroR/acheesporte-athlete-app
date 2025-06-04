@@ -1,12 +1,73 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
-             x:Class="acheesporte_athlete_app.Views.SelectVenueMapPage"
-             Title="SelectVenueMapPage">
-    <maps:Map x:Name="VenueMap"
-          IsShowingUser="True"
-          MapType="Hybrid"
-          />
+<ContentPage  
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+    xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"  
+    x:Class="acheesporte_athlete_app.Views.SelectVenueMapPage"  
+    BackgroundColor="White">  
 
+    <Grid>  
+        <Grid.RowDefinitions>  
+            <RowDefinition Height="Auto" />  
+            <RowDefinition Height="*" />  
+        </Grid.RowDefinitions>  
+
+        <Grid Grid.Row="0" Margin="16,12,16,8" HeightRequest="48">  
+            <Grid.ColumnDefinitions>  
+                <ColumnDefinition Width="*" />  
+                <ColumnDefinition Width="48" />  
+            </Grid.ColumnDefinitions>  
+
+            <SearchBar x:Name="VenueSearchBar"  
+                       Placeholder="Buscar locais..."  
+                       BackgroundColor="White"  
+                       CancelButtonColor="Gray"  
+                       FontSize="14"  
+                       Grid.Column="0" />  
+
+            <Frame Grid.Column="1"  
+                   BackgroundColor="White"  
+                   Padding="10"  
+                   CornerRadius="24"  
+                   HasShadow="True"  
+                   BorderColor="Transparent"  
+                   HeightRequest="48"  
+                   WidthRequest="48"  
+                   VerticalOptions="Center"  
+                   HorizontalOptions="Center">  
+                <Image Source="search.png"  
+                       Shadow="20"  
+                       HeightRequest="24"  
+                       WidthRequest="24"  
+                       VerticalOptions="Center"  
+                       HorizontalOptions="Center" />  
+            </Frame>  
+        </Grid>  
+
+        <maps:Map x:Name="VenueMap"  
+                  Grid.Row="1"  
+                  IsShowingUser="True"  
+                  MapType="Street"  
+                  VerticalOptions="Fill"  
+                  HorizontalOptions="Fill">  
+        </maps:Map>  
+
+        <Frame Grid.Row="1"  
+               BackgroundColor="White"  
+               Padding="12"  
+               CornerRadius="24"  
+               HasShadow="True"  
+               BorderColor="Transparent"  
+               HeightRequest="58"  
+               WidthRequest="58"  
+               VerticalOptions="Start"  
+               HorizontalOptions="Start"  
+               Margin="16">  
+            <Image Source="filter.png"  
+                   HeightRequest="24"  
+                   WidthRequest="24"  
+                   VerticalOptions="Center"  
+                   HorizontalOptions="Center" />  
+        </Frame>  
+    </Grid>  
 </ContentPage>

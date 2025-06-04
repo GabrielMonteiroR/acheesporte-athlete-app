@@ -1,5 +1,4 @@
-using acheesporte_athlete_app.ViewModels.Venue;
-using Microsoft.Maui.Controls.Maps;
+﻿using acheesporte_athlete_app.ViewModels.Venue;
 using Microsoft.Maui.Maps;
 
 namespace acheesporte_athlete_app.Views
@@ -18,18 +17,38 @@ namespace acheesporte_athlete_app.Views
         {
             base.OnAppearing();
 
+            try
+            {
+                var location = await Geolocation.GetLastKnownLocationAsync();
+
+                var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                if (status != PermissionStatus.Granted)
+                    status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+
+                if (location == null)
+                    location = await Geolocation.GetLocationAsync(new GeolocationRequest
+                    {
+                        DesiredAccuracy = GeolocationAccuracy.High,
+                        Timeout = TimeSpan.FromSeconds(10)
+                    });
+
+                if (location != null)
+                {
+                    var userPosition = new Location(location.Latitude, location.Longitude);
+                    VenueMap.MoveToRegion(MapSpan.FromCenterAndRadius(userPosition, Distance.FromKilometers(3)));
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", $"Erro ao obter localização: {ex.Message}", "OK");
+            }
+
             await _viewModel.LoadVenuesAsync();
 
             VenueMap.Pins.Clear();
 
             foreach (var pin in _viewModel.VenuePins)
                 VenueMap.Pins.Add(pin);
-
-            if (_viewModel.VenuePins.Count > 0)
-            {
-                var firstLocation = _viewModel.VenuePins[0].Location;
-                VenueMap.MoveToRegion(MapSpan.FromCenterAndRadius(firstLocation, Distance.FromKilometers(5)));
-            }
         }
     }
 }
