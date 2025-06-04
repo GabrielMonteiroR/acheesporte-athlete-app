@@ -15,5 +15,6 @@ namespace acheesporte_athlete_app.Configuration
         public string ImageUploadEndpoint { get; set; } = string.Empty;
         public string ReservationEndpoint { get; set; } = string.Empty;
         public string VenueEndpoint { get; set; } = string.Empty;
+        public string PlacesApiKey { get; set; } = string.Empty;
     }
 }
