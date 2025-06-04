@@ -4,70 +4,80 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
     xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"  
     x:Class="acheesporte_athlete_app.Views.SelectVenueMapPage"  
-    BackgroundColor="White">  
+    BackgroundColor="White">
 
-    <Grid>  
-        <Grid.RowDefinitions>  
-            <RowDefinition Height="Auto" />  
-            <RowDefinition Height="*" />  
-        </Grid.RowDefinitions>  
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="16,12,16,8" HeightRequest="48">  
-            <Grid.ColumnDefinitions>  
-                <ColumnDefinition Width="*" />  
-                <ColumnDefinition Width="48" />  
-            </Grid.ColumnDefinitions>  
+        <!-- Search bar and filter -->
+        <Grid Grid.Row="0" Margin="16,12,16,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="48" />
+            </Grid.ColumnDefinitions>
 
             <SearchBar x:Name="VenueSearchBar"  
                        Placeholder="Buscar locais..."  
-                       BackgroundColor="White"  
+                       BackgroundColor="White"
                        CancelButtonColor="Gray"  
                        FontSize="14"  
-                       Grid.Column="0" />  
+                       Grid.Column="0"  
+                       TextColor="Black"  
+                       TextChanged="OnSearchBarTextChanged" />
 
-            <Frame Grid.Column="1"  
-                   BackgroundColor="White"  
-                   Padding="10"  
-                   CornerRadius="24"  
-                   HasShadow="True"  
-                   BorderColor="Transparent"  
-                   HeightRequest="48"  
-                   WidthRequest="48"  
-                   VerticalOptions="Center"  
-                   HorizontalOptions="Center">  
-                <Image Source="search.png"  
-                       Shadow="20"  
-                       HeightRequest="24"  
-                       WidthRequest="24"  
-                       VerticalOptions="Center"  
-                       HorizontalOptions="Center" />  
-            </Frame>  
-        </Grid>  
+            <Frame Grid.Column="1" BackgroundColor="White" BorderColor="Transparent" 
+                   Padding="10" CornerRadius="24"  
+                   HasShadow="False" HeightRequest="48" WidthRequest="48">
+                <Image Source="search.png" HeightRequest="24" WidthRequest="24" />
+            </Frame>
+        </Grid>
 
+        <!-- Mapa -->
         <maps:Map x:Name="VenueMap"  
                   Grid.Row="1"  
                   IsShowingUser="True"  
-                  MapType="Street"  
-                  VerticalOptions="Fill"  
-                  HorizontalOptions="Fill">  
-        </maps:Map>  
+                  MapType="Street" />
 
-        <Frame Grid.Row="1"  
-               BackgroundColor="White"  
-               Padding="12"  
-               CornerRadius="24"  
-               HasShadow="True"  
-               BorderColor="Transparent"  
-               HeightRequest="58"  
-               WidthRequest="58"  
+        <!-- Sugestões do Google -->
+        <CollectionView Grid.Row="0"  
+                        Margin="16,64,16,0"  
+                        ItemsSource="{Binding Suggestions}"  
+                        SelectionMode="Single"  
+                        SelectionChanged="OnSuggestionSelected"  
+                        BackgroundColor="White"  
+                        IsVisible="{Binding Suggestions.Count, Converter={StaticResource ZeroToFalseConverter}}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="12">
+                        <Label Text="{Binding Description}" FontSize="14" TextColor="Black"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Filtro -->
+        <Frame Grid.Row="1" BackgroundColor="White"  
+               Padding="12" CornerRadius="24"  
+               BorderColor="Transparent"
+               HasShadow="False"  
+               HeightRequest="58" WidthRequest="58"  
                VerticalOptions="Start"  
                HorizontalOptions="Start"  
-               Margin="16">  
-            <Image Source="filter.png"  
-                   HeightRequest="24"  
-                   WidthRequest="24"  
-                   VerticalOptions="Center"  
-                   HorizontalOptions="Center" />  
-        </Frame>  
-    </Grid>  
+               Margin="16">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnFilterClicked"/>
+            </Frame.GestureRecognizers>
+            <Image Source="filter.png" HeightRequest="24" WidthRequest="24"/>
+        </Frame>
+        <ActivityIndicator
+    IsRunning="{Binding IsLoading}"
+    IsVisible="{Binding IsLoading}"
+    Color="Black"
+    HorizontalOptions="Center"
+    VerticalOptions="Center"
+    Grid.RowSpan="2"/>
+    </Grid>
 </ContentPage>

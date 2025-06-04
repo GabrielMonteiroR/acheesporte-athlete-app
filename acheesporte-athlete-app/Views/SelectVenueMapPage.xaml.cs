@@ -1,4 +1,7 @@
-﻿using acheesporte_athlete_app.ViewModels.Venue;
+﻿using acheesporte_athlete_app.Dtos.GooglePlaces;
+using acheesporte_athlete_app.ViewModels.Venue;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 
 namespace acheesporte_athlete_app.Views
@@ -11,6 +14,11 @@ namespace acheesporte_athlete_app.Views
         {
             InitializeComponent();
             BindingContext = _viewModel = viewModel;
+
+            MessagingCenter.Subscribe<SelectVenueMapViewModel, MapSpan>(this, "CenterMap", (sender, span) =>
+            {
+                VenueMap.MoveToRegion(span);
+            });
         }
 
         protected override async void OnAppearing()
@@ -19,18 +27,16 @@ namespace acheesporte_athlete_app.Views
 
             try
             {
-                var location = await Geolocation.GetLastKnownLocationAsync();
-
                 var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
                 if (status != PermissionStatus.Granted)
                     status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
 
-                if (location == null)
-                    location = await Geolocation.GetLocationAsync(new GeolocationRequest
-                    {
-                        DesiredAccuracy = GeolocationAccuracy.High,
-                        Timeout = TimeSpan.FromSeconds(10)
-                    });
+                var location = await Geolocation.GetLastKnownLocationAsync()
+                              ?? await Geolocation.GetLocationAsync(new GeolocationRequest
+                              {
+                                  DesiredAccuracy = GeolocationAccuracy.High,
+                                  Timeout = TimeSpan.FromSeconds(10)
+                              });
 
                 if (location != null)
                 {
@@ -46,9 +52,26 @@ namespace acheesporte_athlete_app.Views
             await _viewModel.LoadVenuesAsync();
 
             VenueMap.Pins.Clear();
-
             foreach (var pin in _viewModel.VenuePins)
                 VenueMap.Pins.Add(pin);
+        }
+
+        private void OnSearchBarTextChanged(object sender, TextChangedEventArgs e)
+        {
+            _viewModel.SearchPlacesCommand.Execute(e.NewTextValue);
+        }
+
+        private void OnFilterClicked(object sender, EventArgs e)
+        {
+            _viewModel.ApplyFilterCommand.Execute(null);
+        }
+
+        private void OnSuggestionSelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.CurrentSelection.FirstOrDefault() is Prediction selected)
+                _viewModel.SelectSuggestionCommand.Execute(selected);
+
+            ((CollectionView)sender).SelectedItem = null;
         }
     }
 }
