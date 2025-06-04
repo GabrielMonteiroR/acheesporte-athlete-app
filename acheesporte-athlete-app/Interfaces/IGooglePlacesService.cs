@@ -1,13 +1,12 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using acheesporte_athlete_app.Dtos.GooglePlaces;
 
 namespace acheesporte_athlete_app.Interfaces
 {
-    public class IGooglePlacesService
+    public interface IGooglePlacesService
     {
-        Task<ListPredic>
+        Task<List<Prediction>> GetAutocompleteSuggestionsAsync(string input);
+        Task<PlaceLocation?> GetPlaceLocationAsync(string placeId);
     }
 }
