@@ -79,5 +79,100 @@
     HorizontalOptions="Center"
     VerticalOptions="Center"
     Grid.RowSpan="2"/>
+        <!-- Modal de detalhes do local -->
+        <Grid x:Name="VenueDetailsModal"
+      Grid.RowSpan="2"
+      BackgroundColor="#80000000"
+      IsVisible="{Binding IsModalVisible}"
+      Padding="0"
+      InputTransparent="{Binding IsModalVisible, Converter={StaticResource InverseBoolConverter}}">
+
+            <Frame BackgroundColor="White"
+           CornerRadius="24"
+           Padding="0"
+           Margin="24"
+           VerticalOptions="Center"
+           HorizontalOptions="Center"
+           HasShadow="True">
+
+                <Grid RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="200"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Imagem principal com setas -->
+                    <Grid Grid.Row="0">
+                        <Image Source="{Binding CurrentImageUrl}" Aspect="AspectFill" />
+
+                        <!-- Fechar -->
+                        <Grid Margin="12" VerticalOptions="Start" HorizontalOptions="End">
+                            <Image Source="close.png" HeightRequest="24" WidthRequest="24">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding CloseModalCommand}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Grid>
+
+                        <!-- Navegação -->
+                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Source="prev.png" HeightRequest="32" WidthRequest="32" Margin="12"
+                           VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="0">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding PreviousImageCommand}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+
+                            <BoxView Grid.Column="1" BackgroundColor="Transparent" HeightRequest="0" WidthRequest="0" />
+
+
+                            <Image Source="next.png" HeightRequest="32" WidthRequest="32" Margin="12"
+                           VerticalOptions="Center" HorizontalOptions="End" Grid.Column="2">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NextImageCommand}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Grid>
+                    </Grid>
+
+                    <!-- Nome e endereço -->
+                    <StackLayout Grid.Row="1" Padding="16,8">
+                        <Label Text="{Binding SelectedVenue.Name}" FontAttributes="Bold" FontSize="18" TextColor="Black"/>
+                        <Label Text="{Binding SelectedVenue.Address}" FontSize="14" TextColor="#555"/>
+                    </StackLayout>
+
+                    <!-- Conteúdo -->
+                    <StackLayout Grid.Row="2" Padding="16,0" Spacing="4">
+                        <Label Text="{Binding SelectedVenue.Description}" FontSize="14" TextColor="#333"/>
+                        <Label Text="Capacidade: " FontSize="14" FontAttributes="Bold" TextColor="Black"/>
+                        <Label Text="{Binding SelectedVenue.Capacity}" FontSize="14" TextColor="#333"/>
+                        <Label Text="Regras:" FontSize="14" FontAttributes="Bold" Margin="0,8,0,0" TextColor="Black"/>
+                        <Label Text="{Binding SelectedVenue.Rules}" FontSize="14" TextColor="#333"/>
+                        <Label Text="Pagamento local:" FontSize="14" FontAttributes="Bold" Margin="0,8,0,0" TextColor="Black"/>
+                        <Label Text="{Binding SelectedVenue.AllowLocalPayment, Converter={StaticResource BoolToSimNaoConverter}}" FontSize="14" TextColor="#333"/>
+                    </StackLayout>
+
+                    <!-- Botão prosseguir -->
+                    <Button Grid.Row="3"
+                    Text="Prosseguir"
+                    Command="{Binding ConfirmVenueCommand}"
+                    BackgroundColor="#200937"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    Margin="16"
+                    CornerRadius="12"/>
+                </Grid>
+            </Frame>
+        </Grid>
+
+
     </Grid>
 </ContentPage>

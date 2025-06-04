@@ -1,4 +1,6 @@
-﻿using acheesporte_athlete_app.Dtos.GooglePlaces;
+﻿using acheesporte_athlete_app.Dtos;
+using acheesporte_athlete_app.Dtos.GooglePlaces;
+using acheesporte_athlete_app.Dtos.Venue;
 using acheesporte_athlete_app.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -21,28 +23,74 @@ namespace acheesporte_athlete_app.ViewModels.Venue
         [ObservableProperty]
         private bool isLoading;
 
+        [ObservableProperty]
+        private bool isModalVisible;
+
+        [ObservableProperty]
+        private VenueDto? selectedVenue;
+
         public SelectVenueMapViewModel(IVenueService venueService, IGooglePlacesService googlePlacesService)
         {
             _venueService = venueService;
             _googlePlacesService = googlePlacesService;
         }
+        [ObservableProperty]
+        private int selectedImageIndex;
+
+        [ObservableProperty]
+        private string? currentImageUrl;
+
+        partial void OnSelectedVenueChanged(VenueDto? value)
+        {
+            SelectedImageIndex = 0;
+            CurrentImageUrl = value?.ImageUrls?.FirstOrDefault();
+        }
+
+        partial void OnSelectedImageIndexChanged(int value)
+        {
+            if (SelectedVenue?.ImageUrls == null || !SelectedVenue.ImageUrls.Any())
+                return;
+
+            CurrentImageUrl = SelectedVenue.ImageUrls[value];
+        }
+
 
         [RelayCommand]
-        public async Task ApplyFilterAsync()
+        private void NextImage()
         {
+            if (SelectedVenue?.ImageUrls == null || SelectedVenue.ImageUrls.Count == 0)
+                return;
+
+            SelectedImageIndex = (SelectedImageIndex + 1) % SelectedVenue.ImageUrls.Count;
+        }
+
+        [RelayCommand]
+        private void PreviousImage()
+        {
+            if (SelectedVenue?.ImageUrls == null || SelectedVenue.ImageUrls.Count == 0)
+                return;
+
+            SelectedImageIndex = (SelectedImageIndex - 1 + SelectedVenue.ImageUrls.Count) % SelectedVenue.ImageUrls.Count;
+        }
+
+
+        [RelayCommand]
+        private async Task ApplyFilterAsync()
+        {
+            // Aqui você pode aplicar lógica de filtragem com base em critérios fixos ou adicionáveis no futuro
             IsLoading = true;
+
             try
             {
-                var venues = await _venueService.GetVenuesAsync(
-                    venueTypeId: 1, 
-                    minCapacity: 10,
-                    maxCapacity: 100,
-                    name: null,
-                    address: null
+                var filteredVenues = await _venueService.GetVenuesAsync(
+                // exemplo de filtros fixos ou variáveis que você pode definir via propriedades
+                // venueTypeId: SelectedVenueTypeId,
+                // minCapacity: SelectedMinCapacity
                 );
 
                 VenuePins.Clear();
-                foreach (var venue in venues)
+
+                foreach (var venue in filteredVenues)
                 {
                     var pin = new Pin
                     {
@@ -64,7 +112,6 @@ namespace acheesporte_athlete_app.ViewModels.Venue
             }
         }
 
-
         [RelayCommand]
         public async Task LoadVenuesAsync()
         {
@@ -81,8 +128,15 @@ namespace acheesporte_athlete_app.ViewModels.Venue
                         Label = venue.Name,
                         Address = venue.Address,
                         Location = new Location(venue.Latitude, venue.Longitude),
-                        Type = PinType.Place
+                        Type = PinType.Place,
                     };
+
+                    pin.MarkerClicked += async (s, e) =>
+                    {
+                        SelectedVenue = venue;
+                        IsModalVisible = true;
+                    };
+
                     VenuePins.Add(pin);
                 }
             }
@@ -124,6 +178,20 @@ namespace acheesporte_athlete_app.ViewModels.Venue
 
                 MessagingCenter.Send(this, "CenterMap", mapSpan);
             }
+        }
+
+        [RelayCommand]
+        public void CloseModal()
+        {
+            IsModalVisible = false;
+            SelectedVenue = null;
+        }
+
+        [RelayCommand]
+        public void ConfirmVenue()
+        {
+            Shell.Current.DisplayAlert("Selecionado", SelectedVenue?.Name ?? "", "OK");
+            IsModalVisible = false;
         }
     }
 }
