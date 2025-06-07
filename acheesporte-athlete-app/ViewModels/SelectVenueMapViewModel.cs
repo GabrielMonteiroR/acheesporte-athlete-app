@@ -1,6 +1,7 @@
 ﻿using acheesporte_athlete_app.Dtos;
 using acheesporte_athlete_app.Dtos.GooglePlaces;
-using acheesporte_athlete_app.Dtos.Venue;
+using acheesporte_athlete_app.Dtos.Venues;
+using acheesporte_athlete_app.Dtos.Venues;
 using acheesporte_athlete_app.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -29,21 +30,27 @@ namespace acheesporte_athlete_app.ViewModels.Venue
         [ObservableProperty]
         private VenueDto? selectedVenue;
 
-        public SelectVenueMapViewModel(IVenueService venueService, IGooglePlacesService googlePlacesService)
-        {
-            _venueService = venueService;
-            _googlePlacesService = googlePlacesService;
-        }
         [ObservableProperty]
         private int selectedImageIndex;
 
         [ObservableProperty]
         private string? currentImageUrl;
 
+        public string? SportsString => SelectedVenue?.Sports != null
+            ? string.Join(", ", SelectedVenue.Sports)
+            : null;
+
+        public SelectVenueMapViewModel(IVenueService venueService, IGooglePlacesService googlePlacesService)
+        {
+            _venueService = venueService;
+            _googlePlacesService = googlePlacesService;
+        }
+
         partial void OnSelectedVenueChanged(VenueDto? value)
         {
             SelectedImageIndex = 0;
             CurrentImageUrl = value?.ImageUrls?.FirstOrDefault();
+            OnPropertyChanged(nameof(SportsString)); // Atualiza a string de esportes
         }
 
         partial void OnSelectedImageIndexChanged(int value)
@@ -53,7 +60,6 @@ namespace acheesporte_athlete_app.ViewModels.Venue
 
             CurrentImageUrl = SelectedVenue.ImageUrls[value];
         }
-
 
         [RelayCommand]
         private void NextImage()
@@ -73,21 +79,13 @@ namespace acheesporte_athlete_app.ViewModels.Venue
             SelectedImageIndex = (SelectedImageIndex - 1 + SelectedVenue.ImageUrls.Count) % SelectedVenue.ImageUrls.Count;
         }
 
-
         [RelayCommand]
         private async Task ApplyFilterAsync()
         {
-            // Aqui você pode aplicar lógica de filtragem com base em critérios fixos ou adicionáveis no futuro
             IsLoading = true;
-
             try
             {
-                var filteredVenues = await _venueService.GetVenuesAsync(
-                // exemplo de filtros fixos ou variáveis que você pode definir via propriedades
-                // venueTypeId: SelectedVenueTypeId,
-                // minCapacity: SelectedMinCapacity
-                );
-
+                var filteredVenues = await _venueService.GetVenuesAsync();
                 VenuePins.Clear();
 
                 foreach (var venue in filteredVenues)
@@ -99,6 +97,13 @@ namespace acheesporte_athlete_app.ViewModels.Venue
                         Location = new Location(venue.Latitude, venue.Longitude),
                         Type = PinType.Place
                     };
+
+                    pin.MarkerClicked += async (s, e) =>
+                    {
+                        SelectedVenue = venue;
+                        IsModalVisible = true;
+                    };
+
                     VenuePins.Add(pin);
                 }
             }

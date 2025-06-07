@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace acheesporte_athlete_app.Dtos.Venue;
+namespace acheesporte_athlete_app.Dtos.Venues;
 
 public class VenueListResponseDto
 {

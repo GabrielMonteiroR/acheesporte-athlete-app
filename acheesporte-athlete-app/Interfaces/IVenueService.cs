@@ -1,4 +1,5 @@
 ﻿using acheesporte_athlete_app.Dtos;
+using acheesporte_athlete_app.Dtos.Venues;
 
 namespace acheesporte_athlete_app.Interfaces;
 

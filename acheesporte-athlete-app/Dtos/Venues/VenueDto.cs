@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace acheesporte_athlete_app.Dtos;
+namespace acheesporte_athlete_app.Dtos.Venues;
 
 public class VenueDto
 {
@@ -25,21 +25,27 @@ public class VenueDto
     [JsonPropertyName("description")]
     public string Description { get; set; }
 
-    [JsonPropertyName("allowLocalPayment")]
-    public bool AllowLocalPayment { get; set; }
-
-    [JsonPropertyName("imageUrls")]
-    public List<string> ImageUrls { get; set; }
-
-    [JsonPropertyName("venueTypeId")]
-    public int VenueTypeId { get; set; }
-
     [JsonPropertyName("rules")]
     public string Rules { get; set; }
 
-    [JsonPropertyName("ownerId")]
+    [JsonPropertyName("venue_type_id")]
+    public int VenueTypeId { get; set; }
+
+    [JsonPropertyName("venue_type_name")]
+    public string VenueTypeName { get; set; }
+
+    [JsonPropertyName("owner_id")]
     public int OwnerId { get; set; }
 
-    [JsonPropertyName("venueAvaliabilityId")]
-    public int VenueAvaliabilityId { get; set; }
+    [JsonPropertyName("owner_name")]
+    public string OwnerName { get; set; }
+
+    [JsonPropertyName("sports")]
+    public List<string> Sports { get; set; } = new();
+
+    [JsonPropertyName("image_urls")]
+    public List<string> ImageUrls { get; set; } = new();
+
+    [JsonPropertyName("venue_avaliability_times")]
+    public List<VenueAvailabilityDto> VenueAvailabilityTimes { get; set; } = new();
 }

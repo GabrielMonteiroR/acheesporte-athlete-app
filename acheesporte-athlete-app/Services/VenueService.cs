@@ -1,6 +1,6 @@
 ﻿using acheesporte_athlete_app.Configuration;
 using acheesporte_athlete_app.Dtos;
-using acheesporte_athlete_app.Dtos.Venue;
+using acheesporte_athlete_app.Dtos.Venues;
 using acheesporte_athlete_app.Interfaces;
 using System.Text.Json;
 
