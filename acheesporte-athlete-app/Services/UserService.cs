@@ -1,15 +1,11 @@
 ﻿using acheesporte_athlete_app.Configuration;
 using acheesporte_athlete_app.Dtos.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using acheesporte_athlete_app.Interfaces;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace acheesporte_athlete_app.Services
 {
-    public class UserService
+    public class UserService : IUser
     {
         private readonly HttpClient _httpClient;
         private readonly ApiSettings _apiSettings;
