@@ -34,11 +34,13 @@
         <Grid Grid.Row="0" Padding="0" HeightRequest="240">
             <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
 
-                <Label Text="Bem-vindo, novo Atleta"
-                       FontSize="24"
-                       FontAttributes="Bold"
-                       TextColor="White"
-                       HorizontalTextAlignment="Center" />
+                <Label x:Name="TypingLabel"
+       FontSize="24"
+       FontAttributes="Bold"
+       HorizontalTextAlignment="Center"
+       TextColor="White" />
+
+
                 <Label Text="Cadastre-se!"
                        FontSize="24"
                        FontAttributes="Bold"
