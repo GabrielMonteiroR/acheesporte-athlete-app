@@ -6,7 +6,7 @@
     xmlns:main="clr-namespace:acheesporte_athlete_app.Views"  
     xmlns:history="clr-namespace:acheesporte_athlete_app.Views"  
 
-Shell.TabBarBackgroundColor="#200937"  
+    Shell.TabBarBackgroundColor="#200937"  
     Shell.TabBarForegroundColor="Purple"  
     Shell.TabBarTitleColor="Purple"  
     Shell.TabBarUnselectedColor="#CCCCCC"  
@@ -14,25 +14,25 @@ Shell.TabBarBackgroundColor="#200937"
     Shell.BackgroundColor="#200937"  
     Shell.NavBarIsVisible="False">
 
-    <ShellContent Route="SplashPage" ContentTemplate="{DataTemplate auth:SplashPage}" />
+    <!-- <ShellContent Route="SplashPage" ContentTemplate="{DataTemplate auth:SplashPage}" /> -->
     <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate auth:LoginPage}" />
-    <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate auth:RegisterPage}" />
-    <ShellContent Route="LoadingPage" ContentTemplate="{DataTemplate shared:LoadingPage}" />
+    <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate auth:RegisterPage}" /> 
+    <!-- <ShellContent Route="LoadingPage" ContentTemplate="{DataTemplate shared:LoadingPage}" /> -->
 
     <TabBar Route="MainApp">
-        <ShellContent Title="Início"  
+        <!-- <ShellContent Title="Início"  
                       Route="HomePage"  
                       Icon="home.png"  
-                      ContentTemplate="{DataTemplate main:HomePage}" />
+                      ContentTemplate="{DataTemplate main:HomePage}" /> -->
 
-        <ShellContent Title="Reservas"  
+        <!-- <ShellContent Title="Reservas"  
                       Route="ReservationPage"  
                       Icon="reservations.png"  
-                      ContentTemplate="{DataTemplate main:ReservationPage}"/>
+                      ContentTemplate="{DataTemplate main:ReservationPage}"/> -->
 
-        <ShellContent Title="Histórico"  
-               Route="HistoryPage"  
-               Icon="history.png"  
-               ContentTemplate="{DataTemplate history:HistoryPage}" />
-    </TabBar>
+        <!-- <ShellContent Title="Histórico"  
+                      Route="HistoryPage"  
+                      Icon="history.png"  
+                      ContentTemplate="{DataTemplate history:HistoryPage}" /> -->
+    </TabBar> <!-- Closing tag for TabBar added here -->
 </Shell>

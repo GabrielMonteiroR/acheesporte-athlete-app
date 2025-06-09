@@ -1,6 +1,7 @@
 ﻿using acheesporte_athlete_app.Configuration;
 using acheesporte_athlete_app.Interfaces;
 using acheesporte_athlete_app.Services;
+using acheesporte_athlete_app.ViewModels;
 using acheesporte_athlete_app.ViewModels.Venue;
 using acheesporte_athlete_app.Views;
 using CommunityToolkit.Maui;
@@ -30,8 +31,16 @@ namespace acheesporte_athlete_app
 
             builder.Services.AddTransient<SelectVenueMapPage>();
             builder.Services.AddTransient<SelectVenueMapViewModel>();
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<LoginViewModel>();
 
             builder.Services.AddHttpClient<IVenueService, VenueService>(client =>
+            {
+                var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
+                client.BaseAddress = new Uri(apiSettings.BaseUrl);
+            });
+
+            builder.Services.AddHttpClient<IUser, UserService>(client =>
             {
                 var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
                 client.BaseAddress = new Uri(apiSettings.BaseUrl);
