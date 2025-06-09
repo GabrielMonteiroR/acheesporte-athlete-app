@@ -38,12 +38,18 @@ public partial class RegisterViewModel : ObservableObject
     private string cpf = string.Empty;
 
     [ObservableProperty]
-    private string profileImageUrl = string.Empty;
+    private string profileImageUrl = "placeholder_profile.png";
 
     [ObservableProperty]
     private bool isBusy;
 
     public bool IsNotBusy => !IsBusy;
+
+    partial void OnProfileImageUrlChanged(string oldValue, string newValue)
+    {
+        if (string.IsNullOrWhiteSpace(newValue))
+            ProfileImageUrl = "placeholder_profile.png";
+    }
 
     [RelayCommand]
     private async Task NavigateToLoginAsync()

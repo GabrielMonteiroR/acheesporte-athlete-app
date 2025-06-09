@@ -35,6 +35,8 @@ namespace acheesporte_athlete_app
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<RegisterPage>();
             builder.Services.AddTransient<RegisterViewModel>();
+            builder.Services.AddTransient<TestPage>();
+
 
             builder.Services.AddHttpClient<IVenueService, VenueService>(client =>
             {
@@ -49,6 +51,12 @@ namespace acheesporte_athlete_app
             });
 
             builder.Services.AddHttpClient<IGooglePlacesService, GooglePlacesService>(client =>
+            {
+                var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
+                client.BaseAddress = new Uri(apiSettings.BaseUrl);
+            });
+
+            builder.Services.AddHttpClient<IImageService, ImageService>(client =>
             {
                 var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
                 client.BaseAddress = new Uri(apiSettings.BaseUrl);

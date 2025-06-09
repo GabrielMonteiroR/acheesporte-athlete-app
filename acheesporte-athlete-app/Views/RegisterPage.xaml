@@ -4,60 +4,54 @@
              xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"
              xmlns:converters="clr-namespace:acheesporte_athlete_app.Converters"
              x:Class="acheesporte_athlete_app.Views.RegisterPage"
-             Shell.NavBarIsVisible="False"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasBackButton="True">
 
     <ContentPage.Resources>
-    <ResourceDictionary>
-        <converters:EmptyFieldToColorConverter x:Key="EmptyFieldToColorConverter" />
-    </ResourceDictionary>
-</ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:EmptyFieldToColorConverter x:Key="EmptyFieldToColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
 
 
-<ContentPage.Background>
-    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.85">
-        <GradientStop Color="#200937" Offset="0.0" />
-        <GradientStop Color="#3A1155" Offset="0.3" />
-        <GradientStop Color="#6A1B9A" Offset="0.6" />
-        <GradientStop Color="#8B2BB8" Offset="0.8" />
-        <GradientStop Color="#A75AEF" Offset="0.85" />
-        <GradientStop Color="#F7F8FA" Offset="1.0" />
-    </LinearGradientBrush>
-</ContentPage.Background>
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.85">
+            <GradientStop Color="#200937" Offset="0.0" />
+            <GradientStop Color="#3A1155" Offset="0.3" />
+            <GradientStop Color="#6A1B9A" Offset="0.6" />
+            <GradientStop Color="#8B2BB8" Offset="0.8" />
+            <GradientStop Color="#A75AEF" Offset="0.85" />
+            <GradientStop Color="#F7F8FA" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
-<Grid>
-    <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="2*" />
-    </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
 
-    <Grid Grid.Row="0" Padding="4" HeightRequest="240">
-        <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
-            <Image Source="logo_achesporte.png"
-                       HeightRequest="98"
-                       WidthRequest="98"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Center" />
+        <Grid Grid.Row="0" Padding="0" HeightRequest="240">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
 
-            <Label Text="Bem-vindo,"
+                <Label Text="Bem-vindo, novo Atleta"
                        FontSize="24"
                        FontAttributes="Bold"
                        TextColor="White"
                        HorizontalTextAlignment="Center" />
-            <Label Text="Cadastre-se!"
+                <Label Text="Cadastre-se!"
                        FontSize="24"
                        FontAttributes="Bold"
                        TextColor="#FF851B"
                        HorizontalTextAlignment="Center" />
-            <Label Text="Preencha os dados para criar sua conta."
+                <Label Text="Preencha os dados para criar sua conta."
                        FontSize="12"
                        TextColor="#D1C4E9"
                        HorizontalTextAlignment="Center" />
-        </StackLayout>
-    </Grid>
+            </StackLayout>
+        </Grid>
 
-    <Frame Grid.Row="1"
+        <Frame Grid.Row="1"
                BackgroundColor="#F7F8FA"
                BorderColor="Transparent"
                CornerRadius="24"
@@ -65,85 +59,84 @@
                VerticalOptions="EndAndExpand"
                HasShadow="True">
 
-        <ScrollView>
-            <StackLayout Spacing="20">
+            <ScrollView>
+                <StackLayout Spacing="20">
 
-                <!-- Imagem de perfil -->
-                <Frame HeightRequest="100"
+                    <!-- Imagem de perfil -->
+                    <Frame HeightRequest="100"
                            WidthRequest="100"
                            CornerRadius="50"
                            Padding="0"
-                           BorderColor="#200937"
+                           BorderColor="Transparent"
                            HasShadow="False"
-                           HorizontalOptions="Center">
-                        <Image Source="{Binding ProfileImageUrl, FallbackValue='placeholder_profile.png'}"
-                               Aspect="AspectFill"
-                               HeightRequest="100"
-                               WidthRequest="100" />
-                </Frame>
+                           HorizontalOptions="Center"
+                           BackgroundColor="White">
+                        <Image Source="{Binding ProfileImageUrl}" Aspect="AspectFill" HeightRequest="94"
+                               WidthRequest="94" />
+                    </Frame>
 
-                <Button Text="Selecionar Foto"
+                    <Button Text="Selecionar Foto"
                             Command="{Binding PickImageCommand}"
-                            BackgroundColor="Transparent"
-                            TextColor="#200937"
+                            BackgroundColor="BlueViolet"
+                            TextColor="AliceBlue"
                             FontAttributes="Bold"
                             HorizontalOptions="Center"
                             FontSize="12"/>
 
-                <!-- Campos -->
-                <Label Text="Nome *"
+                    <!-- Campos -->
+                    <Label Text="Nome *"
                            FontSize="12"
                            FontAttributes="Bold"
                            TextColor="{Binding FirstName, Converter={StaticResource EmptyFieldToColorConverter}}" />
-                <Entry Placeholder="Primeiro nome"
+                    <Entry Placeholder="Primeiro nome"
                            Text="{Binding FirstName}" 
                            BackgroundColor="White" TextColor="#200937" />
 
-                <Label Text="Sobrenome *"
+                    <Label Text="Sobrenome *"
                            FontSize="12"
                            FontAttributes="Bold"
                            TextColor="{Binding LastName, Converter={StaticResource EmptyFieldToColorConverter}}" />
-                <Entry Placeholder="Sobrenome"
+                    <Entry Placeholder="Sobrenome"
                            Text="{Binding LastName}" 
                            BackgroundColor="White" TextColor="#200937" />
 
-                <Label Text="E-mail *"
+                    <Label Text="E-mail *"
                            FontSize="12"
                            FontAttributes="Bold"
                            TextColor="{Binding Email, Converter={StaticResource EmptyFieldToColorConverter}}" />
-                <Entry Placeholder="Email"
+                    <Entry Placeholder="Email"
                            Keyboard="Email"
                            Text="{Binding Email}" 
                            BackgroundColor="White" TextColor="#200937" />
 
-                <Label Text="Senha *"
+                    <Label Text="Senha *"
                            FontSize="12"
                            FontAttributes="Bold"
                            TextColor="{Binding Password, Converter={StaticResource EmptyFieldToColorConverter}}" />
-                <Entry Placeholder="Senha"
+                    <Entry Placeholder="Senha"
                            IsPassword="True"
                            Text="{Binding Password}" 
                            BackgroundColor="White" TextColor="#200937" />
 
-                <Label Text="Telefone *"
+                    <Label Text="Telefone *"
                            FontSize="12"
                            FontAttributes="Bold"
                            TextColor="{Binding Phone, Converter={StaticResource EmptyFieldToColorConverter}}" />
-                <Entry Placeholder="(99) 99999-9999"
+                    <Entry Placeholder="(99) 99999-9999"
                            Keyboard="Telephone"
                            Text="{Binding Phone}" 
                            BackgroundColor="White" TextColor="#200937" />
 
-                <Label Text="CPF *"
+                    <Label Text="CPF *"
                            FontSize="12"
                            FontAttributes="Bold"
                            TextColor="{Binding Cpf, Converter={StaticResource EmptyFieldToColorConverter}}" />
-                <Entry Placeholder="000.000.000-00"
+                    <Entry Placeholder="000.000.000-00"
                            Keyboard="Numeric"
                            Text="{Binding Cpf}" 
                            BackgroundColor="White" TextColor="#200937" />
 
-                <Button Text="Cadastrar"
+                    <Button Text="Cadastrar"
                             BackgroundColor="#200937"
                             TextColor="White"
                             FontAttributes="Bold"
@@ -152,17 +145,17 @@
                             Command="{Binding RegisterCommand}"
                             IsEnabled="{Binding IsNotBusy}" />
 
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="4">
-                    <Label Text="Já tem uma conta?" TextColor="#200937" FontSize="12" />
-                    <Button Text="Entrar"
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="4">
+                        <Label Text="Já tem uma conta?" TextColor="#200937" FontSize="12" />
+                        <Button Text="Entrar"
                                 Command="{Binding NavigateToLoginCommand}"
                                 BackgroundColor="Transparent"
                                 TextColor="#FF851B"
                                 FontSize="12" />
-                </StackLayout>
+                    </StackLayout>
 
-            </StackLayout>
-        </ScrollView>
-    </Frame>
-</Grid>
+                </StackLayout>
+            </ScrollView>
+        </Frame>
+    </Grid>
 </ContentPage>

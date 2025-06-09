@@ -13,9 +13,10 @@ namespace acheesporte_athlete_app
 
             Services = serviceProvider;
 
-            var viewModel = serviceProvider.GetRequiredService<LoginViewModel>();
+            var loginPage = App.Services.GetService<LoginPage>();
 
-            MainPage = new LoginPage();
+            MainPage = new NavigationPage(loginPage); 
         }
     }
 }
+
