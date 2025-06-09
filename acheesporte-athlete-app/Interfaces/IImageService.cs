@@ -2,7 +2,7 @@
 
 namespace acheesporte_athlete_app.Interfaces;
 
-public interface IImage
+public interface IImageService
 {
     Task<ImageUploadResponseDto> UploadProfileImageAsync(FileResult file);
 }

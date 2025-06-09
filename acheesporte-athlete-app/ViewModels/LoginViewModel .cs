@@ -9,9 +9,9 @@ namespace acheesporte_athlete_app.ViewModels;
 
 public partial class LoginViewModel : ObservableObject
 {
-    private readonly IUser _userService;
+    private readonly IUserService _userService;
 
-    public LoginViewModel(IUser userService)
+    public LoginViewModel(IUserService userService)
     {
         _userService = userService;
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace acheesporte_athlete_app.Interfaces
 {
-    public interface IUser
+    public interface IUserService
     {
         Task<LoginResponseDto> SignInUserAsync(LoginRequestDto dto);
         Task<RegisterResponseDto> SignInUpUserAsync(RegisterRequestDto dto);

@@ -76,7 +76,7 @@
                            BorderColor="#200937"
                            HasShadow="False"
                            HorizontalOptions="Center">
-                    <Image Source="{Binding ProfileImageUrl}"
+                        <Image Source="{Binding ProfileImageUrl, FallbackValue='placeholder_profile.png'}"
                                Aspect="AspectFill"
                                HeightRequest="100"
                                WidthRequest="100" />

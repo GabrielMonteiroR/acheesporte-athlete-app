@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 
 namespace acheesporte_athlete_app.Services
 {
-    public class UserService : IUser
+    public class UserService : IUserService
     {
         private readonly HttpClient _httpClient;
         private readonly ApiSettings _apiSettings;
