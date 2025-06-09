@@ -1,15 +1,11 @@
 ﻿using acheesporte_athlete_app.Dtos.User;
 using acheesporte_athlete_app.Interfaces;
-using AcheesporteAppAthlete.Dtos.Login;
 using AcheesporteAppAthlete.Helpers;
-using AcheesporteAppAthlete.Interfaces;
-using AcheesporteAppAthlete.Services.UserService;
-using AcheesporteAppAthlete.Views.Auth;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Threading.Tasks;
+using acheesporte_athlete_app.Views;
 
-namespace AcheesporteAppAthlete.ViewModels;
+namespace acheesporte_athlete_app.ViewModels;
 
 public partial class LoginViewModel : ObservableObject
 {
@@ -53,7 +49,7 @@ public partial class LoginViewModel : ObservableObject
                 Password = Password
             };
 
-            await _userService.LoginAsync(dto);
+            await _userService.SignInUserAsync(dto);
 
             var currentUser = await _userService.GetCurrentUserAsync();
             UserSession.CurrentUser = currentUser;
