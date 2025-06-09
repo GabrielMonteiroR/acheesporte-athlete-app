@@ -12,8 +12,6 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-
-
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.85">
             <GradientStop Color="#200937" Offset="0.0" />
@@ -33,13 +31,13 @@
 
         <Grid Grid.Row="0" Padding="0" HeightRequest="240">
             <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
+                <Image Source="logo_achesporte.png" MaximumWidthRequest="100" MaximumHeightRequest="100"/>
 
                 <Label x:Name="TypingLabel"
        FontSize="24"
        FontAttributes="Bold"
        HorizontalTextAlignment="Center"
        TextColor="White" />
-
 
                 <Label Text="Cadastre-se!"
                        FontSize="24"
@@ -64,7 +62,6 @@
             <ScrollView>
                 <StackLayout Spacing="20">
 
-                    <!-- Imagem de perfil -->
                     <Frame HeightRequest="100"
                            WidthRequest="100"
                            CornerRadius="50"
@@ -73,20 +70,20 @@
                            HasShadow="False"
                            HorizontalOptions="Center"
                            BackgroundColor="White">
-                        <Image Source="{Binding ProfileImageUrl}" Aspect="AspectFill" HeightRequest="94"
+                        <Image Source="{Binding ProfileImageUrl}" Aspect="AspectFit" HeightRequest="94"
                                WidthRequest="94" />
                     </Frame>
 
                     <Button Text="Selecionar Foto"
                             Command="{Binding PickImageCommand}"
-                            BackgroundColor="BlueViolet"
+                            BackgroundColor="#200937"
                             TextColor="AliceBlue"
                             FontAttributes="Bold"
                             HorizontalOptions="Center"
                             FontSize="12"/>
 
                     <!-- Campos -->
-                    <Label Text="Nome *"
+                    <Label Text="Nome"
                            FontSize="12"
                            FontAttributes="Bold"
                            TextColor="{Binding FirstName, Converter={StaticResource EmptyFieldToColorConverter}}" />
@@ -94,7 +91,7 @@
                            Text="{Binding FirstName}" 
                            BackgroundColor="White" TextColor="#200937" />
 
-                    <Label Text="Sobrenome *"
+                    <Label Text="Sobrenome"
                            FontSize="12"
                            FontAttributes="Bold"
                            TextColor="{Binding LastName, Converter={StaticResource EmptyFieldToColorConverter}}" />
@@ -102,7 +99,7 @@
                            Text="{Binding LastName}" 
                            BackgroundColor="White" TextColor="#200937" />
 
-                    <Label Text="E-mail *"
+                    <Label Text="E-mail"
                            FontSize="12"
                            FontAttributes="Bold"
                            TextColor="{Binding Email, Converter={StaticResource EmptyFieldToColorConverter}}" />
@@ -111,7 +108,7 @@
                            Text="{Binding Email}" 
                            BackgroundColor="White" TextColor="#200937" />
 
-                    <Label Text="Senha *"
+                    <Label Text="Senha"
                            FontSize="12"
                            FontAttributes="Bold"
                            TextColor="{Binding Password, Converter={StaticResource EmptyFieldToColorConverter}}" />
@@ -120,7 +117,7 @@
                            Text="{Binding Password}" 
                            BackgroundColor="White" TextColor="#200937" />
 
-                    <Label Text="Telefone *"
+                    <Label Text="Telefone"
                            FontSize="12"
                            FontAttributes="Bold"
                            TextColor="{Binding Phone, Converter={StaticResource EmptyFieldToColorConverter}}" />
@@ -129,7 +126,7 @@
                            Text="{Binding Phone}" 
                            BackgroundColor="White" TextColor="#200937" />
 
-                    <Label Text="CPF *"
+                    <Label Text="CPF"
                            FontSize="12"
                            FontAttributes="Bold"
                            TextColor="{Binding Cpf, Converter={StaticResource EmptyFieldToColorConverter}}" />
@@ -137,7 +134,7 @@
                            Keyboard="Numeric"
                            Text="{Binding Cpf}" 
                            BackgroundColor="White" TextColor="#200937" />
-
+                   
                     <Button Text="Cadastrar"
                             BackgroundColor="#200937"
                             TextColor="White"
