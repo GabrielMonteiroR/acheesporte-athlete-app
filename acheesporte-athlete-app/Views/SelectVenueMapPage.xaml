@@ -124,7 +124,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Source="prev.png" HeightRequest="32" WidthRequest="32" Margin="12"
+                            <Image Source="next.png" HeightRequest="32" WidthRequest="32" Margin="12"
                            VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="0">
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding PreviousImageCommand}" />
@@ -134,7 +134,7 @@
                             <BoxView Grid.Column="1" BackgroundColor="Transparent" HeightRequest="0" WidthRequest="0" />
 
 
-                            <Image Source="next.png" HeightRequest="32" WidthRequest="32" Margin="12"
+                            <Image Source="prev.png" HeightRequest="32" WidthRequest="32" Margin="12"
                            VerticalOptions="Center" HorizontalOptions="End" Grid.Column="2">
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding NextImageCommand}" />
@@ -170,6 +170,7 @@
                     </StackLayout>
 
 
+
                     <!-- Botão prosseguir -->
                     <Button Grid.Row="3"
                     Text="Prosseguir"
@@ -182,7 +183,53 @@
                 </Grid>
             </Frame>
         </Grid>
+        <!-- Modal de Filtro de Locais -->
+        <Grid x:Name="FilterModal"
+      Grid.RowSpan="2"
+      BackgroundColor="#80000000"
+      IsVisible="{Binding IsFilterModalVisible}"
+      Padding="0"
+      InputTransparent="{Binding IsFilterModalVisible, Converter={StaticResource InverseBoolConverter}}">
 
+            <Frame BackgroundColor="White"
+           CornerRadius="24"
+           Padding="16"
+           Margin="24"
+           VerticalOptions="Center"
+           HorizontalOptions="Center"
+           HasShadow="True"
+           WidthRequest="300">
+
+                <StackLayout Spacing="16">
+                    <Label Text="Filtrar por tipo de local" FontSize="18" FontAttributes="Bold" TextColor="Black" />
+
+                    <Picker
+    Title="Selecione um tipo"
+    ItemsSource="{Binding VenueTypes}"
+    ItemDisplayBinding="{Binding Name}"
+    SelectedItem="{Binding SelectedVenueType, Mode=TwoWay}"
+    x:Name="VenueTypePicker"
+    TextColor="Black"
+    TitleColor="Gray" />
+
+
+
+                    <Button Text="Aplicar Filtro"
+                    Command="{Binding ApplyFilterCommand}"
+                    BackgroundColor="#200937"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="12" />
+
+                    <Button Text="Cancelar"
+                    Command="{Binding CloseFilterModalCommand}"
+                    BackgroundColor="LightGray"
+                    TextColor="Black"
+                    FontAttributes="None"
+                    CornerRadius="12" />
+                </StackLayout>
+            </Frame>
+        </Grid>
 
     </Grid>
 </ContentPage>

@@ -43,6 +43,12 @@ namespace acheesporte_athlete_app
                 client.BaseAddress = new Uri(apiSettings.BaseUrl);
             });
 
+            builder.Services.AddHttpClient<VenueTypeService>(client =>
+            {
+                var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
+                client.BaseAddress = new Uri(apiSettings.BaseUrl);
+            });
+
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
