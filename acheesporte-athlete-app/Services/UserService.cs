@@ -20,7 +20,7 @@ namespace acheesporte_athlete_app.Services
             _apiSettings = apiSettings;
         }
 
-        public async Task<LoginResponseDto> LoginAsync(LoginRequestDto dto)
+        public async Task<LoginResponseDto> SignInUserAsync(LoginRequestDto dto)
         {
             try
             {
@@ -43,6 +43,34 @@ namespace acheesporte_athlete_app.Services
             catch (Exception ex)
             {
                 throw new Exception("An error occurred while logging in.", ex);
+            }
+        }
+
+    public async Task<RegisterResponseDto> SignInUpUserAsync(RegisterRequestDto dto)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync(_apiSettings.RegisterEndpoint, dto);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var registerResponse = await response.Content.ReadFromJsonAsync<RegisterResponseDto>();
+                    if (registerResponse is null || string.IsNullOrEmpty(registerResponse.Token))
+                        throw new Exception("Invalid registration response.");
+
+                    await SecureStorage.SetAsync("auth_token", registerResponse.Token);
+
+                    return registerResponse;
+                }
+
+                var statusCode = (int)response.StatusCode;
+                var errorContent = await response.Content.ReadAsStringAsync();
+
+                throw new Exception($"Backend Error ({statusCode}): {errorContent}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while registering the user.", ex);
             }
         }
     }
