@@ -35,9 +35,8 @@ namespace acheesporte_athlete_app.ViewModels
 
         public new bool IsNotBusy => !IsBusy;
 
-        public RegisterViewModel(IAuthService authService, IImageService imageService, IUserService userService)
+        public RegisterViewModel(IImageService imageService, IUser userService)
         {
-            _authService = authService;
             _imageService = imageService;
             _userService = userService;
 
