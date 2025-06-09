@@ -19,6 +19,13 @@ namespace acheesporte_athlete_app.Views
             {
                 VenueMap.MoveToRegion(span);
             });
+
+            MessagingCenter.Subscribe<SelectVenueMapViewModel, List<Pin>>(this, "UpdatePins", (sender, pins) =>
+            {
+                VenueMap.Pins.Clear();
+                foreach (var pin in pins)
+                    VenueMap.Pins.Add(pin);
+            });
         }
 
         protected override async void OnAppearing()
@@ -27,6 +34,8 @@ namespace acheesporte_athlete_app.Views
 
             try
             {
+                await _viewModel.LoadVenueTypesAsync(); 
+
                 var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
                 if (status != PermissionStatus.Granted)
                     status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
@@ -50,10 +59,6 @@ namespace acheesporte_athlete_app.Views
             }
 
             await _viewModel.LoadVenuesAsync();
-
-            VenueMap.Pins.Clear();
-            foreach (var pin in _viewModel.VenuePins)
-                VenueMap.Pins.Add(pin);
         }
 
         private void OnSearchBarTextChanged(object sender, TextChangedEventArgs e)
@@ -63,7 +68,8 @@ namespace acheesporte_athlete_app.Views
 
         private void OnFilterClicked(object sender, EventArgs e)
         {
-            _viewModel.ApplyFilterCommand.Execute(null);
+            _viewModel.OpenFilterModalCommand.Execute(null);
+
         }
 
         private void OnSuggestionSelected(object sender, SelectionChangedEventArgs e)

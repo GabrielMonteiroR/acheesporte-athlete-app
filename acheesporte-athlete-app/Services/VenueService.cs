@@ -1,5 +1,4 @@
 ﻿using acheesporte_athlete_app.Configuration;
-using acheesporte_athlete_app.Dtos;
 using acheesporte_athlete_app.Dtos.Venues;
 using acheesporte_athlete_app.Interfaces;
 using System.Text.Json;
@@ -18,11 +17,13 @@ namespace acheesporte_athlete_app.Services
         }
 
         public async Task<List<VenueDto>> GetVenuesAsync(
-            int? venueTypeId = null,
-            int? minCapacity = null,
-            int? maxCapacity = null,
-            string? name = null,
-            string? address = null)
+    int? venueTypeId = null,
+    int? minCapacity = null,
+    int? maxCapacity = null,
+    string? name = null,
+    string? address = null,
+    bool? isReserved = null 
+)
         {
             try
             {
@@ -38,6 +39,8 @@ namespace acheesporte_athlete_app.Services
                     queryParams.Add($"name={Uri.EscapeDataString(name)}");
                 if (!string.IsNullOrWhiteSpace(address))
                     queryParams.Add($"address={Uri.EscapeDataString(address)}");
+                if (isReserved.HasValue)
+                    queryParams.Add($"isReserved={isReserved.Value.ToString().ToLower()}"); // ✅ aqui também
 
                 var queryString = queryParams.Count > 0 ? "?" + string.Join("&", queryParams) : string.Empty;
                 var fullUrl = _apiSettings.BaseUrl + _apiSettings.VenueEndpoint + queryString;
@@ -49,12 +52,16 @@ namespace acheesporte_athlete_app.Services
                 var venueResponse = JsonSerializer.Deserialize<VenueListResponseDto>(json, new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
-                });
+                }) ?? new VenueListResponseDto
+                {
+                    Data = new List<VenueDto>()
+                };
 
-                return venueResponse?.Data ?? new List<VenueDto>();
+                return venueResponse.Data ?? new List<VenueDto>();
+
             }
             catch (HttpRequestException ex)
-            { 
+            {
                 throw new Exception("An error occurred while fetching venues.", ex);
             }
             catch (JsonException ex)
@@ -66,5 +73,6 @@ namespace acheesporte_athlete_app.Services
                 throw new Exception("An unexpected error occurred.", ex);
             }
         }
+
     }
 }

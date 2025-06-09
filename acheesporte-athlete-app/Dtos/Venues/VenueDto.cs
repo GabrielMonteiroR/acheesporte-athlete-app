@@ -44,7 +44,7 @@ public class VenueDto
     public List<string> Sports { get; set; } = new();
 
     [JsonPropertyName("image_urls")]
-    public List<string> ImageUrls { get; set; } = new();
+    public List<string>? ImageUrls { get; set; } = new();
 
     [JsonPropertyName("venue_avaliability_times")]
     public List<VenueAvailabilityDto> VenueAvailabilityTimes { get; set; } = new();
