@@ -21,7 +21,7 @@ namespace acheesporte_athlete_app.Services
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync(_apiSettings.LoginEndpoint, dto);
+                var response = await _httpClient.PostAsJsonAsync(_apiSettings.SignInEndpoint, dto);
                 if (response.IsSuccessStatusCode)
                 {
                     var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
@@ -47,7 +47,7 @@ namespace acheesporte_athlete_app.Services
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync(_apiSettings.RegisterEndpoint, dto);
+                var response = await _httpClient.PostAsJsonAsync(_apiSettings.SignInUpEndpoint, dto);
 
                 if (response.IsSuccessStatusCode)
                 {
