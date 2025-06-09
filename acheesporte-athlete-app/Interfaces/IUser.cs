@@ -11,5 +11,6 @@ namespace acheesporte_athlete_app.Interfaces
     {
         Task<LoginResponseDto> SignInUserAsync(LoginRequestDto dto);
         Task<RegisterResponseDto> SignInUpUserAsync(RegisterRequestDto dto);
+        Task<CurrentUserDto> GetCurrentUserAsync();
     }
 }
