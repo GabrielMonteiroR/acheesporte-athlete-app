@@ -38,6 +38,8 @@ namespace acheesporte_athlete_app
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddTransient<HomeViewModel>();
             builder.Services.AddSingleton<AppShell>();
+            builder.Services.AddTransient<SplashPage>();
+
 
 
             builder.Services.AddHttpClient<IVenueService, VenueService>(client =>
