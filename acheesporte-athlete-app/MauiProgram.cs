@@ -35,7 +35,9 @@ namespace acheesporte_athlete_app
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<RegisterPage>();
             builder.Services.AddTransient<RegisterViewModel>();
-            builder.Services.AddTransient<TestPage>();
+            builder.Services.AddTransient<HomePage>();
+            builder.Services.AddTransient<HomeViewModel>();
+            builder.Services.AddSingleton<AppShell>();
 
 
             builder.Services.AddHttpClient<IVenueService, VenueService>(client =>

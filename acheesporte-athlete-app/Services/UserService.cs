@@ -30,7 +30,7 @@ namespace acheesporte_athlete_app.Services
                     {
                         throw new Exception("Login failed. Invalid response from server.");
                     }
-                    await SecureStorage.SetAsync("token", loginResponse.Token);
+                    await SecureStorage.SetAsync("auth_token", loginResponse.Token);
                     return loginResponse;
                 }
 

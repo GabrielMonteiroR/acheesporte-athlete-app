@@ -27,6 +27,7 @@ public partial class LoginViewModel : ObservableObject
 
     public bool IsNotBusy => !IsBusy;
 
+
     [RelayCommand]
     private async Task LoginAsync()
     {
@@ -39,7 +40,7 @@ public partial class LoginViewModel : ObservableObject
         {
             if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
             {
-                await Shell.Current.DisplayAlert("Atenção", "Preencha o e-mail e a senha.", "OK");
+                await Application.Current.MainPage.DisplayAlert("Atenção", "Preencha o e-mail e a senha.", "OK");
                 return;
             }
 
@@ -52,14 +53,22 @@ public partial class LoginViewModel : ObservableObject
             await _userService.SignInUserAsync(dto);
 
             var currentUser = await _userService.GetCurrentUserAsync();
+
+            if (currentUser == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", "Não foi possível carregar os dados do usuário.", "OK");
+                return;
+            }
+
             UserSession.CurrentUser = currentUser;
 
-            Application.Current.MainPage = new AppShell();
-            await Shell.Current.GoToAsync("loading?message=Entrando...&redirect=//MainApp/HomePage");
+
+            Application.Current.MainPage = App.Services.GetService<AppShell>();
+            await Shell.Current.GoToAsync("//MainApp/HomePage");
         }
         catch
         {
-            await Shell.Current.DisplayAlert("Erro", "Email ou senha inválidos", "OK");
+            await Application.Current.MainPage.DisplayAlert("Erro", "Email ou senha inválidos", "OK");
         }
         finally
         {
@@ -67,6 +76,7 @@ public partial class LoginViewModel : ObservableObject
             OnPropertyChanged(nameof(IsNotBusy));
         }
     }
+
 
     [RelayCommand]
     private async Task NavigateToRegisterAsync()

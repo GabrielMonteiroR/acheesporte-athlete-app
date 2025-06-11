@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
     xmlns:auth="clr-namespace:acheesporte_athlete_app.Views"  
     xmlns:main="clr-namespace:acheesporte_athlete_app.Views"  
+    xmlns:test="clr-namespace:acheesporte_athlete_app.Views"
     xmlns:history="clr-namespace:acheesporte_athlete_app.Views"  
 
     Shell.TabBarBackgroundColor="#200937"  
@@ -16,23 +17,28 @@
 
     <!-- <ShellContent Route="SplashPage" ContentTemplate="{DataTemplate auth:SplashPage}" /> -->
     <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate auth:LoginPage}" />
-    <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate auth:RegisterPage}" /> 
+    <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate auth:RegisterPage}" />
     <!-- <ShellContent Route="LoadingPage" ContentTemplate="{DataTemplate shared:LoadingPage}" /> -->
 
     <TabBar Route="MainApp">
-        <!-- <ShellContent Title="Início"  
-                      Route="HomePage"  
-                      Icon="home.png"  
-                      ContentTemplate="{DataTemplate main:HomePage}" /> -->
+        <ShellContent 
+        Title="Início"
+        Route="HomePage"
+        Icon="home.png"
+        ContentTemplate="{DataTemplate main:HomePage}" />
 
-        <!-- <ShellContent Title="Reservas"  
-                      Route="ReservationPage"  
-                      Icon="reservations.png"  
-                      ContentTemplate="{DataTemplate main:ReservationPage}"/> -->
+        <ShellContent
+            Title="Reservas"
+            Route="TestPage"
+            Icon="reservations.png"
+            ContentTemplate="{DataTemplate test:TestPage}"/>
 
-        <!-- <ShellContent Title="Histórico"  
-                      Route="HistoryPage"  
-                      Icon="history.png"  
-                      ContentTemplate="{DataTemplate history:HistoryPage}" /> -->
-    </TabBar> <!-- Closing tag for TabBar added here -->
+        <ShellContent
+    Title="Histórico"
+    Route="TestPage"
+    Icon="history.png"
+    ContentTemplate="{DataTemplate test:TestPage}"/>
+        
+    </TabBar>
+
 </Shell>

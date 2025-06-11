@@ -25,16 +25,14 @@ public partial class RegisterPage : ContentPage
             string phrase = phrases[index];
             Color phraseColor = colors[index];
 
-            // Digitação
             for (int i = 1; i <= phrase.Length; i++)
             {
                 SetFormattedText(prefix, phrase[..i], phraseColor);
                 await Task.Delay(100);
             }
 
-            await Task.Delay(4000);
+            await Task.Delay(1000);
 
-            // Apagar
             for (int i = phrase.Length - 1; i >= 0; i--)
             {
                 SetFormattedText(prefix, phrase[..i], phraseColor);
