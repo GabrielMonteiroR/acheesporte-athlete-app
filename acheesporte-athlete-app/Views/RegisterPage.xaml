@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"
+             xmlns:converters="clr-namespace:acheesporte_athlete_app.Converters"
+             x:Class="acheesporte_athlete_app.Views.RegisterPage"
+             NavigationPage.HasBackButton="True">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:EmptyFieldToColorConverter x:Key="EmptyFieldToColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.85">
+            <GradientStop Color="#200937" Offset="0.0" />
+            <GradientStop Color="#3A1155" Offset="0.3" />
+            <GradientStop Color="#6A1B9A" Offset="0.6" />
+            <GradientStop Color="#8B2BB8" Offset="0.8" />
+            <GradientStop Color="#A75AEF" Offset="0.85" />
+            <GradientStop Color="#F7F8FA" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Padding="0" HeightRequest="240">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
+                <Image Source="logo_achesporte.png" MaximumWidthRequest="100" MaximumHeightRequest="100"/>
+
+                <Label x:Name="TypingLabel"
+       FontSize="24"
+       FontAttributes="Bold"
+       HorizontalTextAlignment="Center"
+       TextColor="White" />
+
+                <Label Text="Cadastre-se!"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="#FF851B"
+                       HorizontalTextAlignment="Center" />
+                <Label Text="Preencha os dados para criar sua conta."
+                       FontSize="12"
+                       TextColor="#D1C4E9"
+                       HorizontalTextAlignment="Center" />
+            </StackLayout>
+        </Grid>
+
+        <Frame Grid.Row="1"
+               BackgroundColor="#F7F8FA"
+               BorderColor="Transparent"
+               CornerRadius="24"
+               Padding="24"
+               VerticalOptions="EndAndExpand"
+               HasShadow="True">
+
+            <ScrollView>
+                <StackLayout Spacing="20">
+
+                    <Frame HeightRequest="100"
+                           WidthRequest="100"
+                           CornerRadius="50"
+                           Padding="0"
+                           BorderColor="Transparent"
+                           HasShadow="False"
+                           HorizontalOptions="Center"
+                           BackgroundColor="White">
+                        <Image Source="{Binding ProfileImageUrl}" Aspect="AspectFit" HeightRequest="94"
+                               WidthRequest="94" />
+                    </Frame>
+
+                    <Button Text="Selecionar Foto"
+                            Command="{Binding PickImageCommand}"
+                            BackgroundColor="#200937"
+                            TextColor="AliceBlue"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            FontSize="12"/>
+
+                    <!-- Campos -->
+                    <Label Text="Nome"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           TextColor="{Binding FirstName, Converter={StaticResource EmptyFieldToColorConverter}}" />
+                    <Entry Placeholder="Primeiro nome"
+                           Text="{Binding FirstName}" 
+                           BackgroundColor="White" TextColor="#200937" />
+
+                    <Label Text="Sobrenome"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           TextColor="{Binding LastName, Converter={StaticResource EmptyFieldToColorConverter}}" />
+                    <Entry Placeholder="Sobrenome"
+                           Text="{Binding LastName}" 
+                           BackgroundColor="White" TextColor="#200937" />
+
+                    <Label Text="E-mail"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           TextColor="{Binding Email, Converter={StaticResource EmptyFieldToColorConverter}}" />
+                    <Entry Placeholder="Email"
+                           Keyboard="Email"
+                           Text="{Binding Email}" 
+                           BackgroundColor="White" TextColor="#200937" />
+
+                    <Label Text="Senha"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           TextColor="{Binding Password, Converter={StaticResource EmptyFieldToColorConverter}}" />
+                    <Entry Placeholder="Senha"
+                           IsPassword="True"
+                           Text="{Binding Password}" 
+                           BackgroundColor="White" TextColor="#200937" />
+
+                    <Label Text="Telefone"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           TextColor="{Binding Phone, Converter={StaticResource EmptyFieldToColorConverter}}" />
+                    <Entry Placeholder="(99) 99999-9999"
+                           Keyboard="Telephone"
+                           Text="{Binding Phone}" 
+                           BackgroundColor="White" TextColor="#200937" />
+
+                    <Label Text="CPF"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           TextColor="{Binding Cpf, Converter={StaticResource EmptyFieldToColorConverter}}" />
+                    <Entry Placeholder="000.000.000-00"
+                           Keyboard="Numeric"
+                           Text="{Binding Cpf}" 
+                           BackgroundColor="White" TextColor="#200937" />
+                   
+                    <Button Text="Cadastrar"
+                            BackgroundColor="#200937"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            CornerRadius="12"
+                            HeightRequest="48"
+                            Command="{Binding RegisterCommand}"
+                            IsEnabled="{Binding IsNotBusy}" />
+
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="4">
+                        <Label Text="Já tem uma conta?" TextColor="#200937" FontSize="12" />
+                        <Button Text="Entrar"
+                                Command="{Binding NavigateToLoginCommand}"
+                                BackgroundColor="Transparent"
+                                TextColor="#FF851B"
+                                FontSize="12" />
+                    </StackLayout>
+
+                </StackLayout>
+            </ScrollView>
+        </Frame>
+    </Grid>
+</ContentPage>

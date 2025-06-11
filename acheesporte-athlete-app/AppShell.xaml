@@ -1,14 +1,44 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="acheesporte_athlete_app.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:acheesporte_athlete_app"
-    Title="acheesporte_athlete_app">
+<Shell  
+    x:Class="acheesporte_athlete_app.AppShell"  
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+    xmlns:auth="clr-namespace:acheesporte_athlete_app.Views"  
+    xmlns:main="clr-namespace:acheesporte_athlete_app.Views"  
+    xmlns:test="clr-namespace:acheesporte_athlete_app.Views"
+    xmlns:history="clr-namespace:acheesporte_athlete_app.Views"  
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    Shell.TabBarBackgroundColor="#200937"  
+    Shell.TabBarForegroundColor="Purple"  
+    Shell.TabBarTitleColor="Purple"  
+    Shell.TabBarUnselectedColor="#CCCCCC"  
+    Shell.TabBarDisabledColor="#888888"  
+    Shell.BackgroundColor="#200937"  
+    Shell.NavBarIsVisible="False">
+
+    <!-- <ShellContent Route="SplashPage" ContentTemplate="{DataTemplate auth:SplashPage}" /> -->
+    <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate auth:LoginPage}" />
+    <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate auth:RegisterPage}" />
+    <!-- <ShellContent Route="LoadingPage" ContentTemplate="{DataTemplate shared:LoadingPage}" /> -->
+
+    <TabBar Route="MainApp">
+        <ShellContent 
+        Title="Início"
+        Route="HomePage"
+        Icon="home.png"
+        ContentTemplate="{DataTemplate main:HomePage}" />
+
+        <ShellContent
+            Title="Reservas"
+            Route="TestPage"
+            Icon="reservations.png"
+            ContentTemplate="{DataTemplate test:TestPage}"/>
+
+        <ShellContent
+    Title="Histórico"
+    Route="TestPage"
+    Icon="history.png"
+    ContentTemplate="{DataTemplate test:TestPage}"/>
+        
+    </TabBar>
 
 </Shell>

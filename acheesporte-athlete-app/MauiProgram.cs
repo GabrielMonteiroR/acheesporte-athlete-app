@@ -1,6 +1,7 @@
 ﻿using acheesporte_athlete_app.Configuration;
 using acheesporte_athlete_app.Interfaces;
 using acheesporte_athlete_app.Services;
+using acheesporte_athlete_app.ViewModels;
 using acheesporte_athlete_app.ViewModels.Venue;
 using acheesporte_athlete_app.Views;
 using CommunityToolkit.Maui;
@@ -30,6 +31,16 @@ namespace acheesporte_athlete_app
 
             builder.Services.AddTransient<SelectVenueMapPage>();
             builder.Services.AddTransient<SelectVenueMapViewModel>();
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<RegisterPage>();
+            builder.Services.AddTransient<RegisterViewModel>();
+            builder.Services.AddTransient<HomePage>();
+            builder.Services.AddTransient<HomeViewModel>();
+            builder.Services.AddSingleton<AppShell>();
+            builder.Services.AddTransient<SplashPage>();
+
+
 
             builder.Services.AddHttpClient<IVenueService, VenueService>(client =>
             {
@@ -37,7 +48,19 @@ namespace acheesporte_athlete_app
                 client.BaseAddress = new Uri(apiSettings.BaseUrl);
             });
 
+            builder.Services.AddHttpClient<IUserService, UserService>(client =>
+            {
+                var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
+                client.BaseAddress = new Uri(apiSettings.BaseUrl);
+            });
+
             builder.Services.AddHttpClient<IGooglePlacesService, GooglePlacesService>(client =>
+            {
+                var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
+                client.BaseAddress = new Uri(apiSettings.BaseUrl);
+            });
+
+            builder.Services.AddHttpClient<IImageService, ImageService>(client =>
             {
                 var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
                 client.BaseAddress = new Uri(apiSettings.BaseUrl);
