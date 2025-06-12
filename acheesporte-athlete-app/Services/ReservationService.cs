@@ -1,5 +1,6 @@
 ﻿using acheesporte_athlete_app.Configuration;
 using acheesporte_athlete_app.Dtos.ReservationDtos;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace acheesporte_athlete_app.Services;
@@ -26,7 +27,12 @@ public class ReservationService
                 requestUrl += $"?status={requestDto.Status.Value}";
             }
 
-            var response = await _httpClient.GetAsync(requestUrl);
+            var token = await SecureStorage.GetAsync("auth_token");
+
+            var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _httpClient.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
             {
@@ -44,15 +50,15 @@ public class ReservationService
                     Reservations = new List<ReservationDto>()
                 };
             }
-            else 
+            else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
                 throw new Exception($"Failed to fetch reservations: {response.StatusCode} - {errorContent}");
             }
         }
         catch (Exception ex)
-                {
-                    throw new Exception("An error occurred while fetching reservations.", ex);
-                }
+        {
+            throw new Exception("An error occurred while fetching reservations.", ex);
+        }
     }
 }
