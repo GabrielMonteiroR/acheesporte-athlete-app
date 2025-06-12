@@ -40,7 +40,7 @@ namespace acheesporte_athlete_app.Services
                 if (!string.IsNullOrWhiteSpace(address))
                     queryParams.Add($"address={Uri.EscapeDataString(address)}");
                 if (isReserved.HasValue)
-                    queryParams.Add($"isReserved={isReserved.Value.ToString().ToLower()}"); // ✅ aqui também
+                    queryParams.Add($"isReserved={isReserved.Value.ToString().ToLower()}"); 
 
                 var queryString = queryParams.Count > 0 ? "?" + string.Join("&", queryParams) : string.Empty;
                 var fullUrl = _apiSettings.BaseUrl + _apiSettings.VenueEndpoint + queryString;

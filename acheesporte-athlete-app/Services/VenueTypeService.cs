@@ -1,7 +1,7 @@
 ﻿using acheesporte_athlete_app.Configuration;
 using acheesporte_athlete_app.Dtos.Venues;
+using System.Net.Http.Headers;
 using System.Text.Json;
-
 
 namespace acheesporte_athlete_app.Services
 {
@@ -20,13 +20,20 @@ namespace acheesporte_athlete_app.Services
         {
             try
             {
-                var response = await _httpClient.GetAsync(_apiSettings.BaseUrl + _apiSettings.VenueTypeEndpoint);
+                var token = await SecureStorage.GetAsync("auth_token");
+
+                var request = new HttpRequestMessage(HttpMethod.Get, _apiSettings.BaseUrl + _apiSettings.VenueTypeEndpoint);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var response = await _httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
+
                 var json = await response.Content.ReadAsStringAsync();
                 var venueTypeResponse = JsonSerializer.Deserialize<VenueTypeResponseDto>(json, new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 });
+
                 return venueTypeResponse ?? new VenueTypeResponseDto
                 {
                     Message = "No data available",
@@ -35,11 +42,11 @@ namespace acheesporte_athlete_app.Services
             }
             catch (HttpRequestException ex)
             {
-                throw new Exception("An error occurred while fetching venue types.", ex);
+                throw new Exception("Erro ao buscar tipos de local.", ex);
             }
             catch (JsonException ex)
             {
-                throw new Exception("An error occurred while parsing venue types.", ex);
+                throw new Exception("Erro ao interpretar resposta dos tipos de local.", ex);
             }
         }
     }
