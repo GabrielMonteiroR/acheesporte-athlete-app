@@ -1,6 +1,6 @@
 ﻿using acheesporte_athlete_app.Dtos.User;
 using acheesporte_athlete_app.Interfaces;
-using AcheesporteAppAthlete.Helpers;
+using acheesporte_athlete_app.Helpers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using acheesporte_athlete_app.Views;

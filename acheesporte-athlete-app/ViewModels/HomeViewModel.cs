@@ -1,4 +1,4 @@
-﻿using AcheesporteAppAthlete.Helpers;
+﻿using acheesporte_athlete_app.Helpers;
 using acheesporte_athlete_app.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

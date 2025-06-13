@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace acheesporte_athlete_app.ViewModels.Venue
+namespace acheesporte_athlete_app.ViewModels
 {
     public partial class SelectVenueMapViewModel : ObservableObject
     {

@@ -1,11 +1,12 @@
 ﻿using acheesporte_athlete_app.Configuration;
 using acheesporte_athlete_app.Dtos.ReservationDtos;
+using acheesporte_athlete_app.Interfaces;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace acheesporte_athlete_app.Services;
 
-public class ReservationService
+public class ReservationService : IReservationService
 {
     private readonly HttpClient _httpClient;
     private readonly ApiSettings _apiSettings;
@@ -16,7 +17,7 @@ public class ReservationService
         _apiSettings = apiSettings;
     }
 
-    public async Task<ReservationResponseDto> GetReservationsAsync(ReservationRequestDto requestDto)
+    public async Task<ReservationResponseDto> GetReservationsByUserAsync(ReservationRequestDto requestDto)
     {
         try
         {

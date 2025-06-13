@@ -1,8 +1,9 @@
-﻿using acheesporte_athlete_app.Configuration;
+﻿
+
+using acheesporte_athlete_app.Configuration;
 using acheesporte_athlete_app.Interfaces;
 using acheesporte_athlete_app.Services;
 using acheesporte_athlete_app.ViewModels;
-using acheesporte_athlete_app.ViewModels.Venue;
 using acheesporte_athlete_app.Views;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
@@ -39,8 +40,15 @@ namespace acheesporte_athlete_app
             builder.Services.AddTransient<HomeViewModel>();
             builder.Services.AddSingleton<AppShell>();
             builder.Services.AddTransient<SplashPage>();
+            builder.Services.AddTransient<ReservationPage>();
+            builder.Services.AddTransient<ReservationViewModel>();
 
 
+            builder.Services.AddHttpClient<IReservationService, ReservationService>(client =>
+            {
+                var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
+                client.BaseAddress = new Uri(apiSettings.BaseUrl);
+            });
 
             builder.Services.AddHttpClient<IVenueService, VenueService>(client =>
             {

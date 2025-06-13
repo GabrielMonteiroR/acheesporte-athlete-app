@@ -1,5 +1,5 @@
 using acheesporte_athlete_app.Interfaces;
-using AcheesporteAppAthlete.Helpers;
+using acheesporte_athlete_app.Helpers;
 using Microsoft.Maui.Controls;
 
 namespace acheesporte_athlete_app.Views;

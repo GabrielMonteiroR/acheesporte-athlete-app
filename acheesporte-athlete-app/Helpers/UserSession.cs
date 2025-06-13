@@ -1,6 +1,6 @@
 ﻿using acheesporte_athlete_app.Dtos.User;
 
-namespace AcheesporteAppAthlete.Helpers;
+namespace acheesporte_athlete_app.Helpers;
 
 public static class UserSession
 {

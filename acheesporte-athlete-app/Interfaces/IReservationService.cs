@@ -4,5 +4,5 @@ namespace acheesporte_athlete_app.Interfaces;
 
 public interface IReservationService
 {
-    Task<ReservationResponseDto> GetReservationsAsync(ReservationRequestDto requestDto);
+    Task<ReservationResponseDto> GetReservationsByUserAsync(ReservationRequestDto requestDto);
 }

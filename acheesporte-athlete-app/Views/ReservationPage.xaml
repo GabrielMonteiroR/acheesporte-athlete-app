@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:vm="clr-namespace:acheesporte_athlete_app.ViewModels"
+                 x:Class="acheesporte_athlete_app.Views.ReservationPage"
+                 BackgroundColor="#200937"
+                 Title="Minhas Reservas">
+
+    <Grid Padding="16">
+        <!-- Loading -->
+        <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                               IsVisible="{Binding IsBusy}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Color="White" />
+
+        <!-- Lista de reservas -->
+        <CollectionView ItemsSource="{Binding Reservations}"
+                            IsVisible="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="White"
+                               CornerRadius="20"
+                               Padding="0"
+                               Margin="0,8"
+                               HasShadow="True">
+                        <Grid ColumnDefinitions="Auto,*,Auto"
+                                  RowDefinitions="Auto,Auto,Auto,Auto"
+                                  Padding="16">
+                            <!-- Sticker/Icon -->
+                            <Image Source="sticker_ball.png"
+                                       WidthRequest="48"
+                                       HeightRequest="48"
+                                       Grid.RowSpan="4"
+                                       VerticalOptions="Start"
+                                       Margin="0,0,12,0"/>
+                            <!-- Início -->
+                            <Label Text="{Binding StartDate, StringFormat='Início: {0:dd/MM/yyyy HH:mm}'}"
+                                       TextColor="#200937"
+                                       FontAttributes="Bold"
+                                       FontSize="16"
+                                       Grid.Column="1"
+                                       Grid.Row="0"/>
+                            <!-- Status do Pagamento (sticker) -->
+                            <Image Source="{Binding PaymentStatus, Converter={StaticResource PaymentStatusToStickerConverter}}"
+                                       WidthRequest="32"
+                                       HeightRequest="32"
+                                       Grid.Column="2"
+                                       Grid.Row="0"
+                                       VerticalOptions="Start"
+                                       Margin="8,0,0,0"/>
+                            <!-- Fim -->
+                            <Label Text="{Binding EndDate, StringFormat='Fim: {0:dd/MM/yyyy HH:mm}'}"
+                                       TextColor="#4B4B4B"
+                                       FontSize="14"
+                                       Grid.Column="1"
+                                       Grid.Row="1"
+                                       Grid.ColumnSpan="2"/>
+                            <!-- Valor -->
+                            <Label Text="{Binding TotalAmount, StringFormat='Valor: R$ {0:F2}'}"
+                                       TextColor="#4B4B4B"
+                                       FontSize="14"
+                                       Grid.Column="1"
+                                       Grid.Row="2"
+                                       Grid.ColumnSpan="2"/>
+                            <!-- Status do Pagamento (texto) -->
+                            <Label Text="{Binding PaymentStatus, StringFormat='Status do Pagamento: {0}'}"
+                                       TextColor="#4B4B4B"
+                                       FontSize="14"
+                                       Grid.Column="1"
+                                       Grid.Row="3"
+                                       Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Mensagem e imagem quando vazio -->
+        <VerticalStackLayout
+                Spacing="12"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                IsVisible="{Binding Reservations.Count, Converter={StaticResource ZeroToBoolConverter}}">
+            <Image Source="football.png"
+                       WidthRequest="80"
+                       HeightRequest="80"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            <Label Text="Nenhuma reserva encontrada."
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
