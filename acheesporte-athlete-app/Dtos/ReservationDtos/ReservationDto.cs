@@ -46,5 +46,3 @@ public class ReservationDto
     [JsonPropertyName("updatedAt")]
     public DateTime UpdatedAt { get; set; }
 }
-
-}
