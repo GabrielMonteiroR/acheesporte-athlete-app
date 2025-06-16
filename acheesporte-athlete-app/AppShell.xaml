@@ -13,8 +13,8 @@
     Shell.NavBarIsVisible="False">
 
     <!-- <ShellContent Route="SplashPage" ContentTemplate="{DataTemplate auth:SplashPage}" /> -->
-    <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate auth:LoginPage}" />
-    <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate auth:RegisterPage}" />
+    <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate view:HomePage}" />
+    <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate view:HomePage}" />
     <!-- <ShellContent Route="LoadingPage" ContentTemplate="{DataTemplate shared:LoadingPage}" /> -->
 
     <TabBar Route="MainApp">

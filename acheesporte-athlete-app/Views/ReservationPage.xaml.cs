@@ -1,6 +1,6 @@
-using acheesporte_athlete_app.ViewModels.Main;
+using acheesporte_athlete_app.ViewModels;
 
-namespace acheesporte_athlete_app.Views.Main;
+namespace acheesporte_athlete_app.Views;
 
 public partial class ReservationPage : ContentPage
 {
