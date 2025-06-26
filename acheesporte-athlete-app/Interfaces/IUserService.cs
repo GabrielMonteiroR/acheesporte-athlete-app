@@ -1,16 +1,14 @@
-﻿using acheesporte_athlete_app.Dtos.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using acheesporte_athlete_app.Dtos;
+using acheesporte_athlete_app.Dtos.Users;
 
-namespace acheesporte_athlete_app.Interfaces
+namespace acheesporte_athlete_app.Interfaces;
+
+public interface IUserService
 {
-    public interface IUserService
-    {
-        Task<LoginResponseDto> SignInUserAsync(LoginRequestDto dto);
-        Task<RegisterResponseDto> SignInUpUserAsync(RegisterRequestDto dto);
-        Task<CurrentUserDto> GetCurrentUserAsync();
-    }
+    Task<SignInResponseDto> SignInUserAsync(SignInRequestDto requestDto);
+    Task<SignUpResponseDto> SignUpUserAsync(SignUpRequestDto request);
+    Task<CurrentUserDto> GetCurrentUserAsync();
+    Task<UserResponseDto> GetUserByIdAsync(int id);
+    Task<UserResponseDto> UpdateUserAsync(int id, UpdateUserRequestDto dto);
+    Task<UserResponseDto> UpdateUserProfileImageAsync(int userId, string imageUrl);
 }
