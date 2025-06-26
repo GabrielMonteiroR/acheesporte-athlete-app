@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace acheesporte_athlete_app.Config;
+namespace acheesporte_athlete_app.Configuration;
 
 public class ApiSettings
 {

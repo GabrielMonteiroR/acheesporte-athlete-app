@@ -1,11 +1,11 @@
-﻿using acheesporte_athlete_app.Config;
+﻿using acheesporte_athlete_app.Configuration;
 using acheesporte_athlete_app.Dtos;
 using acheesporte_athlete_app.Dtos.Users;
 using acheesporte_athlete_app.Interfaces;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
-namespace acheesporte_locator_app.Services;
+namespace acheesporte_athlete_app.Services;
 
 public class UserService : IUserService
 {

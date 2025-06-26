@@ -17,11 +17,11 @@ public class ReservationService : IReservationService
         _apiSettings = apiSettings;
     }
 
-    public async Task<ReservationResponseDto> GetReservationsByUserAsync(ReservationRequestDto requestDto)
+ public async Task<ReservationResponseDto> GetReservationsByUserAsync(ReservationRequestDto requestDto)
     {
         try
         {
-            var requestUrl = $"{_apiSettings.ReservationEndpoint}/{requestDto.UserId}";
+            var requestUrl = $"{_apiSettings.UpdateUserProfilePicturePatchUrl}/{requestDto.UserId}";
 
             if (requestDto.Status.HasValue)
             {

@@ -1,4 +1,4 @@
-﻿using acheesporte_athlete_app.Dtos.User;
+﻿using acheesporte_athlete_app.Dtos;
 
 namespace acheesporte_athlete_app.Helpers;
 

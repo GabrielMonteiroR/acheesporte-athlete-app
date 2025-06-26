@@ -12,7 +12,7 @@ namespace acheesporte_athlete_app
         {
             base.OnCreate(savedInstanceState);
 
-            Window.SetStatusBarColor(Android.Graphics.Color.ParseColor("#200937")); 
+            Window.SetStatusBarColor(Android.Graphics.Color.ParseColor("#f2f0ef")); 
         }
     }
 }
