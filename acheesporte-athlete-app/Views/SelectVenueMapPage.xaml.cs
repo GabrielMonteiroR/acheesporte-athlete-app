@@ -1,5 +1,5 @@
 ﻿using acheesporte_athlete_app.Dtos.GooglePlaces;
-using acheesporte_athlete_app.ViewModels.Venue;
+using acheesporte_athlete_app.ViewModels;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;

@@ -1,11 +1,8 @@
 <Shell  
     x:Class="acheesporte_athlete_app.AppShell"  
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
-    xmlns:auth="clr-namespace:acheesporte_athlete_app.Views"  
-    xmlns:main="clr-namespace:acheesporte_athlete_app.Views"  
-    xmlns:test="clr-namespace:acheesporte_athlete_app.Views"
-    xmlns:history="clr-namespace:acheesporte_athlete_app.Views"  
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"    
+    xmlns:view="clr-namespace:acheesporte_athlete_app.Views"
 
     Shell.TabBarBackgroundColor="#200937"  
     Shell.TabBarForegroundColor="Purple"  
@@ -16,8 +13,8 @@
     Shell.NavBarIsVisible="False">
 
     <!-- <ShellContent Route="SplashPage" ContentTemplate="{DataTemplate auth:SplashPage}" /> -->
-    <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate auth:LoginPage}" />
-    <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate auth:RegisterPage}" />
+    <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate view:HomePage}" />
+    <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate view:HomePage}" />
     <!-- <ShellContent Route="LoadingPage" ContentTemplate="{DataTemplate shared:LoadingPage}" /> -->
 
     <TabBar Route="MainApp">
@@ -25,19 +22,19 @@
         Title="Início"
         Route="HomePage"
         Icon="home.png"
-        ContentTemplate="{DataTemplate main:HomePage}" />
+        ContentTemplate="{DataTemplate view:HomePage}" />
 
         <ShellContent
             Title="Reservas"
-            Route="TestPage"
+            Route="ReservationPage"
             Icon="reservations.png"
-            ContentTemplate="{DataTemplate test:TestPage}"/>
+            ContentTemplate="{DataTemplate view:ReservationPage}"/>
 
         <ShellContent
     Title="Histórico"
     Route="TestPage"
     Icon="history.png"
-    ContentTemplate="{DataTemplate test:TestPage}"/>
+    ContentTemplate="{DataTemplate view:TestPage}"/>
         
     </TabBar>
 

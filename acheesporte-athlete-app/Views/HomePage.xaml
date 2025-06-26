@@ -7,81 +7,85 @@
                   Shell.TabBarIsVisible="True"
                   BackgroundColor="#200937">
 
-    <ScrollView>
-        <StackLayout Padding="24" Spacing="24">
+    <Grid RowDefinitions="Auto, *" Padding="24">
+        <!-- TOPO: Boas-vindas + imagem de perfil -->
+        <Grid Grid.Row="0" ColumnSpacing="16" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-            <!-- TOPO: Boas-vindas + imagem de perfil -->
-            <Grid ColumnSpacing="16">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <StackLayout VerticalOptions="Center">
-                    <Label Text="Bem-vindo," FontSize="16" FontAttributes="Bold" TextColor="White" />
-                    <Label Text="{Binding UserName}" FontSize="20" FontAttributes="Bold" TextColor="#FF851B" />
-                </StackLayout>
-
-                <Frame Grid.Column="1"
-                            HeightRequest="56" WidthRequest="56"
-                            Padding="0" CornerRadius="28"
-                            BorderColor="Transparent" BackgroundColor="Transparent" HasShadow="False">
-                    <Image Source="{Binding ProfileImageUrl}" Aspect="AspectFill" HeightRequest="56" WidthRequest="56" />
-                </Frame>
-            </Grid>
-
-            <!-- CARD: Próximo jogo (menor) -->
-            <Frame BackgroundColor="White" CornerRadius="16" HasShadow="True" Padding="12" HeightRequest="90" BorderColor="Transparent">
-                <StackLayout Spacing="2" VerticalOptions="Center">
-                    <Label Text="Próximo jogo" FontSize="15" FontAttributes="Bold" TextColor="#200937" />
-                    <Label Text="Arena Central - Quadra 3" FontSize="13" TextColor="#444" />
-                    <Label Text="Sábado, 01/06 às 10:00" FontSize="12" TextColor="#888" />
-                </StackLayout>
-            </Frame>
-
-            <!-- SEARCH BAR + BUTTON -->
-            <StackLayout Spacing="8">
-                <Frame Padding="0" CornerRadius="12" BorderColor="#FF851B" HasShadow="False" BackgroundColor="White" HeightRequest="44">
-                    <SearchBar Placeholder="Buscar locais..." BackgroundColor="Transparent" HeightRequest="44" />
-                </Frame>
-                <Button Text="Buscar Locais"
-                             BackgroundColor="#FF851B"
-                             TextColor="White"
-                             CornerRadius="12"
-                             FontAttributes="Bold"
-                             HeightRequest="44" />
+            <StackLayout VerticalOptions="Center">
+                <Label Text="Bem-vindo," FontSize="18" FontAttributes="Bold" TextColor="White" />
+                <Label Text="{Binding UserName}" FontSize="20" FontAttributes="Bold" TextColor="#FF851B" />
             </StackLayout>
 
-            <Frame BackgroundColor="White" CornerRadius="16" HasShadow="True" Padding="16" Margin="0,8,0,0">
-                <StackLayout Spacing="12">
-                    <Label Text="Resumo de agendamentos" FontSize="13" FontAttributes="Bold" TextColor="#888" HorizontalOptions="Center" />
-                    <Grid ColumnSpacing="16">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <StackLayout Grid.Column="0" HorizontalOptions="Center">
-                            <Label Text="Semana" FontSize="13" TextColor="#888" HorizontalOptions="Center" />
-                            <Label Text="2" FontSize="20" FontAttributes="Bold" TextColor="#200937" HorizontalOptions="Center" />
-                        </StackLayout>
-                        <StackLayout Grid.Column="1" HorizontalOptions="Center">
-                            <Label Text="Mês" FontSize="13" TextColor="#888" HorizontalOptions="Center" />
-                            <Label Text="4" FontSize="20" FontAttributes="Bold" TextColor="#200937" HorizontalOptions="Center" />
-                        </StackLayout>
-                        <StackLayout Grid.Column="2" HorizontalOptions="Center">
-                            <Label Text="Total" FontSize="13" TextColor="#888" HorizontalOptions="Center" />
-                            <Label Text="23" FontSize="20" FontAttributes="Bold" TextColor="#200937" HorizontalOptions="Center" />
-                        </StackLayout>
-                    </Grid>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="6">
-                        <Image Source="fire.gif" HeightRequest="24" WidthRequest="24" />
-                        <Label Text="4" FontSize="16" FontAttributes="Bold" TextColor="#FF851B" VerticalOptions="Center" />
-                        <Label Text="semanas seguidas praticando!" FontSize="13" TextColor="#888" VerticalOptions="Center" />
-                    </StackLayout>
-                </StackLayout>
+            <Frame Grid.Column="1"
+                        HeightRequest="56" WidthRequest="56"
+                        Padding="0" CornerRadius="28"
+                        BorderColor="Transparent" BackgroundColor="Transparent" HasShadow="False">
+                <Image Source="{Binding ProfileImageUrl}" Aspect="AspectFill" HeightRequest="56" WidthRequest="56" />
             </Frame>
+        </Grid>
 
+        <!-- SEARCH BAR + BUTTON -->
+        <StackLayout Spacing="8" Grid.Row="1">
+            <Frame Padding="0" CornerRadius="8" BorderColor="#FF851B" HasShadow="False" BackgroundColor="White" HeightRequest="64">
+                <SearchBar Placeholder="Buscar locais..." BackgroundColor="Transparent" HeightRequest="44" />
+            </Frame>
+            <Button Text="Abrir Mapa"
+                         BackgroundColor="BlueViolet"
+                         TextColor="White"
+                         CornerRadius="8"
+                         FontAttributes="Bold"
+                         HeightRequest="44" />
         </StackLayout>
-    </ScrollView>
+
+        <!-- MAIN CONTENT -->
+        <ScrollView Grid.Row="2" VerticalOptions="Center">
+            <StackLayout Spacing="24">
+
+                <!-- CARD: Próximo jogo (menor) -->
+                <Frame BackgroundColor="White" CornerRadius="16" HasShadow="True" Padding="12" HeightRequest="90" BorderColor="Transparent">
+                    <StackLayout Spacing="2" VerticalOptions="Center">
+                        <Label Text="Próximo jogo" FontSize="15" FontAttributes="Bold" TextColor="#200937" />
+                        <Label Text="Arena Central - Quadra 3" FontSize="13" TextColor="#444" />
+                        <Label Text="Sábado, 01/06 às 10:00" FontSize="12" TextColor="#888" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- RESUMO DE AGENDAMENTOS -->
+                <Frame BackgroundColor="White" CornerRadius="16" HasShadow="True" Padding="16" Margin="0,8,0,0">
+                    <StackLayout Spacing="12">
+                        <Label Text="Resumo de agendamentos" FontSize="13" FontAttributes="Bold" TextColor="#888" HorizontalOptions="Center" />
+                        <Grid ColumnSpacing="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Grid.Column="0" HorizontalOptions="Center">
+                                <Label Text="Semana" FontSize="13" TextColor="#888" HorizontalOptions="Center" />
+                                <Label Text="2" FontSize="20" FontAttributes="Bold" TextColor="#200937" HorizontalOptions="Center" />
+                            </StackLayout>
+                            <StackLayout Grid.Column="1" HorizontalOptions="Center">
+                                <Label Text="Mês" FontSize="13" TextColor="#888" HorizontalOptions="Center" />
+                                <Label Text="4" FontSize="20" FontAttributes="Bold" TextColor="#200937" HorizontalOptions="Center" />
+                            </StackLayout>
+                            <StackLayout Grid.Column="2" HorizontalOptions="Center">
+                                <Label Text="Total" FontSize="13" TextColor="#888" HorizontalOptions="Center" />
+                                <Label Text="23" FontSize="20" FontAttributes="Bold" TextColor="#200937" HorizontalOptions="Center" />
+                            </StackLayout>
+                        </Grid>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="6">
+                            <Image Source="fire.gif" HeightRequest="24" WidthRequest="24" />
+                            <Label Text="4" FontSize="16" FontAttributes="Bold" TextColor="#FF851B" VerticalOptions="Center" />
+                            <Label Text="semanas seguidas praticando!" FontSize="13" TextColor="#888" VerticalOptions="Center" />
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+
+            </StackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

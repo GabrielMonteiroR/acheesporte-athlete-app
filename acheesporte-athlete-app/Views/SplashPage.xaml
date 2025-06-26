@@ -10,7 +10,7 @@
         <BoxView BackgroundColor="#FFFFFF"
                  HorizontalOptions="Center"
                  VerticalOptions="Fill"
-                 WidthRequest="320" />
+                 WidthRequest="300" />
 
         <WebView x:Name="GifWebView"
                  HeightRequest="300"

@@ -1,5 +1,4 @@
-﻿
-using acheesporte_athlete_app.Views;
+﻿using acheesporte_athlete_app.Views;
 
 namespace acheesporte_athlete_app;
 
@@ -16,7 +15,7 @@ public partial class AppShell : Shell
         // Routing.RegisterRoute("loading", typeof(LoadingPage));
         Routing.RegisterRoute("HomePage", typeof(HomePage));
         // Routing.RegisterRoute("HistoryPage", typeof(Views.History.HistoryPage));
-        // Routing.RegisterRoute("ReservationPage", typeof(ReservationPage));
+        Routing.RegisterRoute("ReservationPage", typeof(ReservationPage));
 
     }
 }

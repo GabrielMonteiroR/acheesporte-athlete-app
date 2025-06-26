@@ -1,7 +1,7 @@
 ﻿using acheesporte_athlete_app.Dtos.User;
 using acheesporte_athlete_app.Interfaces;
 using acheesporte_athlete_app.Views;
-using AcheesporteAppAthlete.Helpers;
+using acheesporte_athlete_app.Helpers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using static Microsoft.Maui.ApplicationModel.Permissions;
