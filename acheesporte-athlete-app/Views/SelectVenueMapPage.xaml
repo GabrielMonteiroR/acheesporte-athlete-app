@@ -125,14 +125,12 @@
                                 TextColor="Black"/>
 
                         <!-- ESPORTES -->
-                        <!-- ▸ Esporte -->
                         <Label Text="Esporte" FontSize="14" TextColor="Black"/>
                         <Picker ItemsSource="{Binding AvailableSports}"
-        ItemDisplayBinding="{Binding Name}"
-        SelectedItem="{Binding SelectedSport}"
-        Title="Selecione um esporte"
-        TextColor="Black"/>
-
+                                ItemDisplayBinding="{Binding Name}"
+                                SelectedItem="{Binding SelectedSport}"
+                                Title="Selecione um esporte"
+                                TextColor="Black"/>
 
                         <!-- DATA -->
                         <Label Text="Data" FontSize="14" TextColor="Black"/>
@@ -155,11 +153,10 @@
                                 CornerRadius="12"/>
 
                         <Button Text="Limpar Filtros"
-        Command="{Binding ClearFiltersCommand}"
-        BackgroundColor="#e0e0e0"
-        TextColor="Black"
-        CornerRadius="12"/>
-
+                                Command="{Binding ClearFiltersCommand}"
+                                BackgroundColor="#e0e0e0"
+                                TextColor="Black"
+                                CornerRadius="12"/>
 
                         <Button Text="Cancelar"
                                 Command="{Binding CloseFilterModalCommand}"
@@ -170,6 +167,106 @@
                 </ScrollView>
             </Frame>
         </Grid>
+
+        <!-- MODAL DETALHES LOCAL -->
+        <!-- MODAL DE DETALHES DO LOCAL -->
+        <Grid x:Name="VenueDetailModal"
+      Grid.RowSpan="2"
+      BackgroundColor="#80000000"
+      IsVisible="{Binding IsModalVisible}"
+      InputTransparent="{Binding IsModalVisible, Converter={StaticResource InverseBoolConverter}}">
+
+            <Frame Padding="0"
+           CornerRadius="24"
+           BackgroundColor="White"
+           Margin="20"
+           HasShadow="True"
+           HorizontalOptions="Center"
+           VerticalOptions="Center"
+           WidthRequest="340">
+
+                <StackLayout Spacing="0">
+
+                    <!-- Imagem principal -->
+                    <Grid>
+                        <Image Source="{Binding CurrentImageUrl}"
+                       Aspect="AspectFill"
+                       HeightRequest="180"
+                       WidthRequest="340"
+                       />
+                        <Grid BackgroundColor="#40000000" Padding="8"
+                      HorizontalOptions="End" VerticalOptions="Start">
+                            <Label Text="{Binding SelectedImageIndex, StringFormat='Imagem {0:+1}'}"
+                           FontSize="12" TextColor="White"/>
+                        </Grid>
+                    </Grid>
+
+                    <!-- Carrossel de Imagens -->
+                    <Grid Padding="8" HorizontalOptions="Center">
+                        <StackLayout Orientation="Horizontal" Spacing="8">
+                            <Button Text="◀" Command="{Binding PreviousImageCommand}" WidthRequest="40"/>
+                            <Button Text="▶" Command="{Binding NextImageCommand}" WidthRequest="40"/>
+                        </StackLayout>
+                    </Grid>
+
+                    <!-- Conteúdo -->
+                    <StackLayout Padding="16" Spacing="12">
+
+                        <!-- Nome e tipo -->
+                        <Label Text="{Binding SelectedVenue.Name}" FontSize="18" FontAttributes="Bold" TextColor="#200937"/>
+                        <Label Text="{Binding SelectedVenue.VenueTypeName}" FontSize="14" TextColor="Gray"/>
+
+                        <!-- Proprietário -->
+                        <Label Text="{Binding SelectedVenue.OwnerName, StringFormat='Proprietário: {0}'}"
+                       FontSize="13" TextColor="Black"/>
+
+                        <!-- Capacidade -->
+                        <Label Text="{Binding SelectedVenue.Capacity, StringFormat='Capacidade: até {0} pessoas'}"
+                       FontSize="13" TextColor="Black"/>
+
+                        <!-- Esportes -->
+                        <Label Text="{Binding SportsString, StringFormat='Esportes: {0}'}"
+                       FontSize="13" TextColor="Black"/>
+
+                        <!-- Regras -->
+                        <Label Text="{Binding SelectedVenue.Rules, StringFormat='Regras: {0}'}"
+                       FontSize="13" TextColor="Black" />
+
+                        <!-- Endereço -->
+                        <Label Text="{Binding Address, StringFormat='Endereço: {0}'}"
+       FontSize="13" TextColor="Black"/>
+
+
+                        <!-- Descrição -->
+                        <Label Text="{Binding SelectedVenue.Description}" FontSize="13" TextColor="Black"/>
+
+                        <!-- Botões -->
+                        <Grid ColumnSpacing="10" Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0"
+                            Text="Fechar"
+                            Command="{Binding CloseModalCommand}"
+                            BackgroundColor="LightGray"
+                            TextColor="Black"
+                            CornerRadius="12"/>
+
+                            <Button Grid.Column="1"
+                            Text="Selecionar"
+                            Command="{Binding ConfirmVenueCommand}"
+                            BackgroundColor="#200937"
+                            TextColor="White"
+                            CornerRadius="12"/>
+                        </Grid>
+
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </Grid>
+
 
     </Grid>
 </ContentPage>

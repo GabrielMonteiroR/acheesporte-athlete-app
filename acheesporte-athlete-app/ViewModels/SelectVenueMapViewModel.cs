@@ -13,18 +13,15 @@ namespace acheesporte_athlete_app.ViewModels;
 
 public partial class SelectVenueMapViewModel : ObservableObject
 {
-    // ────────────── Serviços
     private readonly IVenueService _venueService;
     private readonly IGooglePlacesService _googlePlacesService;
     private readonly VenueTypeService _venueTypeService;
 
-    // ────────────── Coleções bindadas
     public ObservableCollection<Pin> VenuePins { get; } = new();
     public ObservableCollection<Prediction> Suggestions { get; } = new();
     public ObservableCollection<VenueTypeDto> VenueTypes { get; } = new();
     public ObservableCollection<SportDto> AvailableSports { get; } = new();
 
-    // ────────────── Propriedades para UI
     [ObservableProperty] private bool isLoading;
     [ObservableProperty] private bool isModalVisible;
     [ObservableProperty] private VenueDto? selectedVenue;
@@ -33,7 +30,6 @@ public partial class SelectVenueMapViewModel : ObservableObject
     [ObservableProperty] private VenueTypeDto? selectedVenueType;
     [ObservableProperty] private bool isFilterModalVisible;
 
-    // Filtros escolhidos
     [ObservableProperty] private SportDto? selectedSport;
     [ObservableProperty] private DateTime? selectedDate;
     [ObservableProperty] private TimeSpan? fromTime;
@@ -43,6 +39,10 @@ public partial class SelectVenueMapViewModel : ObservableObject
         SelectedVenue?.Sports is { Count: > 0 }
             ? string.Join(", ", SelectedVenue.Sports!)
             : null;
+
+    public string? Address =>
+    SelectedVenue is null ? null :
+    $"{SelectedVenue.Street}, {SelectedVenue.Number} - {SelectedVenue.City} / {SelectedVenue.State}";
 
     public SelectVenueMapViewModel(
         IVenueService venueService,
@@ -54,12 +54,12 @@ public partial class SelectVenueMapViewModel : ObservableObject
         _venueTypeService = venueTypeService;
     }
 
-    // ────────────── Reacções automáticas
     partial void OnSelectedVenueChanged(VenueDto? value)
     {
         SelectedImageIndex = 0;
         CurrentImageUrl = value?.ImageUrls?.FirstOrDefault();
         OnPropertyChanged(nameof(SportsString));
+        OnPropertyChanged(nameof(Address));
     }
 
     partial void OnSelectedImageIndexChanged(int value)
@@ -68,7 +68,6 @@ public partial class SelectVenueMapViewModel : ObservableObject
             CurrentImageUrl = SelectedVenue.ImageUrls[value];
     }
 
-    // ────────────── Navegação de imagens
     [RelayCommand] private void NextImage() => JumpImage(+1);
     [RelayCommand] private void PreviousImage() => JumpImage(-1);
 
@@ -80,7 +79,6 @@ public partial class SelectVenueMapViewModel : ObservableObject
                 % SelectedVenue.ImageUrls.Count;
     }
 
-    // ────────────── Tipos de local
     [RelayCommand]
     public async Task LoadVenueTypesAsync()
     {
@@ -97,10 +95,8 @@ public partial class SelectVenueMapViewModel : ObservableObject
         }
     }
 
-    // ────────────── Locais (sem filtro)
     [RelayCommand] public Task LoadVenuesAsync() => FetchAndPlotVenuesAsync();
 
-    // ────────────── Aplicar Filtro
     [RelayCommand]
     public async Task ApplyFilterAsync()
     {
@@ -117,7 +113,6 @@ public partial class SelectVenueMapViewModel : ObservableObject
         IsFilterModalVisible = false;
     }
 
-    // ────────────── Busca por texto (Google Places)
     [RelayCommand]
     public async Task SearchPlacesAsync(string text)
     {
@@ -147,13 +142,11 @@ public partial class SelectVenueMapViewModel : ObservableObject
         }
     }
 
-    // ────────────── Abertura/fecho de modais
     [RelayCommand] public void OpenFilterModal() => IsFilterModalVisible = true;
     [RelayCommand] public void CloseFilterModal() => IsFilterModalVisible = false;
     [RelayCommand] public void CloseModal() => (IsModalVisible, SelectedVenue) = (false, null);
     [RelayCommand] public void ConfirmVenue() => CloseModal();
 
-    // ────────────── Core: busca & criação de pins
     private async Task FetchAndPlotVenuesAsync(
         int? venueTypeId = null,
         List<int>? sportIds = null,
@@ -171,7 +164,6 @@ public partial class SelectVenueMapViewModel : ObservableObject
                 to: to,
                 isReserved: false);
 
-            // Pins ----------------------------------------------------------------
             VenuePins.Clear();
             foreach (var v in venues)
             {
@@ -191,7 +183,6 @@ public partial class SelectVenueMapViewModel : ObservableObject
             }
             MessagingCenter.Send(this, "UpdatePins", VenuePins.ToList());
 
-            // Esportes (só os usados) ---------------------------------------------
             var inUse = venues
                 .SelectMany(v => v.SportsObj ?? new List<SportDto>())
                 .GroupBy(s => s.Id)
@@ -229,8 +220,7 @@ public partial class SelectVenueMapViewModel : ObservableObject
         FromTime = null;
         ToTime = null;
 
-        await FetchAndPlotVenuesAsync(); // recarrega tudo sem filtros
+        await FetchAndPlotVenuesAsync();
         IsFilterModalVisible = false;
     }
-
 }
