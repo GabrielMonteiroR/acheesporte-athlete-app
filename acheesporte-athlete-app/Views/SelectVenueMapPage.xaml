@@ -1,53 +1,62 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage  
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
-    xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"  
-    x:Class="acheesporte_athlete_app.Views.SelectVenueMapPage"  
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+    xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"
+    x:Class="acheesporte_athlete_app.Views.SelectVenueMapPage"
+    x:DataType="viewmodels:SelectVenueMapViewModel"
     BackgroundColor="White">
 
     <Grid>
+
+        <!-- ROWS -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Search bar and filter -->
+        <!-- BARRA DE BUSCA -->
         <Grid Grid.Row="0" Margin="16,12,16,8">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="48" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="48"/>
             </Grid.ColumnDefinitions>
 
-            <SearchBar x:Name="VenueSearchBar"  
-                       Placeholder="Buscar locais..."  
+            <SearchBar x:Name="VenueSearchBar"
+                       Placeholder="Buscar locais..."
                        BackgroundColor="White"
-                       CancelButtonColor="Gray"  
-                       FontSize="14"  
-                       Grid.Column="0"  
-                       TextColor="Black"  
-                       TextChanged="OnSearchBarTextChanged" />
+                       CancelButtonColor="Gray"
+                       FontSize="14"
+                       TextColor="Black"
+                       Grid.Column="0"
+                       TextChanged="OnSearchBarTextChanged"/>
 
-            <Frame Grid.Column="1" BackgroundColor="White" BorderColor="Transparent" 
-                   Padding="10" CornerRadius="24"  
-                   HasShadow="False" HeightRequest="48" WidthRequest="48">
-                <Image Source="search.png" HeightRequest="24" WidthRequest="24" />
+            <Frame Grid.Column="1"
+                   Padding="10"
+                   CornerRadius="24"
+                   BackgroundColor="White"
+                   BorderColor="Transparent"
+                   HasShadow="False"
+                   HeightRequest="48" WidthRequest="48">
+                <Image Source="search.png" HeightRequest="24" WidthRequest="24"/>
             </Frame>
         </Grid>
 
-        <!-- Mapa -->
-        <maps:Map x:Name="VenueMap"  
-                  Grid.Row="1"  
-                  IsShowingUser="True"  
+        <!-- MAPA -->
+        <maps:Map x:Name="VenueMap"
+                  Grid.Row="1"
+                  IsShowingUser="True"
                   MapType="Street" />
 
-        <!-- Sugestões do Google -->
-        <CollectionView Grid.Row="0"  
-                        Margin="16,64,16,0"  
-                        ItemsSource="{Binding Suggestions}"  
-                        SelectionMode="Single"  
-                        SelectionChanged="OnSuggestionSelected"  
-                        BackgroundColor="White"  
+        <!-- AUTOCOMPLETE -->
+        <CollectionView Grid.Row="0"
+                        ItemsSource="{Binding Suggestions}"
+                        SelectionMode="Single"
+                        SelectionChanged="OnSuggestionSelected"
+                        Margin="16,64,16,0"
+                        BackgroundColor="White"
                         IsVisible="{Binding Suggestions.Count, Converter={StaticResource ZeroToFalseConverter}}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -58,176 +67,107 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <!-- Filtro -->
-        <Frame Grid.Row="1" BackgroundColor="White"  
-               Padding="12" CornerRadius="24"  
+        <!-- BOTÃO FILTRO -->
+        <Frame Grid.Row="1"
+               Padding="12"
+               CornerRadius="24"
+               BackgroundColor="White"
                BorderColor="Transparent"
-               HasShadow="False"  
-               HeightRequest="58" WidthRequest="58"  
-               VerticalOptions="Start"  
-               HorizontalOptions="Start"  
+               HasShadow="False"
+               HeightRequest="58" WidthRequest="58"
+               HorizontalOptions="Start"
+               VerticalOptions="Start"
                Margin="16">
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnFilterClicked"/>
             </Frame.GestureRecognizers>
             <Image Source="filter.png" HeightRequest="24" WidthRequest="24"/>
         </Frame>
-        <ActivityIndicator
-    IsRunning="{Binding IsLoading}"
-    IsVisible="{Binding IsLoading}"
-    Color="Black"
-    HorizontalOptions="Center"
-    VerticalOptions="Center"
-    Grid.RowSpan="2"/>
-        <!-- Modal de detalhes do local -->
-        <Grid x:Name="VenueDetailsModal"
-      Grid.RowSpan="2"
-      BackgroundColor="#80000000"
-      IsVisible="{Binding IsModalVisible}"
-      Padding="0"
-      InputTransparent="{Binding IsModalVisible, Converter={StaticResource InverseBoolConverter}}">
 
-            <Frame BackgroundColor="White"
-           CornerRadius="24"
-           Padding="0"
-           Margin="24"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"
-           HasShadow="True">
+        <!-- LOADER -->
+        <ActivityIndicator IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"
+                           Color="Black"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Grid.RowSpan="2"/>
 
-                <Grid RowSpacing="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="200"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <!-- Imagem principal com setas -->
-                    <Grid Grid.Row="0">
-                        <Image Source="{Binding CurrentImageUrl}" Aspect="AspectFill" />
-
-                        <!-- Fechar -->
-                        <Grid Margin="12" VerticalOptions="Start" HorizontalOptions="End">
-                            <Image Source="close.png" HeightRequest="24" WidthRequest="24">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding CloseModalCommand}" />
-                                </Image.GestureRecognizers>
-                            </Image>
-                        </Grid>
-
-                        <!-- Navegação -->
-                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Image Source="next.png" HeightRequest="32" WidthRequest="32" Margin="12"
-                           VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="0">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding PreviousImageCommand}" />
-                                </Image.GestureRecognizers>
-                            </Image>
-
-                            <BoxView Grid.Column="1" BackgroundColor="Transparent" HeightRequest="0" WidthRequest="0" />
-
-
-                            <Image Source="prev.png" HeightRequest="32" WidthRequest="32" Margin="12"
-                           VerticalOptions="Center" HorizontalOptions="End" Grid.Column="2">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding NextImageCommand}" />
-                                </Image.GestureRecognizers>
-                            </Image>
-                        </Grid>
-                    </Grid>
-
-                    <!-- Nome e endereço -->
-                    <StackLayout Grid.Row="1" Padding="16,8">
-                        <Label Text="{Binding SelectedVenue.Name}" FontAttributes="Bold" FontSize="18" TextColor="Black"/>
-                        <Label Text="{Binding SelectedVenue.Address}" FontSize="14" TextColor="#555"/>
-                    </StackLayout>
-
-                    <!-- Conteúdo -->
-                    <StackLayout Grid.Row="2" Padding="16,0" Spacing="4">
-                        <Label Text="{Binding SelectedVenue.Description}" FontSize="14" TextColor="#333"/>
-
-                        <Label Text="Capacidade:" FontSize="14" FontAttributes="Bold" TextColor="Black"/>
-                        <Label Text="{Binding SelectedVenue.Capacity}" FontSize="14" TextColor="#333"/>
-
-                        <Label Text="Tipo de local:" FontSize="14" FontAttributes="Bold" TextColor="Black" Margin="0,8,0,0"/>
-                        <Label Text="{Binding SelectedVenue.VenueTypeName}" FontSize="14" TextColor="#333"/>
-
-                        <Label Text="Esportes:" FontSize="14" FontAttributes="Bold" TextColor="Black" Margin="0,8,0,0"/>
-                        <Label Text="{Binding SportsString}" FontSize="14" TextColor="#333"/>
-
-                        <Label Text="Regras:" FontSize="14" FontAttributes="Bold" TextColor="Black" Margin="0,8,0,0"/>
-                        <Label Text="{Binding SelectedVenue.Rules}" FontSize="14" TextColor="#333"/>
-
-                        <Label Text="Locador:" FontSize="14" FontAttributes="Bold" TextColor="Black" Margin="0,8,0,0"/>
-                        <Label Text="{Binding SelectedVenue.OwnerName}" FontSize="14" TextColor="#333"/>
-                    </StackLayout>
-
-
-
-                    <!-- Botão prosseguir -->
-                    <Button Grid.Row="3"
-                    Text="Prosseguir"
-                    Command="{Binding ConfirmVenueCommand}"
-                    BackgroundColor="#200937"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    Margin="16"
-                    CornerRadius="12"/>
-                </Grid>
-            </Frame>
-        </Grid>
-        <!-- Modal de Filtro de Locais -->
+        <!-- MODAL DE FILTRO -->
         <Grid x:Name="FilterModal"
-      Grid.RowSpan="2"
-      BackgroundColor="#80000000"
-      IsVisible="{Binding IsFilterModalVisible}"
-      Padding="0"
-      InputTransparent="{Binding IsFilterModalVisible, Converter={StaticResource InverseBoolConverter}}">
+              Grid.RowSpan="2"
+              BackgroundColor="#80000000"
+              IsVisible="{Binding IsFilterModalVisible}"
+              InputTransparent="{Binding IsFilterModalVisible, Converter={StaticResource InverseBoolConverter}}">
 
             <Frame BackgroundColor="White"
-           CornerRadius="24"
-           Padding="16"
-           Margin="24"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"
-           HasShadow="True"
-           WidthRequest="300">
+                   CornerRadius="24"
+                   Padding="16"
+                   Margin="24"
+                   WidthRequest="300"
+                   HasShadow="True"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center">
 
-                <StackLayout Spacing="16">
-                    <Label Text="Filtrar por tipo de local" FontSize="18" FontAttributes="Bold" TextColor="Black" />
+                <ScrollView>
+                    <StackLayout Spacing="16">
 
-                    <Picker
-    Title="Selecione um tipo"
-    ItemsSource="{Binding VenueTypes}"
-    ItemDisplayBinding="{Binding Name}"
-    SelectedItem="{Binding SelectedVenueType, Mode=TwoWay}"
-    x:Name="VenueTypePicker"
-    TextColor="Black"
-    TitleColor="Gray" />
+                        <Label Text="Filtrar Locais"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="Black"/>
+
+                        <!-- TIPO DE LOCAL -->
+                        <Label Text="Tipo de Local" FontSize="14" TextColor="Black"/>
+                        <Picker ItemsSource="{Binding VenueTypes}"
+                                ItemDisplayBinding="{Binding Name}"
+                                SelectedItem="{Binding SelectedVenueType}"
+                                Title="Selecione um tipo"
+                                TextColor="Black"/>
+
+                        <!-- ESPORTES -->
+                        <!-- ▸ Esporte -->
+                        <Label Text="Esporte" FontSize="14" TextColor="Black"/>
+                        <Picker ItemsSource="{Binding AvailableSports}"
+        ItemDisplayBinding="{Binding Name}"
+        SelectedItem="{Binding SelectedSport}"
+        Title="Selecione um esporte"
+        TextColor="Black"/>
 
 
+                        <!-- DATA -->
+                        <Label Text="Data" FontSize="14" TextColor="Black"/>
+                        <DatePicker Date="{Binding SelectedDate}"
+                                    MinimumDate="{x:Static sys:DateTime.Today}"
+                                    TextColor="Black"/>
 
-                    <Button Text="Aplicar Filtro"
-                    Command="{Binding ApplyFilterCommand}"
-                    BackgroundColor="#200937"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="12" />
+                        <!-- HORÁRIOS -->
+                        <Label Text="Hora de Início" FontSize="14" TextColor="Black"/>
+                        <TimePicker Time="{Binding FromTime}" TextColor="Black"/>
 
-                    <Button Text="Cancelar"
-                    Command="{Binding CloseFilterModalCommand}"
-                    BackgroundColor="LightGray"
-                    TextColor="Black"
-                    FontAttributes="None"
-                    CornerRadius="12" />
-                </StackLayout>
+                        <Label Text="Hora de Fim" FontSize="14" TextColor="Black"/>
+                        <TimePicker Time="{Binding ToTime}" TextColor="Black"/>
+
+                        <!-- BOTÕES -->
+                        <Button Text="Aplicar Filtro"
+                                Command="{Binding ApplyFilterCommand}"
+                                BackgroundColor="#200937"
+                                TextColor="White"
+                                CornerRadius="12"/>
+
+                        <Button Text="Limpar Filtros"
+        Command="{Binding ClearFiltersCommand}"
+        BackgroundColor="#e0e0e0"
+        TextColor="Black"
+        CornerRadius="12"/>
+
+
+                        <Button Text="Cancelar"
+                                Command="{Binding CloseFilterModalCommand}"
+                                BackgroundColor="LightGray"
+                                TextColor="Black"
+                                CornerRadius="12"/>
+                    </StackLayout>
+                </ScrollView>
             </Frame>
         </Grid>
 

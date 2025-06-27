@@ -66,7 +66,7 @@ namespace acheesporte_athlete_app.Views
             _viewModel.SearchPlacesCommand.Execute(e.NewTextValue);
         }
 
-        private void OnFilterClicked(object sender, EventArgs e)
+        private async void OnFilterClicked(object sender, EventArgs e)
         {
             _viewModel.OpenFilterModalCommand.Execute(null);
 

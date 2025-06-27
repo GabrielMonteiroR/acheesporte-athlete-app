@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using acheesporte_athlete_app.Dtos.Sports;
+using System.Text.Json.Serialization;
 
 namespace acheesporte_athlete_app.Dtos.Venues;
 
@@ -42,6 +43,9 @@ public class VenueDto
 
     [JsonPropertyName("sports")]
     public List<string> Sports { get; set; } = new();
+
+    [JsonPropertyName("sports_obj")]
+    public List<SportDto>? SportsObj { get; set; }
 
     [JsonPropertyName("image_urls")]
     public List<string>? ImageUrls { get; set; } = new();
