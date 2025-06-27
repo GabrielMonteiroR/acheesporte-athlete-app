@@ -57,4 +57,6 @@ public class ApiSettings
     public string GetReservationsByUserIdEndpoint { get; set; }
 
     public string GetSportsEndpoint { get; set; }
+
+    public string ReservationsEndpoint { get; set; }
 }
