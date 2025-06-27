@@ -26,7 +26,7 @@ public class ApiSettings
 
     public string UploadVenueImagesEndpoint { get; set; }
 
-    public string VenueTypeEndpoint { get; set; }
+    public string GetVenueTypesEndpoint { get; set; }
 
     public string CreateVenuesEndpoint { get; set; }
 
@@ -55,4 +55,6 @@ public class ApiSettings
     public string GetReservationsByVenueIdEndpoint { get; set; }
 
     public string GetReservationsByUserIdEndpoint { get; set; }
+
+    public string GetSportsEndpoint { get; set; }
 }

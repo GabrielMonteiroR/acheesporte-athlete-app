@@ -43,9 +43,9 @@ public class VenueService : IVenueService
             if (isReserved.HasValue)
                 queryParams.Add($"isReserved={isReserved.Value.ToString().ToLower()}");
 
-            //TDDO: var fullUrl = _apiSettings.BaseUrl + _apiSettings.VenueEndpoint + queryString;
+
             var queryString = queryParams.Count > 0 ? "?" + string.Join("&", queryParams) : string.Empty;
-            var fullUrl = _apiSettings.BaseUrl + queryString;
+            var fullUrl = _apiSettings.BaseUrl + _apiSettings.VenuesEndpoint + queryString;
 
             var token = await SecureStorage.GetAsync("auth_token");
 

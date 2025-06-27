@@ -22,7 +22,7 @@ namespace acheesporte_athlete_app.Services
             {
                 var token = await SecureStorage.GetAsync("auth_token");
 
-                var request = new HttpRequestMessage(HttpMethod.Get, _apiSettings.BaseUrl + _apiSettings.VenueTypeEndpoint);
+                var request = new HttpRequestMessage(HttpMethod.Get, _apiSettings.BaseUrl + _apiSettings.GetVenueTypesEndpoint);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = await _httpClient.SendAsync(request);

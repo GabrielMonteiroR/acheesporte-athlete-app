@@ -3,7 +3,11 @@
              x:Class="acheesporte_athlete_app.Views.HomePage"
              Shell.NavBarIsVisible="False"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#F5F5F5">
+             BackgroundColor="AliceBlue"
+             Shell.BackgroundColor="AliceBlue"
+             Shell.TabBarBackgroundColor="AliceBlue"
+             Shell.TabBarForegroundColor="DeepPink"
+             Shell.TabBarTitleColor="DeepPink">
 
     <Grid RowDefinitions="Auto,*" Padding="24">
 
@@ -39,11 +43,13 @@
 
                 <!-- BOTÃO MAPA -->
                 <Button Text="Buscar Locais"
-                        BackgroundColor="#E94560"
-                        TextColor="White"
-                        CornerRadius="8"
-                        FontAttributes="Bold"
-                        HeightRequest="44" />
+        BackgroundColor="#E94560"
+        TextColor="White"
+        CornerRadius="8"
+        FontAttributes="Bold"
+        HeightRequest="44"
+        Command="{Binding NavigateToMapCommand}" />
+
 
                 <!-- CARTÃO: PRÓXIMO JOGO -->
                 <Frame CornerRadius="16" Padding="16" HasShadow="True" BackgroundColor="White">

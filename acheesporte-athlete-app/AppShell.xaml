@@ -4,12 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"    
     xmlns:view="clr-namespace:acheesporte_athlete_app.Views"
 
-    Shell.TabBarBackgroundColor="#200937"  
+    Shell.TabBarBackgroundColor="AliceBlue"  
     Shell.TabBarForegroundColor="DeepPink"  
-    Shell.TabBarTitleColor="Purple"  
-    Shell.TabBarUnselectedColor="#CCCCCC"  
-    Shell.TabBarDisabledColor="#888888"  
-    Shell.BackgroundColor="#F5F5F5"  
+    Shell.TabBarTitleColor="DeepPink"  
+    Shell.TabBarUnselectedColor="DarkGrey"  
+    Shell.TabBarDisabledColor="DarkGrey"  
     Shell.NavBarIsVisible="False">
 
     <!-- <ShellContent Route="SplashPage" ContentTemplate="{DataTemplate auth:SplashPage}" /> -->

@@ -9,6 +9,9 @@
             <converters:ZeroToFalseConverter x:Key="ZeroToFalseConverter"/>
             <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
             <converters:BoolToSimNaoConverter x:Key="BoolToSimNaoConverter" />
+            <converters:IsEmptyConverter x:Key="IsEmptyConverter"/>
+            <converters:BoolToPaidConverter x:Key="BoolToPaidConverter" />
+            <converters:PaidColorConverter x:Key="PaidColorConverter" />
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="#200937" />
                 <Setter Property="BarTextColor" Value="DeepPink" />

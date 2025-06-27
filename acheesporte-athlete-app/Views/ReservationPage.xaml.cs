@@ -4,7 +4,7 @@ namespace acheesporte_athlete_app.Views;
 
 public partial class ReservationPage : ContentPage
 {
-    public ReservationPage(ReservationViewModel vm)
+    public ReservationPage(MyReservationsViewModel vm)
     {
         InitializeComponent();
         BindingContext = vm;
@@ -14,9 +14,8 @@ public partial class ReservationPage : ContentPage
     {
         base.OnAppearing();
 
-        if (BindingContext is ReservationViewModel vm && vm.Reservations.Count == 0)
-        {
-            await vm.LoadReservationsCommand.ExecuteAsync(null);
-        }
+        var vm = (MyReservationsViewModel)BindingContext;
+        if (!vm.Reservations.Any())
+            await vm.LoadCommand.ExecuteAsync(null);
     }
 }
