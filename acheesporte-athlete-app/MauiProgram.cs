@@ -50,6 +50,12 @@ namespace acheesporte_athlete_app
                 client.BaseAddress = new Uri(apiSettings.BaseUrl);
             });
 
+            builder.Services.AddHttpClient<ISportService, SportService>(client =>
+            {
+                var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
+                client.BaseAddress = new Uri(apiSettings.BaseUrl);
+            });
+
             builder.Services.AddHttpClient<IVenueService, VenueService>(client =>
             {
                 var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
