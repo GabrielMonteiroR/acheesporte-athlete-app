@@ -5,11 +5,11 @@
     xmlns:view="clr-namespace:acheesporte_athlete_app.Views"
 
     Shell.TabBarBackgroundColor="#200937"  
-    Shell.TabBarForegroundColor="Purple"  
+    Shell.TabBarForegroundColor="DeepPink"  
     Shell.TabBarTitleColor="Purple"  
     Shell.TabBarUnselectedColor="#CCCCCC"  
     Shell.TabBarDisabledColor="#888888"  
-    Shell.BackgroundColor="#200937"  
+    Shell.BackgroundColor="#F5F5F5"  
     Shell.NavBarIsVisible="False">
 
     <!-- <ShellContent Route="SplashPage" ContentTemplate="{DataTemplate auth:SplashPage}" /> -->
