@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"
+    x:Class="acheesporte_athlete_app.Views.ReservationCreatePage"
+    x:DataType="viewmodels:ReservationCreateViewModel"
+    BackgroundColor="White"
+    Title="Nova Reserva">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20">
+
+            <Label Text="Confirmar Reserva" FontSize="22" FontAttributes="Bold" TextColor="#200937" />
+
+            <Frame BackgroundColor="#f9f9f9" CornerRadius="16" Padding="16" HasShadow="False">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding Venue.Name}" FontSize="18" FontAttributes="Bold" TextColor="Black" />
+                    <Label Text="{Binding Venue.Address}" FontSize="14" TextColor="Gray" />
+                    <Label Text="{Binding Availability.StartDate, StringFormat='Início: {0:dd/MM/yyyy HH:mm}'}"
+       FontSize="14" TextColor="Black" />
+                    <Label Text="{Binding Availability.EndDate, StringFormat='Término: {0:dd/MM/yyyy HH:mm}'}"
+       FontSize="14" TextColor="Black" />
+                    <Label Text="{Binding Availability.Price, StringFormat='Preço: R$ {0:F2}'}"
+                           FontSize="14" TextColor="Black" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Forma de pagamento: (fixo por enquanto)" FontSize="14" TextColor="Black" />
+            <Label Text="Cartão de crédito" FontSize="14" FontAttributes="Bold" TextColor="#200937" />
+
+            <Button Text="Confirmar Reserva"
+                    Command="{Binding SubmitCommand}"
+                    BackgroundColor="#200937"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="48"
+                    FontAttributes="Bold" />
+
+            <ActivityIndicator IsRunning="{Binding IsSubmitting}"
+                               IsVisible="{Binding IsSubmitting}"
+                               Color="#200937"
+                               HeightRequest="32" />
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red"
+                   FontSize="13"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource NullToFalseConverter}}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

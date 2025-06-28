@@ -3,6 +3,7 @@ using acheesporte_athlete_app.Dtos.Sports;
 using acheesporte_athlete_app.Dtos.Venues;
 using acheesporte_athlete_app.Interfaces;
 using acheesporte_athlete_app.Services;
+using acheesporte_athlete_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls.Maps;
@@ -145,7 +146,30 @@ public partial class SelectVenueMapViewModel : ObservableObject
     [RelayCommand] public void OpenFilterModal() => IsFilterModalVisible = true;
     [RelayCommand] public void CloseFilterModal() => IsFilterModalVisible = false;
     [RelayCommand] public void CloseModal() => (IsModalVisible, SelectedVenue) = (false, null);
-    [RelayCommand] public void ConfirmVenue() => CloseModal();
+
+    [RelayCommand]
+    public async Task ConfirmVenueAsync()
+    {
+        if (SelectedVenue is null)
+            return;
+
+        var selectedAvailability = SelectedVenue.VenueAvailabilityTimes
+            .FirstOrDefault(); 
+
+        if (selectedAvailability is null)
+        {
+            await Shell.Current.DisplayAlert("Indisponível", "Este local não possui horários disponíveis no momento.", "OK");
+            return;
+        }
+
+        IsModalVisible = false;
+
+        await Shell.Current.GoToAsync(nameof(ReservationCreatePage), new Dictionary<string, object>
+    {
+        { "Venue", SelectedVenue },
+        { "Availability", selectedAvailability }
+    });
+    }
 
     private async Task FetchAndPlotVenuesAsync(
         int? venueTypeId = null,
