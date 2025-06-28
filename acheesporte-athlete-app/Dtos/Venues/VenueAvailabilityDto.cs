@@ -25,4 +25,8 @@ public class VenueAvailabilityDto
 
     [JsonPropertyName("user_id")]
     public int? UserId { get; set; }
+
+    [JsonIgnore]
+    public string DisplayText => $"{StartDate:dd/MM HH:mm} - R$ {Price:F2}";
+
 }

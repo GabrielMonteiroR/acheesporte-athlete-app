@@ -3,31 +3,49 @@ using acheesporte_athlete_app.Dtos.Venues;
 using acheesporte_athlete_app.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 using VenueDto = acheesporte_athlete_app.Dtos.Venues.VenueDto;
 
 namespace acheesporte_athlete_app.ViewModels;
 
 [QueryProperty(nameof(Venue), "Venue")]
-[QueryProperty(nameof(Availability), "Availability")]
 public partial class ReservationCreateViewModel : ObservableObject
 {
     private readonly IReservationService _reservationService;
+    private readonly IVenueService _venueService;      // ← novo
 
-    public ReservationCreateViewModel(IReservationService reservationService)
+    public ReservationCreateViewModel(
+        IReservationService reservationService,
+        IVenueService venueService)                    // ← injeta
     {
         _reservationService = reservationService;
+        _venueService = venueService;
     }
 
+    // ────────────── propriedades bindadas ──────────────
     [ObservableProperty] private VenueDto venue;
-    [ObservableProperty] private VenueAvailabilityDto availability;
-
+    [ObservableProperty] private VenueAvailabilityDto? selectedAvailability;
     [ObservableProperty] private bool isSubmitting;
     [ObservableProperty] private string? errorMessage;
 
+    public ObservableCollection<VenueAvailabilityDto> Availabilities { get; } = new();
+
+    // chamado no code-behind (OnAppearing)
+    public async Task InitializeAsync()
+    {
+        // Sempre puxa do endpoint dedicado
+        var list = await _venueService.GetAvailableTimesByVenueIdAsync(Venue.Id);
+
+        Availabilities.Clear();
+        foreach (var t in list)
+            Availabilities.Add(t);
+    }
+
+    // ────────────── confirmar reserva ──────────────
     [RelayCommand]
     private async Task SubmitAsync()
     {
-        if (IsSubmitting) return;
+        if (IsSubmitting || SelectedAvailability is null) return;
 
         try
         {
@@ -45,29 +63,26 @@ public partial class ReservationCreateViewModel : ObservableObject
             {
                 UserId = userId,
                 VenueId = Venue.Id,
-                VenueAvailabilityTimeId = Availability.Id,
-                PaymentMethodId = 1 
+                VenueAvailabilityTimeId = SelectedAvailability.Id,
+                PaymentMethodId = 1 //
             };
 
-            var result = await _reservationService.CreateReservationAsync(dto);
+            var ok = await _reservationService.CreateReservationAsync(dto);
 
-            if (result)
+            if (ok)
             {
-                await Shell.Current.DisplayAlert("Sucesso", "Reserva realizada com sucesso!", "OK");
+                await Shell.Current.DisplayAlert("Sucesso", "Reserva realizada!", "OK");
                 await Shell.Current.GoToAsync("..");
             }
             else
             {
-                ErrorMessage = "Erro ao criar reserva. Tente novamente.";
+                ErrorMessage = "Falha ao criar reserva.";
             }
         }
         catch (Exception ex)
         {
             ErrorMessage = $"Erro: {ex.Message}";
         }
-        finally
-        {
-            IsSubmitting = false;
-        }
+        finally { IsSubmitting = false; }
     }
 }

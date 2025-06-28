@@ -24,8 +24,8 @@ public class VenueService : IVenueService
         string? name = null,
         string? address = null,
         bool? isReserved = false,
-        DateTime? from = null,       
-        DateTime? to = null,       
+        DateTime? from = null,
+        DateTime? to = null,
         List<int>? sportId = null
     )
     {
@@ -43,7 +43,7 @@ public class VenueService : IVenueService
             if (sportId is { Count: > 0 })
                 q.AddRange(sportId.Select(id => $"sportId={id}"));
 
-            if (from.HasValue) q.Add($"from={from.Value:o}"); 
+            if (from.HasValue) q.Add($"from={from.Value:o}");
             if (to.HasValue) q.Add($"to={to.Value:o}");
 
             var queryString = q.Count > 0 ? "?" + string.Join("&", q) : string.Empty;
@@ -74,6 +74,31 @@ public class VenueService : IVenueService
         catch (Exception ex)
         {
             throw new Exception("Erro inesperado.", ex);
+        }
+    }
+
+    public async Task<IReadOnlyList<VenueAvailabilityDto>> GetAvailableTimesByVenueIdAsync(int venueId)
+    {
+        try
+        {
+            var url = $"{_apiSettings.BaseUrl}{_apiSettings.GetAvailableTimesByVenueIdEndpoint}{venueId}";
+            var token = await SecureStorage.GetAsync("auth_token");
+
+            using var req = new HttpRequestMessage(HttpMethod.Get, url);
+            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            using var res = await _httpClient.SendAsync(req);
+            res.EnsureSuccessStatusCode();
+
+            var json = await res.Content.ReadAsStringAsync();
+            var dto = JsonSerializer.Deserialize<AvailableTimesResponseDto>(json, (JsonSerializerOptions?)new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return dto?.Data?.Where(t => !t.IsReserved).OrderBy(t => t.StartDate).ToList()
+                   ?? new List<VenueAvailabilityDto>();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Erro ao buscar horários disponíveis.", ex);
         }
     }
 }

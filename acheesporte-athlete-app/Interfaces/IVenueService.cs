@@ -16,5 +16,7 @@ public interface IVenueService
      DateTime? to = null,
      List<int>? sportId = null
  );
+
+    Task<IReadOnlyList<VenueAvailabilityDto>> GetAvailableTimesByVenueIdAsync(int venueId);
 }
 
