@@ -7,6 +7,8 @@
     xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"
     x:Class="acheesporte_athlete_app.Views.SelectVenueMapPage"
     x:DataType="viewmodels:SelectVenueMapViewModel"
+    Shell.TabBarIsVisible="False"
+    Shell.NavBarIsVisible="True"
     BackgroundColor="White">
 
     <Grid>
@@ -204,8 +206,8 @@
                     <!-- Carrossel de Imagens -->
                     <Grid Padding="8" HorizontalOptions="Center">
                         <StackLayout Orientation="Horizontal" Spacing="8">
-                            <Button Text="◀" Command="{Binding PreviousImageCommand}" WidthRequest="40"/>
-                            <Button Text="▶" Command="{Binding NextImageCommand}" WidthRequest="40"/>
+                            <Button Text="◀" Command="{Binding PreviousImageCommand}" WidthRequest="40" Background="DeepPink"/>
+                            <Button Text="▶" Command="{Binding NextImageCommand}" WidthRequest="40" Background="DeepPink"/>
                         </StackLayout>
                     </Grid>
 
@@ -257,7 +259,7 @@
                             <Button Grid.Column="1"
                             Text="Selecionar"
                             Command="{Binding ConfirmVenueCommand}"
-                            BackgroundColor="#200937"
+                            BackgroundColor="DeepPink"
                             TextColor="White"
                             CornerRadius="12"/>
                         </Grid>

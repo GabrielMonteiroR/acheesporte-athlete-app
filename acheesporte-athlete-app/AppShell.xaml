@@ -8,9 +8,10 @@
     Shell.TabBarForegroundColor="DeepPink"  
     Shell.TabBarTitleColor="DeepPink"  
     Shell.TabBarUnselectedColor="DarkGrey"  
-    Shell.TabBarDisabledColor="DarkGrey"  
+    Shell.TabBarDisabledColor="DarkGrey"
+    Shell.BackgroundColor="AliceBlue"
+    Shell.ForegroundColor="DeepPink"
     Shell.NavBarIsVisible="False">
-
     <!-- <ShellContent Route="SplashPage" ContentTemplate="{DataTemplate auth:SplashPage}" /> -->
     <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate view:HomePage}" />
     <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate view:HomePage}" />
