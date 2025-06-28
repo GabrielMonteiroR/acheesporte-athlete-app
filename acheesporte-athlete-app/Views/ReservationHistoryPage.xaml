@@ -1,35 +1,98 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
-             xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"  
-             xmlns:reservationDtos="clr-namespace:acheesporte_athlete_app.Dtos.ReservationDtos"  
-             x:Class="acheesporte_athlete_app.Views.ReservationHistoryPage"  
-             x:DataType="viewmodels:ReservationHistoryViewModel"  
-             Title="Histórico de Reservas">
-    <Grid Padding="16">
-        <ActivityIndicator IsRunning="{Binding IsLoading}"  
-                           IsVisible="{Binding IsLoading}" />
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"
+             xmlns:reservationDtos="clr-namespace:acheesporte_athlete_app.Dtos.ReservationDtos"
+             x:Class="acheesporte_athlete_app.Views.ReservationHistoryPage"
+             x:DataType="viewmodels:ReservationHistoryViewModel"
+             Title="Histórico de Reservas"
+             BackgroundColor="White"
+             Shell.NavBarIsVisible="True">
 
-        <CollectionView ItemsSource="{Binding History}"  
-                        IsVisible="{Binding IsLoading,  
-                                            Converter={StaticResource InverseBoolConverter}}">
+    <Grid Padding="16">
+
+        <!-- Loading -->
+        <ActivityIndicator IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"
+                           Color="#E94560"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+
+        <!-- Lista -->
+        <CollectionView ItemsSource="{Binding History}"
+                        IsVisible="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}"
+                        Margin="0,10,0,0">
+
             <CollectionView.EmptyView>
-                <Label Text="Nenhum histórico encontrado."  
-                       HorizontalOptions="Center" VerticalOptions="Center" />
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                    <Image Source="football.png" WidthRequest="80" HeightRequest="80"/>
+                    <Label Text="Nenhum histórico encontrado." TextColor="#888"/>
+                </StackLayout>
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="reservationDtos:ReservationDto">
-                    <Frame Padding="12" Margin="0,8" CornerRadius="12">
-                        <StackLayout Spacing="4">
-                            <Label Text="{Binding Venue.Name}"  
-                                   FontAttributes="Bold" />
-                            <Label Text="{Binding VenueAvailabilityTime.StartDate,  
-                                                  StringFormat='Data: {0:dd/MM/yyyy HH:mm}'}" />
-                            <Label Text="{Binding VenueAvailabilityTime.Price,  
-                                                  StringFormat='Preço: R$ {0:F2}'}" />
-                            <Label Text="{Binding IsPaid,  
-                                                  Converter={StaticResource BoolToPaidConverter}}" />
+                    <Frame CornerRadius="16" Padding="0" Margin="0,8" HasShadow="True" BackgroundColor="White">
+                        <StackLayout>
+
+                            <!-- Imagem principal -->
+                            <Image Source="{Binding Venue.ImageUrls[0]}"
+                                   HeightRequest="160"
+                                   Aspect="AspectFill"
+                                   BackgroundColor="#EEE" />
+
+                            <Grid Padding="12" ColumnSpacing="16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="110" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Informações da reserva -->
+                                <StackLayout Spacing="6">
+                                    <Label Text="{Binding Venue.Name}"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="#E94560" />
+
+                                    <Label Text="{Binding VenueAvailabilityTime.StartDate, StringFormat='Início: {0:dd/MM/yyyy HH:mm}'}"
+                                           FontSize="14" TextColor="#333"/>
+                                    <Label Text="{Binding VenueAvailabilityTime.EndDate, StringFormat='Fim: {0:dd/MM/yyyy HH:mm}'}"
+                                           FontSize="14" TextColor="#333"/>
+                                    <Label Text="{Binding VenueAvailabilityTime.Price, StringFormat='Valor: R$ {0:F2}'}"
+                                           FontSize="14" TextColor="#333"/>
+
+                                    <Label Text="{Binding IsPaid, Converter={StaticResource BoolToPaidConverter}}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           TextColor="{Binding IsPaid, Converter={StaticResource PaidColorConverter}}"/>
+                                </StackLayout>
+
+                                <!-- Informações do locador -->
+                                <VerticalStackLayout Grid.Column="1"
+                                                     Spacing="4"
+                                                     HorizontalOptions="Center">
+
+                                    <Border HeightRequest="64" WidthRequest="64"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 32">
+                                        <Image Source="{Binding Locator.ProfileImageUrl}"
+                                               Aspect="AspectFill"/>
+                                    </Border>
+
+                                    <Label Text="{Binding Locator.FirstName}" FontSize="12"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           TextColor="#444"/>
+
+                                    <Label Text="{Binding Locator.Email}" FontSize="10"
+                                           TextColor="#888"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <Label Text="{Binding Locator.Phone}" FontSize="10"
+                                           TextColor="#888"
+                                           HorizontalTextAlignment="Center"/>
+                                </VerticalStackLayout>
+                            </Grid>
                         </StackLayout>
                     </Frame>
                 </DataTemplate>

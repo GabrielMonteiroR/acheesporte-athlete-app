@@ -1,27 +1,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="acheesporte_athlete_app.Views.HomePage"
-             Shell.NavBarIsVisible="False"
-             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="True"
              BackgroundColor="AliceBlue"
              Shell.BackgroundColor="AliceBlue"
              Shell.TabBarBackgroundColor="AliceBlue"
-             Shell.TabBarForegroundColor="DeepPink"
-             Shell.TabBarTitleColor="DeepPink">
+             Title="Inicio">
 
     <Grid RowDefinitions="Auto,*" Padding="24">
-
-        <!-- CABEÇALHO -->
-        <StackLayout Grid.Row="0" Spacing="0" Margin="0,0,0,16">
-            <Label Text="Bem-vindo,"
-                   FontSize="18"
-                   FontAttributes="Bold"
-                   TextColor="#222222" />
-            <Label Text="{Binding UserName}"
-                   FontSize="22"
-                   FontAttributes="Bold"
-                   TextColor="#E94560" />
-        </StackLayout>
 
         <!-- CONTEÚDO -->
         <ScrollView Grid.Row="1">

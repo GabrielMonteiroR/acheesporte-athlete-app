@@ -1,20 +1,18 @@
 ﻿using acheesporte_athlete_app.Dtos.Venues;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace acheesporte_athlete_app.Converters;
+
 public class AvailabilityToStringConverter : IValueConverter
 {
-    public object Convert(object value, Type t, object p, CultureInfo c)
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is VenueAvailabilityDto a)
-            return $"{a.StartDate:HH:mm} – R$ {a.Price:F2}";
-        return string.Empty;
+        if (value is not VenueAvailabilityDto dto)
+            return string.Empty;
+
+        return $"{dto.StartDate:HH:mm} - {dto.EndDate:HH:mm} | R$ {dto.Price:F2}";
     }
 
-    public object ConvertBack(object v, Type t, object p, CultureInfo c) => throw new NotImplementedException();
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
 }
