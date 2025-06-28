@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+             xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"  
+             xmlns:reservationDtos="clr-namespace:acheesporte_athlete_app.Dtos.ReservationDtos"  
+             x:Class="acheesporte_athlete_app.Views.ReservationHistoryPage"  
+             x:DataType="viewmodels:ReservationHistoryViewModel"  
+             Title="Histórico de Reservas">
+    <Grid Padding="16">
+        <ActivityIndicator IsRunning="{Binding IsLoading}"  
+                           IsVisible="{Binding IsLoading}" />
+
+        <CollectionView ItemsSource="{Binding History}"  
+                        IsVisible="{Binding IsLoading,  
+                                            Converter={StaticResource InverseBoolConverter}}">
+            <CollectionView.EmptyView>
+                <Label Text="Nenhum histórico encontrado."  
+                       HorizontalOptions="Center" VerticalOptions="Center" />
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="reservationDtos:ReservationDto">
+                    <Frame Padding="12" Margin="0,8" CornerRadius="12">
+                        <StackLayout Spacing="4">
+                            <Label Text="{Binding Venue.Name}"  
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding VenueAvailabilityTime.StartDate,  
+                                                  StringFormat='Data: {0:dd/MM/yyyy HH:mm}'}" />
+                            <Label Text="{Binding VenueAvailabilityTime.Price,  
+                                                  StringFormat='Preço: R$ {0:F2}'}" />
+                            <Label Text="{Binding IsPaid,  
+                                                  Converter={StaticResource BoolToPaidConverter}}" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

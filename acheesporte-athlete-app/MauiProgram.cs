@@ -48,6 +48,8 @@ namespace acheesporte_athlete_app
             builder.Services.AddTransient<PixPaymentViewModel>();
             builder.Services.AddTransient<UserProfilePage>();
             builder.Services.AddTransient<UserProfileViewModel>();
+            builder.Services.AddTransient<ReservationHistoryPage>();
+            builder.Services.AddTransient<ReservationHistoryViewModel>();
 
 
             builder.Services.AddHttpClient<IReservationService, ReservationService>(client =>

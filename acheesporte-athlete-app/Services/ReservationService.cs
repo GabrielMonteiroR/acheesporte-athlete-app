@@ -69,5 +69,24 @@ public class ReservationService : IReservationService
         }
     }
 
+    public async Task<ReservationsByUserResponseDto> GetHistoryByUserAsync(int userId)
+    {
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.GetHistoryByUserIdEndpoint}{userId}";
+        var token = await SecureStorage.GetAsync("auth_token");
 
+        using var req = new HttpRequestMessage(HttpMethod.Get, url);
+        if (!string.IsNullOrWhiteSpace(token))
+            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        using var res = await _httpClient.SendAsync(req); 
+        var body = await res.Content.ReadAsStringAsync();
+
+        if (!res.IsSuccessStatusCode)
+            throw new Exception($"API error {(int)res.StatusCode}: {body}");
+
+        return JsonSerializer.Deserialize<ReservationsByUserResponseDto>(
+            body,
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+            ?? new ReservationsByUserResponseDto();
+    }
 }

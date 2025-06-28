@@ -6,6 +6,7 @@ public interface IReservationService
 {
     Task<ReservationsByUserResponseDto> GetReservationsByUserAsync(int userId);
     Task<ReservationDto?> CreateReservationAsync(CreateReservationDto dto);
+    Task<ReservationsByUserResponseDto> GetHistoryByUserAsync(int userId);
 
 }
 
