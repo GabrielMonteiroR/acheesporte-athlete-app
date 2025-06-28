@@ -18,6 +18,7 @@ public partial class MyReservationsViewModel : ObservableObject
 
     public MyReservationsViewModel(IReservationService service) => _service = service;
 
+    /* ───────── carregar reservas ───────── */
     [RelayCommand]
     private async Task LoadAsync()
     {
@@ -31,21 +32,53 @@ public partial class MyReservationsViewModel : ObservableObject
             var userId = UserSession.CurrentUser!.Id;
             var dto = await _service.GetReservationsByUserAsync(userId);
 
-            foreach (var res in dto.Reservations)
-                Reservations.Add(res);
+            foreach (var r in dto.Reservations)
+                Reservations.Add(r);
         }
         finally { IsLoading = false; }
     }
 
+    /* ───────── abrir rota (somente pagas) ───────── */
     [RelayCommand]
-    private async Task OpenRouteAsync(ReservationDto? reservation)
+    private async Task OpenRouteAsync(ReservationDto? res)
     {
-        if (reservation?.Venue is null) return;
+        if (res?.Venue is null) return;
 
-        var lat = reservation.Venue.Latitude;
-        var lng = reservation.Venue.Longitude;
-        var uri = new Uri($"https://www.google.com/maps/dir/?api=1&destination={lat},{lng}&travelmode=driving");
+        var uri = new Uri(
+            $"https://www.google.com/maps/dir/?api=1&destination={res.Venue.Latitude},{res.Venue.Longitude}&travelmode=driving");
 
         await Launcher.Default.OpenAsync(uri);
     }
+
+    [RelayCommand]
+    private async Task ReservationActionAsync(ReservationDto? reservation)
+    {
+        if (reservation is null) return;
+
+        if (reservation.IsPaid)
+        {
+            // Ação: Abrir rota no mapa
+            var lat = reservation.Venue?.Latitude;
+            var lng = reservation.Venue?.Longitude;
+
+            if (lat != null && lng != null)
+            {
+                var uri = new Uri($"https://www.google.com/maps/dir/?api=1&destination={lat},{lng}&travelmode=driving");
+                await Launcher.Default.OpenAsync(uri);
+            }
+        }
+        else
+        {
+            // Ação: Navegar para tela de pagamento PIX
+            await Shell.Current.GoToAsync($"pix-payment?reservationId={reservation.Id}");
+        }
+    }
+
+
+    /* ───────── seguir para pagamento PIX ───────── */
+    [RelayCommand]
+    private Task PayAsync(ReservationDto? res) =>
+        res is null || res.IsPaid
+            ? Task.CompletedTask
+            : Shell.Current.GoToAsync($"pix-payment?reservationId={res.Id}");
 }

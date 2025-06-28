@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace acheesporte_athlete_app.ViewModels;
 
-[QueryProperty(nameof(ReservationId), "ReservationId")]
+[QueryProperty(nameof(ReservationId), "reservationId")]
 public partial class PixPaymentViewModel : ObservableObject
 {
     [ObservableProperty]
@@ -35,7 +35,7 @@ public partial class PixPaymentViewModel : ObservableObject
 
     public async Task InitializeAsync()
     {
-        PixCode = $"PIX-RESERVA-{ReservationId}";
+        PixCode = $"00020126360014BR.GOV.BCB.PIX0114acheesporte.com-res-5204000053039865406100.005802BR5921AcheEsporte Ltda6011São Paulo6304ABCD-{ReservationId}";
         await Task.CompletedTask;
     }
 }

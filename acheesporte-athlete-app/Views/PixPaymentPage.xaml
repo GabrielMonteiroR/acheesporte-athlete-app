@@ -51,13 +51,13 @@
                     HorizontalOptions="Center" />
 
             <Button Text="Voltar"
-                    Command="{Binding NavigationBackAsync}"
-                    BackgroundColor="#E0E0E0"
-                    TextColor="Black"
-                    CornerRadius="12"
-                    HeightRequest="50"
-                    WidthRequest="250"
-                    HorizontalOptions="Center" />
+        Command="{Binding NavigationBackCommand}" 
+                BackgroundColor="#E0E0E0"
+        TextColor="Black"
+        CornerRadius="12"
+        HeightRequest="50"
+        WidthRequest="250"
+        HorizontalOptions="Center" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

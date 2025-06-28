@@ -1,5 +1,4 @@
 using acheesporte_athlete_app.ViewModels;
-using System.Security.Cryptography.X509Certificates;
 
 namespace acheesporte_athlete_app.Views;
 
@@ -9,12 +8,13 @@ public partial class PixPaymentPage : ContentPage
     {
         InitializeComponent();
         BindingContext = vm;
+    }
 
-        async void OnAppearing(object sender, EventArgs e)
-        {
-            var viewModel = (PixPaymentViewModel)BindingContext;
-            await viewModel.InitializeAsync();
-        }
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
 
+        if (BindingContext is PixPaymentViewModel vm)
+            await vm.InitializeAsync();
     }
 }
