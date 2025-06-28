@@ -1,69 +1,65 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage  
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
-    xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"  
-    x:Class="acheesporte_athlete_app.Views.ReservationCreatePage"  
-    x:DataType="viewmodels:ReservationCreateViewModel"  
-    Title="Nova Reserva"  
-    Shell.NavBarIsVisible="True"
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"
+    x:Class="acheesporte_athlete_app.Views.ReservationCreatePage"
+    x:DataType="viewmodels:ReservationCreateViewModel"
+    Title="Nova Reserva"
     BackgroundColor="AliceBlue">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="20">
 
-            <!-- Local -->
-            <VerticalStackLayout Spacing="8">
-                <Label Text="{Binding Venue.Name}" FontSize="20" FontAttributes="Bold" TextColor="#333333" />
-                <Label Text="{Binding Venue.Address}" FontSize="16" TextColor="#666666" />
-            </VerticalStackLayout>
+            <Label Text="{Binding Venue.Name}" FontSize="20" FontAttributes="Bold" TextColor="#200937"/>
+            <Label Text="{Binding Venue.Address}" FontSize="15" TextColor="#555"/>
 
-            <!-- Horário -->
-            <Label Text="Selecione um horário disponível:" FontSize="16" TextColor="#333333" />
+            <!-- Etapa 1: Datas -->
+            <Label Text="Escolha a data:" FontSize="16" TextColor="#333"/>
+            <Picker Title="Data"
+                    ItemsSource="{Binding AvailableDates}"
+                    SelectedItem="{Binding SelectedDate}"
+                    ItemDisplayBinding="{Binding ., StringFormat='{0:dd/MM/yyyy}'}"
+                    TextColor="#333"/>
 
-            <Picker ItemsSource="{Binding Availabilities}"  
-                    SelectedItem="{Binding SelectedAvailability}"  
-                    ItemDisplayBinding="{Binding DisplayText}"  
-                    Title="Horários"  
-                    TextColor="#333333"  
-                    BackgroundColor="#FFFFFF"   />
+            <!-- Etapa 2: Horários -->
+            <Label Text="Horários disponíveis:" FontSize="16" TextColor="#333"
+                   IsVisible="{Binding DayAvailabilities.Count, Converter={StaticResource ZeroToFalseConverter}}"/>
+            <Picker Title="Horários"
+                    ItemsSource="{Binding DayAvailabilities}"
+                    SelectedItem="{Binding SelectedAvailability}"
+                    ItemDisplayBinding="{Binding ., Converter={StaticResource AvailabilityToStringConverter}}"
+                    IsVisible="{Binding DayAvailabilities.Count, Converter={StaticResource ZeroToFalseConverter}}"
+                    TextColor="#333"/>
 
             <!-- Detalhes -->
-            <Frame BackgroundColor="#FFFFFF" CornerRadius="16" Padding="16" HasShadow="True" IsVisible="{Binding SelectedAvailability}">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="{Binding SelectedAvailability.StartDate, StringFormat='Início: {0:dd/MM/yyyy HH:mm}'}"  
-                           FontSize="14" TextColor="#333333" />
-                    <Label Text="{Binding SelectedAvailability.EndDate, StringFormat='Término: {0:dd/MM/yyyy HH:mm}'}"  
-                           FontSize="14" TextColor="#333333" />
-                    <Label Text="{Binding SelectedAvailability.Price, StringFormat='Preço: R$ {0:F2}'}"  
-                           FontSize="14" TextColor="#333333" />
+            <Frame BackgroundColor="White" CornerRadius="12" Padding="12" HasShadow="True"
+                   IsVisible="{Binding SelectedAvailability, Converter={StaticResource NullToFalseConverter}}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="{Binding SelectedAvailability.StartDate, StringFormat='Início: {0:dd/MM/yyyy HH:mm}'}"/>
+                    <Label Text="{Binding SelectedAvailability.EndDate, StringFormat='Fim: {0:dd/MM/yyyy HH:mm}'}"/>
+                    <Label Text="{Binding SelectedAvailability.Price, StringFormat='Preço: R$ {0:F2}'}"/>
                 </VerticalStackLayout>
             </Frame>
 
             <!-- Pagamento -->
-            <Label Text="Forma de pagamento:" FontSize="16" TextColor="#333333" />
-            <Frame BackgroundColor="#FFFFFF" CornerRadius="16" Padding="16" HasShadow="True">
-                <Label Text="Cartão de crédito" FontSize="16" FontAttributes="Bold" TextColor="black" />
-            </Frame>
+            <Label Text="Forma de pagamento:" FontSize="16" TextColor="#333"/>
+            <Label Text="Cartão de crédito" FontSize="16" FontAttributes="Bold" TextColor="#200937"/>
 
             <!-- Botão -->
-            <Button Text="Confirmar Reserva"  
-                    Command="{Binding SubmitCommand}"  
-                    BackgroundColor="DeepPink"  
-                    TextColor="White"  
-                    CornerRadius="12"  
-                    HeightRequest="48"  
-                    FontAttributes="Bold"  
-                    IsEnabled="{Binding SelectedAvailability}" />
+            <Button Text="Confirmar Reserva"
+                    Command="{Binding SubmitCommand}"
+                    IsEnabled="{Binding SelectedAvailability, Converter={StaticResource NullToFalseConverter}}"
+                    BackgroundColor="DeepPink"
+                    TextColor="White"
+                    CornerRadius="12"/>
 
-            <ActivityIndicator IsRunning="{Binding IsSubmitting}"  
-                               IsVisible="{Binding IsSubmitting}"  
-                               Color="#200937"  
-                               HeightRequest="32" />
+            <ActivityIndicator IsRunning="{Binding IsSubmitting}"
+                               IsVisible="{Binding IsSubmitting}"
+                               Color="#200937"/>
 
-            <Label Text="{Binding ErrorMessage}" TextColor="Red"  
-                   FontSize="13"  
-                   IsVisible="{Binding ErrorMessage, Converter={StaticResource NullToFalseConverter}}" />
+            <Label Text="{Binding ErrorMessage}" TextColor="Red"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource NullToFalseConverter}}"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
