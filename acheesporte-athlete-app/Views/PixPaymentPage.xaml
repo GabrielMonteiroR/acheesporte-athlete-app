@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage  
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+    xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"  
+    x:Class="acheesporte_athlete_app.Views.PixPaymentPage"  
+    x:DataType="viewmodels:PixPaymentViewModel"  
+    Shell.TabBarIsVisible="False"  
+    Title="Pagamento via PIX"  
+    BackgroundColor="#F9F9F9">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="24"
+            Spacing="20"
+            VerticalOptions="CenterAndExpand"
+            HorizontalOptions="Center">
+
+            <Label Text="Pagamento via PIX"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#200937"
+                   HorizontalOptions="Center" />
+
+            <Image Source="pix_qrcode_exemplo.png"
+                   HeightRequest="240"
+                   WidthRequest="240"
+                   HorizontalOptions="Center" />
+
+            <Label Text="Escaneie o QR Code ou copie o código abaixo para realizar o pagamento."
+                   FontSize="14"
+                   TextColor="#444"
+                   HorizontalTextAlignment="Center"
+                   Margin="10,0" />
+
+            <Label Text="{Binding PixCode}"
+                   FontSize="16"
+                   TextColor="Black"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   LineBreakMode="CharacterWrap"
+                   Margin="10,0" />
+
+            <Button Text="Copiar código"
+                    Command="{Binding CopyCodeCommand}"
+                    BackgroundColor="DeepPink"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    WidthRequest="250"
+                    HorizontalOptions="Center" />
+
+            <Button Text="Voltar"
+                    Command="{Binding NavigationBackAsync}"
+                    BackgroundColor="#E0E0E0"
+                    TextColor="Black"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    WidthRequest="250"
+                    HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,9 +1,12 @@
 ﻿using acheesporte_athlete_app.Configuration;
+using acheesporte_athlete_app.Dtos;
 using acheesporte_athlete_app.Dtos.ReservationDtos;
 using acheesporte_athlete_app.Interfaces;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using static System.Net.WebRequestMethods;
 
 namespace acheesporte_athlete_app.Services;
 
@@ -39,7 +42,7 @@ public class ReservationService : IReservationService
                ?? new ReservationsByUserResponseDto();
     }
 
-    public async Task<bool> CreateReservationAsync(CreateReservationDto dto)
+    public async Task<ReservationDto?> CreateReservationAsync(CreateReservationDto dto)
     {
         try
         {
@@ -47,18 +50,24 @@ public class ReservationService : IReservationService
             var token = await SecureStorage.GetAsync("auth_token");
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            if (!string.IsNullOrWhiteSpace(token))
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             var json = JsonSerializer.Serialize(dto);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.SendAsync(request);
-            return response.IsSuccessStatusCode;
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            return await response.Content.ReadFromJsonAsync<ReservationDto>();
         }
         catch (Exception ex)
         {
             throw new Exception("Erro ao criar reserva.", ex);
         }
     }
+
 
 }

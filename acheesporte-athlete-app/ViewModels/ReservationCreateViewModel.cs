@@ -106,16 +106,19 @@ public partial class ReservationCreateViewModel : ObservableObject
                 PaymentMethodId = 1
             };
 
-            var ok = await _reservationService.CreateReservationAsync(dto);
+            var created = await _reservationService.CreateReservationAsync(dto);
 
-            if (ok)
+            if (created != null)
             {
                 await Shell.Current.DisplayAlert("Sucesso", "Reserva realizada!", "OK");
-                await Shell.Current.GoToAsync("..");
+                await Shell.Current.GoToAsync($"pix-payment?reservationId={created.Id}");
             }
             else
+            {
                 ErrorMessage = "Falha ao criar reserva.";
+            }
         }
+
         catch (Exception ex) { ErrorMessage = ex.Message; }
         finally { IsSubmitting = false; }
     }

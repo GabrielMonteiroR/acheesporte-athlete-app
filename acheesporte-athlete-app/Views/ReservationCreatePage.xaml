@@ -44,7 +44,7 @@
 
             <!-- Pagamento -->
             <Label Text="Forma de pagamento:" FontSize="16" TextColor="#333"/>
-            <Label Text="Cartão de crédito" FontSize="16" FontAttributes="Bold" TextColor="#200937"/>
+            <Label Text="PIX" FontSize="16" FontAttributes="Bold" TextColor="#200937"/>
 
             <!-- Botão -->
             <Button Text="Confirmar Reserva"
