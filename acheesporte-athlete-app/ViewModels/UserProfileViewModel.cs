@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using static Microsoft.Maui.ApplicationModel.Permissions;
 
-namespace acheesporte_locator_app.ViewModels;
+namespace acheesporte_athlete_app.ViewModels;
 
 public partial class UserProfileViewModel : ObservableObject
 {

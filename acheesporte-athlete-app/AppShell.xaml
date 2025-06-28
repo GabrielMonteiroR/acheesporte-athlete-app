@@ -5,12 +5,13 @@
     xmlns:view="clr-namespace:acheesporte_athlete_app.Views"
 
     Shell.TabBarBackgroundColor="AliceBlue"  
-    Shell.TabBarForegroundColor="DeepPink"  
-    Shell.TabBarTitleColor="DeepPink"  
+    Shell.TabBarForegroundColor="#E94560"  
+    Shell.TitleColor="#E94560"
+    Shell.TabBarTitleColor="#E94560"  
     Shell.TabBarUnselectedColor="DarkGrey"  
     Shell.TabBarDisabledColor="DarkGrey"
     Shell.BackgroundColor="AliceBlue"
-    Shell.ForegroundColor="DeepPink"
+    Shell.ForegroundColor="#E94560"
     Shell.NavBarIsVisible="False">
     <!-- <ShellContent Route="SplashPage" ContentTemplate="{DataTemplate auth:SplashPage}" /> -->
     <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate view:HomePage}" />
@@ -35,7 +36,13 @@
     Route="TestPage"
     Icon="history.png"
     ContentTemplate="{DataTemplate view:TestPage}"/>
-        
+
+        <ShellContent
+    Title="Perfil"
+    Route="UserProfilePage"
+    Icon="user.png"
+    ContentTemplate="{DataTemplate view:UserProfilePage}"/>
+
     </TabBar>
 
 </Shell>
