@@ -15,6 +15,6 @@ public partial class HomePage : ContentPage
         base.OnAppearing();
 
         if (BindingContext is HomeViewModel vm)
-            await vm.LoadUserAsync();
+            await vm.LoadDataAsync();
     }
 }

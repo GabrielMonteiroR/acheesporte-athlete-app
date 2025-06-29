@@ -61,4 +61,6 @@ public class ApiSettings
     public string ReservationsEndpoint { get; set; }
 
     public string GetHistoryByUserIdEndpoint { get; set; }
+
+    public string GetNextReservationByUserIdEndpoint { get; set; }
 }

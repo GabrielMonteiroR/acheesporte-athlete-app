@@ -29,7 +29,7 @@ public partial class PixPaymentViewModel : ObservableObject
     [RelayCommand]
     private async Task NavigationBackAsync()
     {
-        await Shell.Current.GoToAsync("//ReservationPage");
+        await Shell.Current.GoToAsync("//HomePage");
     }
 
 

@@ -14,6 +14,7 @@
             <converters:PaidColorConverter x:Key="PaidColorConverter" />
             <converters:NullToFalseConverter x:Key="NullToFalseConverter" />
             <converters:BoolToTextConverter x:Key="BoolToTextConverter"/>
+            <converters:ReservationActionSelector x:Key="ReservationActionSelector" />
             <converters:BoolToIconConverter x:Key="BoolToIconConverter"/>
             <converters:AvailabilityToStringConverter x:Key="AvailabilityToStringConverter" />
             <Style TargetType="NavigationPage">
