@@ -38,7 +38,6 @@ public partial class MyReservationsViewModel : ObservableObject
         finally { IsLoading = false; }
     }
 
-    /* ───────── abrir rota (somente pagas) ───────── */
     [RelayCommand]
     private async Task OpenRouteAsync(ReservationDto? res)
     {
