@@ -89,7 +89,9 @@ public partial class LoginViewModel : ObservableObject
 
         try
         {
+            Application.Current.MainPage = new NavigationPage(new LoginPage());
             await Application.Current.MainPage.Navigation.PushAsync(App.Services.GetService<RegisterPage>());
+
 
         }
         catch (Exception ex)

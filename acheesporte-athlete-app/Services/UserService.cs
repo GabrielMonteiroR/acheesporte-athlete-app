@@ -2,6 +2,7 @@
 using acheesporte_athlete_app.Dtos;
 using acheesporte_athlete_app.Dtos.Users;
 using acheesporte_athlete_app.Interfaces;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
@@ -54,23 +55,27 @@ public class UserService : IUserService
             {
                 var registerResponse = await response.Content.ReadFromJsonAsync<SignUpResponseDto>();
                 if (registerResponse is null || string.IsNullOrEmpty(registerResponse.Token))
-                    throw new Exception("Invalid registration response.");
+                    throw new Exception("Resposta inválida do servidor.");
 
                 await SecureStorage.SetAsync("auth_token", registerResponse.Token);
-
                 return registerResponse;
             }
 
-            var statusCode = (int)response.StatusCode;
-            var errorContent = await response.Content.ReadAsStringAsync();
+            if (response.StatusCode == HttpStatusCode.Conflict)
+            {
+                var error = await response.Content.ReadFromJsonAsync<ErrorResponseDto>();
+                throw new Exception(error?.Message ?? "Dados já estão em uso.");
+            }
 
-            throw new Exception($"Backend Error ({statusCode}): {errorContent}");
+            var genericError = await response.Content.ReadAsStringAsync();
+            throw new Exception($"Erro do servidor ({(int)response.StatusCode}): {genericError}");
         }
         catch (Exception ex)
         {
-            throw new Exception("An error occurred while registering the user.", ex);
+            throw new Exception("Ocorreu um erro ao cadastrar o usuário: " + ex.Message, ex);
         }
     }
+
 
     public async Task<CurrentUserDto> GetCurrentUserAsync()
     {
@@ -169,6 +174,11 @@ public class UserService : IUserService
 
         return await response.Content.ReadFromJsonAsync<UserResponseDto>()
                ?? throw new Exception("Resposta inesperada do servidor.");
+    }
+
+    public class ErrorResponseDto
+    {
+        public string Message { get; set; }
     }
 
 

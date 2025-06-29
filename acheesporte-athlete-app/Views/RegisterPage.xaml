@@ -1,66 +1,45 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"
-             xmlns:converters="clr-namespace:acheesporte_athlete_app.Converters"
              x:Class="acheesporte_athlete_app.Views.RegisterPage"
-             NavigationPage.HasBackButton="True">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:EmptyFieldToColorConverter x:Key="EmptyFieldToColorConverter" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
-    <ContentPage.Background>
-        <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.85">
-            <GradientStop Color="#200937" Offset="0.0" />
-            <GradientStop Color="#3A1155" Offset="0.3" />
-            <GradientStop Color="#6A1B9A" Offset="0.6" />
-            <GradientStop Color="#8B2BB8" Offset="0.8" />
-            <GradientStop Color="#A75AEF" Offset="0.85" />
-            <GradientStop Color="#F7F8FA" Offset="1.0" />
-        </LinearGradientBrush>
-    </ContentPage.Background>
+             x:DataType="viewmodels:RegisterViewModel"
+             BackgroundColor="#E94560"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Padding="0" HeightRequest="240">
-            <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
-                <Image Source="logo_achesporte.png" MaximumWidthRequest="100" MaximumHeightRequest="100"/>
+        <!-- Topo -->
+        <Grid Grid.Row="0" Padding="24,4,4,4" HeightRequest="200">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-                <Label x:Name="TypingLabel"
-       FontSize="24"
-       FontAttributes="Bold"
-       HorizontalTextAlignment="Center"
-       TextColor="White" />
-
-                <Label Text="Cadastre-se!"
-                       FontSize="24"
-                       FontAttributes="Bold"
-                       TextColor="#FF851B"
-                       HorizontalTextAlignment="Center" />
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="0"
+                   Grid.Column="0" Margin="0,0,16,0">
+                <Label Text="Vamos lá," FontSize="16" FontAttributes="Bold" TextColor="White" />
+                <Label Text="Cadastre-se!" FontSize="16" FontAttributes="Bold" TextColor="White" />
                 <Label Text="Preencha os dados para criar sua conta."
-                       FontSize="12"
-                       TextColor="#D1C4E9"
-                       HorizontalTextAlignment="Center" />
+                 FontSize="16" TextColor="White" />
             </StackLayout>
         </Grid>
 
-        <Frame Grid.Row="1"
-               BackgroundColor="#F7F8FA"
-               BorderColor="Transparent"
-               CornerRadius="24"
-               Padding="24"
-               VerticalOptions="EndAndExpand"
-               HasShadow="True">
+
+        <!-- Formulário -->
+        <Border Grid.Row="1"
+                BackgroundColor="#FFFFFF"
+                StrokeShape="RoundRectangle 24"
+                Padding="24,44,24,24"
+                VerticalOptions="End"
+                Stroke="Transparent">
 
             <ScrollView>
-                <StackLayout Spacing="20">
+                <VerticalStackLayout Spacing="20">
 
                     <Frame HeightRequest="100"
                            WidthRequest="100"
@@ -70,73 +49,38 @@
                            HasShadow="False"
                            HorizontalOptions="Center"
                            BackgroundColor="White">
-                        <Image Source="{Binding ProfileImageUrl}" Aspect="AspectFit" HeightRequest="94"
-                               WidthRequest="94" />
+                        <Image Source="{Binding ProfileImageUrl}" Aspect="AspectFit" HeightRequest="94" WidthRequest="94" />
                     </Frame>
 
                     <Button Text="Selecionar Foto"
                             Command="{Binding PickImageCommand}"
-                            BackgroundColor="#200937"
-                            TextColor="AliceBlue"
+                            BackgroundColor="#E94560"
+                            TextColor="White"
                             FontAttributes="Bold"
                             HorizontalOptions="Center"
-                            FontSize="12"/>
+                            FontSize="12" />
 
                     <!-- Campos -->
-                    <Label Text="Nome"
-                           FontSize="12"
-                           FontAttributes="Bold"
-                           TextColor="{Binding FirstName, Converter={StaticResource EmptyFieldToColorConverter}}" />
-                    <Entry Placeholder="Primeiro nome"
-                           Text="{Binding FirstName}" 
-                           BackgroundColor="White" TextColor="#200937" />
+                    <Label Text="Nome" FontSize="14" TextColor="#E94560" FontAttributes="Bold" />
+                    <Entry Placeholder="Primeiro nome" Text="{Binding FirstName}" TextColor="#121212" PlaceholderColor="#888888" />
 
-                    <Label Text="Sobrenome"
-                           FontSize="12"
-                           FontAttributes="Bold"
-                           TextColor="{Binding LastName, Converter={StaticResource EmptyFieldToColorConverter}}" />
-                    <Entry Placeholder="Sobrenome"
-                           Text="{Binding LastName}" 
-                           BackgroundColor="White" TextColor="#200937" />
+                    <Label Text="Sobrenome" FontSize="14" TextColor="#E94560" FontAttributes="Bold" />
+                    <Entry Placeholder="Sobrenome" Text="{Binding LastName}" TextColor="#121212" PlaceholderColor="#888888" />
 
-                    <Label Text="E-mail"
-                           FontSize="12"
-                           FontAttributes="Bold"
-                           TextColor="{Binding Email, Converter={StaticResource EmptyFieldToColorConverter}}" />
-                    <Entry Placeholder="Email"
-                           Keyboard="Email"
-                           Text="{Binding Email}" 
-                           BackgroundColor="White" TextColor="#200937" />
+                    <Label Text="Email" FontSize="14" TextColor="#E94560" FontAttributes="Bold" />
+                    <Entry Placeholder="Insira seu Email" Text="{Binding Email}" Keyboard="Email" TextColor="#121212" PlaceholderColor="#888888" />
 
-                    <Label Text="Senha"
-                           FontSize="12"
-                           FontAttributes="Bold"
-                           TextColor="{Binding Password, Converter={StaticResource EmptyFieldToColorConverter}}" />
-                    <Entry Placeholder="Senha"
-                           IsPassword="True"
-                           Text="{Binding Password}" 
-                           BackgroundColor="White" TextColor="#200937" />
+                    <Label Text="Senha" FontSize="14" TextColor="#E94560" FontAttributes="Bold" />
+                    <Entry Placeholder="Insira sua senha" Text="{Binding Password}" IsPassword="True" TextColor="#121212" PlaceholderColor="#888888" />
 
-                    <Label Text="Telefone"
-                           FontSize="12"
-                           FontAttributes="Bold"
-                           TextColor="{Binding Phone, Converter={StaticResource EmptyFieldToColorConverter}}" />
-                    <Entry Placeholder="(99) 99999-9999"
-                           Keyboard="Telephone"
-                           Text="{Binding Phone}" 
-                           BackgroundColor="White" TextColor="#200937" />
+                    <Label Text="Telefone" FontSize="14" TextColor="#E94560" FontAttributes="Bold" />
+                    <Entry Placeholder="(99) 99999-9999" Text="{Binding Phone}" Keyboard="Telephone" TextColor="#121212" PlaceholderColor="#888888" />
 
-                    <Label Text="CPF"
-                           FontSize="12"
-                           FontAttributes="Bold"
-                           TextColor="{Binding Cpf, Converter={StaticResource EmptyFieldToColorConverter}}" />
-                    <Entry Placeholder="000.000.000-00"
-                           Keyboard="Numeric"
-                           Text="{Binding Cpf}" 
-                           BackgroundColor="White" TextColor="#200937" />
-                   
+                    <Label Text="CPF" FontSize="14" TextColor="#E94560" FontAttributes="Bold" />
+                    <Entry Placeholder="000.000.000-00" Text="{Binding Cpf}" Keyboard="Numeric" TextColor="#121212" PlaceholderColor="#888888" />
+
                     <Button Text="Cadastrar"
-                            BackgroundColor="#200937"
+                            BackgroundColor="#E94560"
                             TextColor="White"
                             FontAttributes="Bold"
                             CornerRadius="12"
@@ -144,17 +88,17 @@
                             Command="{Binding RegisterCommand}"
                             IsEnabled="{Binding IsNotBusy}" />
 
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="4">
-                        <Label Text="Já tem uma conta?" TextColor="#200937" FontSize="12" />
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
+                        <Label Text="Já tem uma conta?" TextColor="#E94560" VerticalOptions="Center" />
                         <Button Text="Entrar"
-                                Command="{Binding NavigateToLoginCommand}"
                                 BackgroundColor="Transparent"
-                                TextColor="#FF851B"
-                                FontSize="12" />
-                    </StackLayout>
+                                TextColor="#0F3460"
+                                Padding="0"
+                                Command="{Binding NavigateToLoginCommand}" />
+                    </HorizontalStackLayout>
 
-                </StackLayout>
+                </VerticalStackLayout>
             </ScrollView>
-        </Frame>
+        </Border>
     </Grid>
 </ContentPage>

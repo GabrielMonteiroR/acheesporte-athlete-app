@@ -17,10 +17,6 @@
             <converters:ReservationActionSelector x:Key="ReservationActionSelector" />
             <converters:BoolToIconConverter x:Key="BoolToIconConverter"/>
             <converters:AvailabilityToStringConverter x:Key="AvailabilityToStringConverter" />
-            <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="#200937" />
-                <Setter Property="BarTextColor" Value="DeepPink" />
-            </Style>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

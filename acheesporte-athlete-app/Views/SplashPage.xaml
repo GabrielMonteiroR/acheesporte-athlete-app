@@ -1,17 +1,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="acheesporte_athlete_app.Views.SplashPage"
-             BackgroundColor="#200937"
+             BackgroundColor="AliceBlue"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False">
 
-    <Grid>
-        <!-- Centralized vertical stripe -->
-        <BoxView BackgroundColor="#FFFFFF"
-                 HorizontalOptions="Center"
-                 VerticalOptions="Fill"
-                 WidthRequest="300" />
-
+    <Grid Background="AliceBlue">
         <WebView x:Name="GifWebView"
                  HeightRequest="300"
                  WidthRequest="300"

@@ -8,8 +8,9 @@
     x:Class="acheesporte_athlete_app.Views.SelectVenueMapPage"
     x:DataType="viewmodels:SelectVenueMapViewModel"
     Shell.TabBarIsVisible="False"
+    Title="Selecionar Local"
     Shell.NavBarIsVisible="True"
-    BackgroundColor="White">
+    BackgroundColor="AliceBlue">
 
     <Grid>
 
@@ -28,7 +29,7 @@
 
             <SearchBar x:Name="VenueSearchBar"
                        Placeholder="Buscar locais..."
-                       BackgroundColor="White"
+                       BackgroundColor="AliceBlue"
                        CancelButtonColor="Gray"
                        FontSize="14"
                        TextColor="Black"
@@ -58,12 +59,12 @@
                         SelectionMode="Single"
                         SelectionChanged="OnSuggestionSelected"
                         Margin="16,64,16,0"
-                        BackgroundColor="White"
+                        BackgroundColor="AliceBlue"
                         IsVisible="{Binding Suggestions.Count, Converter={StaticResource ZeroToFalseConverter}}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="12">
-                        <Label Text="{Binding Description}" FontSize="14" TextColor="Black"/>
+                        <Label Text="{Binding Description}" FontSize="14" TextColor="Black" Background="AliceBlue"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -73,7 +74,7 @@
         <Frame Grid.Row="1"
                Padding="12"
                CornerRadius="24"
-               BackgroundColor="White"
+               BackgroundColor="AliceBlue"
                BorderColor="Transparent"
                HasShadow="False"
                HeightRequest="58" WidthRequest="58"
@@ -101,11 +102,11 @@
               IsVisible="{Binding IsFilterModalVisible}"
               InputTransparent="{Binding IsFilterModalVisible, Converter={StaticResource InverseBoolConverter}}">
 
-            <Frame BackgroundColor="White"
+            <Frame BackgroundColor="AliceBlue"
                    CornerRadius="24"
                    Padding="16"
                    Margin="24"
-                   WidthRequest="300"
+                   WidthRequest="340"
                    HasShadow="True"
                    HorizontalOptions="Center"
                    VerticalOptions="Center">
@@ -150,21 +151,32 @@
                         <!-- BOTÕES -->
                         <Button Text="Aplicar Filtro"
                                 Command="{Binding ApplyFilterCommand}"
-                                BackgroundColor="#200937"
-                                TextColor="White"
+                                BackgroundColor="#E94560"
+                                TextColor="AliceBlue"
                                 CornerRadius="12"/>
 
-                        <Button Text="Limpar Filtros"
-                                Command="{Binding ClearFiltersCommand}"
-                                BackgroundColor="#e0e0e0"
-                                TextColor="Black"
-                                CornerRadius="12"/>
+                        <Grid ColumnSpacing="10">  
+                            <Grid.ColumnDefinitions>  
+                                <ColumnDefinition Width="*" />  
+                                <ColumnDefinition Width="*" />  
+                            </Grid.ColumnDefinitions>  
 
-                        <Button Text="Cancelar"
-                                Command="{Binding CloseFilterModalCommand}"
-                                BackgroundColor="LightGray"
-                                TextColor="Black"
-                                CornerRadius="12"/>
+                            <Button Grid.Column="0"  
+                                    Text="Limpar Filtros"  
+                                    Command="{Binding ClearFiltersCommand}"  
+                                    BackgroundColor="#e0e0e0"  
+                                    TextColor="Black"  
+                                    CornerRadius="12" />  
+
+                            <Button Grid.Column="1"  
+                                    Text="Cancelar"  
+                                    Command="{Binding CloseFilterModalCommand}"  
+                                    BackgroundColor="LightGray"  
+                                    TextColor="Black"  
+                                    CornerRadius="12" />  
+                        </Grid>
+
+
                     </StackLayout>
                 </ScrollView>
             </Frame>
@@ -180,7 +192,7 @@
 
             <Frame Padding="0"
            CornerRadius="24"
-           BackgroundColor="White"
+           BackgroundColor="AliceBlue"
            Margin="20"
            HasShadow="True"
            HorizontalOptions="Center"
@@ -206,8 +218,8 @@
                     <!-- Carrossel de Imagens -->
                     <Grid Padding="8" HorizontalOptions="Center">
                         <StackLayout Orientation="Horizontal" Spacing="8">
-                            <Button Text="◀" Command="{Binding PreviousImageCommand}" WidthRequest="40" Background="DeepPink"/>
-                            <Button Text="▶" Command="{Binding NextImageCommand}" WidthRequest="40" Background="DeepPink"/>
+                            <Button Text="◀" Command="{Binding PreviousImageCommand}" WidthRequest="40" Background="#E94560"/>
+                            <Button Text="▶" Command="{Binding NextImageCommand}" WidthRequest="40" Background="#E94560"/>
                         </StackLayout>
                     </Grid>
 
@@ -259,7 +271,7 @@
                             <Button Grid.Column="1"
                             Text="Selecionar"
                             Command="{Binding ConfirmVenueCommand}"
-                            BackgroundColor="DeepPink"
+                            BackgroundColor="#E94560"
                             TextColor="White"
                             CornerRadius="12"/>
                         </Grid>

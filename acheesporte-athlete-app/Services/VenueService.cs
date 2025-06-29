@@ -48,6 +48,7 @@ public class VenueService : IVenueService
 
             var queryString = q.Count > 0 ? "?" + string.Join("&", q) : string.Empty;
             var url = _apiSettings.BaseUrl + _apiSettings.VenuesEndpoint + queryString;
+            await Shell.Current.DisplayAlert("URL", url, "OK");
 
             var token = await SecureStorage.GetAsync("auth_token");
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -65,15 +66,16 @@ public class VenueService : IVenueService
         }
         catch (HttpRequestException ex)
         {
+
             throw new Exception("Erro de rede ao buscar locais.", ex);
         }
         catch (JsonException ex)
         {
-            throw new Exception("Erro ao interpretar dados dos locais.", ex);
+            throw new Exception("Erro ao interpretar dados dos locais.", ex); 
         }
         catch (Exception ex)
         {
-            throw new Exception("Erro inesperado.", ex);
+            throw new Exception("Erro inesperado.", ex); 
         }
     }
 

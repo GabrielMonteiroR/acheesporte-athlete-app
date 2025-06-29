@@ -1,129 +1,115 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="acheesporte_athlete_app.Views.HomePage"
-             Shell.NavBarIsVisible="True"
-             BackgroundColor="AliceBlue"
-             Shell.BackgroundColor="AliceBlue"
-             Shell.TabBarBackgroundColor="AliceBlue"
-             Title="Inicio">
+    <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+                 x:Class="acheesporte_athlete_app.Views.HomePage"  
+                 Shell.NavBarIsVisible="True"  
+                 BackgroundColor="AliceBlue"  
+                 Shell.BackgroundColor="AliceBlue"  
+                 Shell.TabBarBackgroundColor="AliceBlue"  
+                 Title="Inicio">  
 
-    <Grid RowDefinitions="Auto,*" Padding="12,2,12,12">
+        <Grid RowDefinitions="Auto,*" Padding="12,2,12,12">  
 
-        <!-- CONTEÚDO -->
-        <ScrollView Grid.Row="1">
-            <StackLayout Spacing="24">
+            <ScrollView Grid.Row="1">  
+                <StackLayout Spacing="24">  
 
+                    <Frame CornerRadius="16" HasShadow="True" BackgroundColor="White"  
+                           IsVisible="{Binding NextReservation, Converter={StaticResource NullToFalseConverter}}">  
 
-                <!-- CARTÃO: PRÓXIMO JOGO -->
-                <Frame CornerRadius="16"  HasShadow="True" BackgroundColor="White"
-       IsVisible="{Binding NextReservation, Converter={StaticResource NullToFalseConverter}}">
+                        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="12" VerticalOptions="Center">  
 
-                    <Grid ColumnDefinitions="*, Auto" ColumnSpacing="12" VerticalOptions="Center">
+                            <VerticalStackLayout Spacing="4" Grid.Column="0">  
 
-                        <!-- LADO ESQUERDO: Infos -->
-                        <VerticalStackLayout Spacing="4" Grid.Column="0">
+                                <Label Text="Próximo jogo"  
+                                       FontAttributes="Bold"  
+                                       TextColor="#E94560"  
+                                       FontSize="14"/>  
 
-                            <Label Text="Próximo jogo"
-                   FontAttributes="Bold"
-                   TextColor="#E94560"
-                   FontSize="14"/>
+                                <Label Text="{Binding NextReservation.Venue.Name}"  
+                                       FontSize="13"  
+                                       TextColor="#444"/>  
 
-                            <Label Text="{Binding NextReservation.Venue.Name}"
-                   FontSize="13"
-                   TextColor="#444"/>
+                                <Label Text="{Binding NextReservation.VenueAvailabilityTime.StartDate,  
+                                              StringFormat='{0:dddd, dd/MM} às {0:HH\\:mm}'}"  
+                                       FontSize="12"  
+                                       TextColor="#888"/>  
 
-                            <Label Text="{Binding NextReservation.VenueAvailabilityTime.StartDate,
-                                  StringFormat='{0:dddd, dd/MM} às {0:HH\\:mm}'}"
-                   FontSize="12"
-                   TextColor="#888"/>
+                                <Label Text="{Binding NextReservation.VenueAvailabilityTime.Price,  
+                                              StringFormat='Valor: R$ {0:F2}'}"  
+                                       FontSize="12"  
+                                       TextColor="#888"/>  
 
-                            <Label Text="{Binding NextReservation.VenueAvailabilityTime.Price,
-                                  StringFormat='Valor: R$ {0:F2}'}"
-                   FontSize="12"
-                   TextColor="#888"/>
+                                <Button CornerRadius="10" HeightRequest="36"  
+                                        Padding="8,0"  
+                                        BackgroundColor="#E94560"  
+                                        TextColor="White"  
+                                        FontSize="13"  
+                                        Text="{Binding NextReservation.IsPaid,  
+                                                       Converter={StaticResource BoolToTextConverter},  
+                                                       ConverterParameter='Ver rota|Pagar com PIX'}">  
+                                    <Button.Command>  
+                                        <MultiBinding Converter="{StaticResource ReservationActionSelector}">  
+                                            <Binding Path="NextReservation"/>  
+                                        </MultiBinding>  
+                                    </Button.Command>  
+                                </Button>  
 
-                            <Button CornerRadius="10" HeightRequest="36"
-                    Padding="8,0"
-                    BackgroundColor="#E94560"
-                    TextColor="White"
-                    FontSize="13"
-                    Text="{Binding NextReservation.IsPaid,
-                                   Converter={StaticResource BoolToTextConverter},
-                                   ConverterParameter='Ver rota|Pagar com PIX'}">
-                                <Button.Command>
-                                    <MultiBinding Converter="{StaticResource ReservationActionSelector}">
-                                        <Binding Path="NextReservation"/>
-                                    </MultiBinding>
-                                </Button.Command>
-                            </Button>
+                            </VerticalStackLayout>  
 
-                        </VerticalStackLayout>
+                            <Border Grid.Column="1"  
+                                    WidthRequest="120"  
+                                    HeightRequest="120"  
+                                    StrokeThickness="0"  
+                                    StrokeShape="RoundRectangle 16">  
+                                <Image Source="{Binding NextReservation.Venue.ImageUrls[0]}"  
+                                       Aspect="AspectFill"/>  
+                            </Border>  
 
-                        <!-- LADO DIREITO: Imagem -->
-                        <Border Grid.Column="1"
-                WidthRequest="120"
-                HeightRequest="120"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 16">
-                            <Image Source="{Binding NextReservation.Venue.ImageUrls[0]}"
-                   Aspect="AspectFill"/>
-                        </Border>
+                        </Grid>  
+                    </Frame>  
 
-                    </Grid>
-                </Frame>
+                    <Border Stroke="Transparent" StrokeThickness="1" BackgroundColor="White" Padding="12">  
+                        <StackLayout Spacing="8">  
 
+                            <Label Text="Sua sequência"  
+                                   FontAttributes="Bold"  
+                                   FontSize="14"  
+                                   TextColor="#888888"  
+                                   HorizontalOptions="Center"/>  
 
+                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">  
+                                <Image Source="fire.png" HeightRequest="24" WidthRequest="24"/>  
+                                <Label Text="{Binding StreakMessage}"  
+                                       FontSize="14"  
+                                       FontAttributes="Bold"  
+                                       TextColor="#E94560"  
+                                       HorizontalTextAlignment="Center"  
+                                       HorizontalOptions="Center"/>  
+                            </HorizontalStackLayout>  
 
-                <!-- CARTÃO: RESUMO + STREAK -->
-                <Border Stroke="Transparent" StrokeThickness="1" BackgroundColor="White" Padding="12">
-                    <StackLayout Spacing="8">
+                            <Image Source="rat.png"  
+                                   MaximumHeightRequest="220"  
+                                   MaximumWidthRequest="220"  
+                                   HorizontalOptions="Center"/>  
 
-                        <!-- TÍtulo do card -->
-                        <Label Text="Sua sequência"
-                               FontAttributes="Bold"
-                               FontSize="14"
-                               TextColor="#888888"
-                               HorizontalOptions="Center"/>
+                            <Label Text="Continue firme!"  
+                                   FontSize="14"  
+                                   FontAttributes="Italic"  
+                                   TextColor="#888888"  
+                                   HorizontalOptions="Center"/>  
 
-                        <!-- STREAK no topo do card -->
-                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
-                            <Image Source="fire.png" HeightRequest="24" WidthRequest="24"/>
-                            <Label Text="{Binding StreakMessage}"
-           FontSize="14"
-           FontAttributes="Bold"
-           TextColor="#E94560"
-           HorizontalTextAlignment="Center"
-           HorizontalOptions="Center"/>
-                        </HorizontalStackLayout>
+                        </StackLayout>  
+                    </Border>  
 
+                    <Button Text="Buscar Locais"  
+                            BackgroundColor="#E94560"  
+                            TextColor="White"  
+                            CornerRadius="8"  
+                            FontAttributes="Bold"  
+                            HeightRequest="58"  
+                            Margin="0,22,0,0"  
+                            Command="{Binding NavigateToMapCommand}" />  
 
-                        <!-- ILUSTRAÇÃO -->
-                        <Image Source="rat.png"
-                               MaximumHeightRequest="220"
-                               MaximumWidthRequest="220"
-                               HorizontalOptions="Center"/>
-
-                        <!-- Mensagem motivacional -->
-                        <Label Text="Continue firme!"
-                               FontSize="14"
-                               FontAttributes="Italic"
-                               TextColor="#888888"
-                               HorizontalOptions="Center"/>
-                        
-                        
-                    </StackLayout>
-                </Border>
-                <!-- BOTÃO MAPA -->
-                <Button Text="Buscar Locais"
-        BackgroundColor="#E94560"
-        TextColor="White"
-        CornerRadius="8"
-        FontAttributes="Bold"
-        HeightRequest="58"
-                        Margin="0,22,0,0"
-        Command="{Binding NavigateToMapCommand}" />
-
-            </StackLayout>
-        </ScrollView>
-    </Grid>
-</ContentPage>
+                </StackLayout>  
+            </ScrollView>  
+        </Grid>  
+    </ContentPage>
