@@ -63,4 +63,6 @@ public class ApiSettings
     public string GetHistoryByUserIdEndpoint { get; set; }
 
     public string GetNextReservationByUserIdEndpoint { get; set; }
+
+    public string GetUserCurrentStreakEndpoint { get; set; }
 }

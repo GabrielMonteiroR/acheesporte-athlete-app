@@ -8,5 +8,6 @@ public interface IReservationService
     Task<ReservationDto?> CreateReservationAsync(CreateReservationDto dto);
     Task<ReservationsByUserResponseDto> GetHistoryByUserAsync(int userId);
     Task<ReservationsByUserResponseDto> GetNextReservationByUserAsync(int userId);
+    Task<StreakDto?> GetUserStreakAsync(int userId);
 }
 

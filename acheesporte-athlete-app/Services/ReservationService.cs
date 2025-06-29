@@ -111,4 +111,31 @@ public class ReservationService : IReservationService
                ?? new ReservationsByUserResponseDto();
     }
 
+    public async Task<StreakDto?> GetUserStreakAsync(int userId)
+    {
+        try
+        {
+            var url = $"{_apiSettings.BaseUrl}{_apiSettings.GetUserCurrentStreakEndpoint}{userId}";
+            var token = await SecureStorage.GetAsync("auth_token");
+
+            using var req = new HttpRequestMessage(HttpMethod.Get, url);
+            if (!string.IsNullOrWhiteSpace(token))
+                req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            using var res = await _httpClient.SendAsync(req);
+            var content = await res.Content.ReadAsStringAsync();
+
+            if (!res.IsSuccessStatusCode)
+                throw new Exception($"API error {(int)res.StatusCode}: {content}");
+
+            return JsonSerializer.Deserialize<StreakDto>(
+                content,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
+
 }

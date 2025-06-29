@@ -17,45 +17,39 @@ public partial class HomeViewModel : ObservableObject
         _reservationService = reservationService;
     }
 
-    /* ─── dados do usuário ─── */
-    [ObservableProperty] private string userName = "";
-    [ObservableProperty] private string profileImageUrl = "profile.png";
-
     /* ─── próxima reserva ─── */
     [ObservableProperty] private ReservationDto? nextReservation;
     [ObservableProperty] private bool isLoadingNextReservation;
+
+    /* ─── streak ─── */
+    [ObservableProperty] private string streakMessage = "Sem streak ativo no momento.";
 
     /* ─── navegação para o mapa ─── */
     [RelayCommand]
     private Task NavigateToMapAsync() =>
         Shell.Current.GoToAsync(nameof(SelectVenueMapPage));
 
-    /* ─── carregar dados do usuário + próxima reserva ─── */
+    /* ─── carregar dados do usuário + próxima reserva + streak ─── */
     [RelayCommand]
     public async Task LoadDataAsync()
     {
         try
         {
-            /* usuário */
             var user = await _userService.GetCurrentUserAsync();
             UserSession.CurrentUser = user;
 
-            UserName = user.FirstName;
-            ProfileImageUrl = string.IsNullOrWhiteSpace(user.ProfileImage) ? "profile.png"
-                                                                            : user.ProfileImage;
-
-            /* próxima reserva  */
             IsLoadingNextReservation = true;
-            var dto = await _reservationService.GetNextReservationByUserAsync(user.Id);
 
+            var dto = await _reservationService.GetNextReservationByUserAsync(user.Id);
             NextReservation = dto.Reservations.FirstOrDefault();
+
+            var streak = await _reservationService.GetUserStreakAsync(user.Id);
+            StreakMessage = streak?.Message ?? "Sem streak ativo no momento.";
         }
         catch
         {
-            // fallback simples
-            UserName = "Atleta";
-            ProfileImageUrl = "profile.png";
             NextReservation = null;
+            StreakMessage = "Sem streak ativo no momento.";
         }
         finally
         {

@@ -88,11 +88,14 @@
                         <!-- STREAK no topo do card -->
                         <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                             <Image Source="fire.png" HeightRequest="24" WidthRequest="24"/>
-                            <Label Text="4 semanas seguidas praticando!"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="#E94560"/>
+                            <Label Text="{Binding StreakMessage}"
+           FontSize="16"
+           FontAttributes="Bold"
+           TextColor="#E94560"
+           HorizontalTextAlignment="Center"
+           HorizontalOptions="Center"/>
                         </HorizontalStackLayout>
+
 
                         <!-- ILUSTRAÇÃO -->
                         <Image Source="rat.png"
