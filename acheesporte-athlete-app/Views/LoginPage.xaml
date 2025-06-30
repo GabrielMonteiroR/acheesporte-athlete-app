@@ -13,7 +13,6 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Top Section with Logo and Title -->
         <Grid Grid.Row="0" Padding="24,4,4,4" HeightRequest="200">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -34,7 +33,6 @@
             </StackLayout>
         </Grid>
 
-        <!-- Formulário de login -->
         <Border Grid.Row="1"  
                 BackgroundColor="#FFFFFF"  
                 StrokeShape="RoundRectangle 24"  
@@ -57,7 +55,6 @@
                     </HorizontalStackLayout>
                 </Border>
 
-                <!-- Campos de login -->
                 <Label Text="Email" FontSize="14" TextColor="#E94560" FontAttributes="Bold" />
                 <Entry Placeholder="Insira seu Email"  
                        Keyboard="Email"  
@@ -87,7 +84,6 @@
                         Command="{Binding LoginCommand}"
                         IsEnabled="{Binding IsNotBusy}" />
 
-                <!-- Link para cadastro -->
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
                     <Label Text="Não tem uma conta?" TextColor="#E94560" VerticalOptions="Center" />
                     <Button Text="Cadastre-se"  
@@ -99,5 +95,10 @@
 
             </VerticalStackLayout>
         </Border>
+        <ActivityIndicator IsRunning="{Binding IsBusy}"  
+                   Color="#E94560"  
+                   VerticalOptions="Center"  
+                   HorizontalOptions="Center" />
+
     </Grid>
 </ContentPage>

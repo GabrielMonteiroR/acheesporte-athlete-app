@@ -70,6 +70,12 @@
                     CornerRadius="20"  
                     FontSize="18"  
                     HeightRequest="55" />
+            <Button Text="Sair da conta"
+        BackgroundColor="#444"
+        TextColor="White"
+        CornerRadius="12"
+        HeightRequest="50"
+        Command="{Binding LogoutCommand}" />
 
             <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="#FF1493" />
         </VerticalStackLayout>

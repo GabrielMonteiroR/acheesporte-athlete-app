@@ -13,7 +13,6 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Topo -->
         <Grid Grid.Row="0" Padding="24,4,4,4" HeightRequest="200">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -29,8 +28,6 @@
             </StackLayout>
         </Grid>
 
-
-        <!-- Formulário -->
         <Border Grid.Row="1"
                 BackgroundColor="#FFFFFF"
                 StrokeShape="RoundRectangle 24"
@@ -60,7 +57,6 @@
                             HorizontalOptions="Center"
                             FontSize="12" />
 
-                    <!-- Campos -->
                     <Label Text="Nome" FontSize="14" TextColor="#E94560" FontAttributes="Bold" />
                     <Entry Placeholder="Primeiro nome" Text="{Binding FirstName}" TextColor="#121212" PlaceholderColor="#888888" />
 

@@ -4,6 +4,7 @@ using acheesporte_athlete_app.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using static Microsoft.Maui.ApplicationModel.Permissions;
+using acheesporte_athlete_app.Helpers;
 
 namespace acheesporte_athlete_app.ViewModels;
 
@@ -130,5 +131,20 @@ public partial class UserProfileViewModel : ObservableObject
         {
             IsLoading = false;
         }
+    }
+
+    [RelayCommand]
+    private async Task LogoutAsync()
+    {
+        var confirm = await Application.Current.MainPage.DisplayAlert(
+            "Sair", "Deseja realmente sair da conta?", "Sim", "Cancelar");
+
+        if (!confirm) return;
+
+        SecureStorage.Remove("auth_token");
+
+        UserSession.CurrentUser = null;
+
+        await Shell.Current.GoToAsync("//LoginPage");
     }
 }

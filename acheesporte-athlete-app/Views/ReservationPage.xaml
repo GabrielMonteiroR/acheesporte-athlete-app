@@ -14,14 +14,12 @@
 
     <Grid Padding="16">  
 
-        <!-- Loading -->  
         <ActivityIndicator IsRunning="{Binding IsLoading}"  
                            IsVisible="{Binding IsLoading}"  
                            HorizontalOptions="Center"  
                            VerticalOptions="Center"  
                            Color="#E94560"/>  
 
-        <!-- Lista -->  
         <CollectionView ItemsSource="{Binding Reservations}"  
                         IsVisible="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}">  
 
@@ -41,20 +39,17 @@
                             Margin="0,8">  
 
                         <StackLayout>  
-
-                            <!-- IMAGEM DE CAPA -->  
+  
                             <Image Source="{Binding Venue.ImageUrls[0]}"  
                                    HeightRequest="160"  
                                    Aspect="AspectFill" />  
-
-                            <!-- GRID: dados + locador -->  
+ 
                             <Grid Padding="12" ColumnSpacing="16">  
                                 <Grid.ColumnDefinitions>  
                                     <ColumnDefinition Width="*" />  
                                     <ColumnDefinition Width="110" />  
                                 </Grid.ColumnDefinitions>  
-
-                                <!-- ESQUERDA -->  
+ 
                                 <StackLayout Spacing="6">  
                                     <Label Text="{Binding Venue.Name}"  
                                            FontSize="18"  
@@ -75,7 +70,6 @@
                                            TextColor="{Binding IsPaid, Converter={StaticResource PaidColorConverter}}"/>  
                                 </StackLayout>  
 
-                                <!-- DIREITA: locador -->  
                                 <VerticalStackLayout Grid.Column="1"  
                                                      Spacing="4"  
                                                      HorizontalOptions="Center">  
@@ -103,7 +97,6 @@
                                 </VerticalStackLayout>  
                             </Grid>  
 
-                            <!-- BOTÃO DINÂMICO -->  
                             <Border BackgroundColor="#E94560"  
                                     StrokeThickness="0"  
                                     StrokeShape="RoundRectangle 8"  

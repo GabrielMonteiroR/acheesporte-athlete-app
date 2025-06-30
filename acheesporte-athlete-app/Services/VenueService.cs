@@ -48,7 +48,6 @@ public class VenueService : IVenueService
 
             var queryString = q.Count > 0 ? "?" + string.Join("&", q) : string.Empty;
             var url = _apiSettings.BaseUrl + _apiSettings.VenuesEndpoint + queryString;
-            await Shell.Current.DisplayAlert("URL", url, "OK");
 
             var token = await SecureStorage.GetAsync("auth_token");
             var request = new HttpRequestMessage(HttpMethod.Get, url);
