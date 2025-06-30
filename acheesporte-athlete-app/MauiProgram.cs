@@ -41,10 +41,24 @@ namespace acheesporte_athlete_app
             builder.Services.AddSingleton<AppShell>();
             builder.Services.AddTransient<SplashPage>();
             builder.Services.AddTransient<ReservationPage>();
-            builder.Services.AddTransient<ReservationViewModel>();
+            builder.Services.AddTransient<MyReservationsViewModel>();
+            builder.Services.AddTransient<ReservationCreatePage>();
+            builder.Services.AddTransient<ReservationCreateViewModel>();
+            builder.Services.AddTransient<PixPaymentPage>();
+            builder.Services.AddTransient<PixPaymentViewModel>();
+            builder.Services.AddTransient<UserProfilePage>();
+            builder.Services.AddTransient<UserProfileViewModel>();
+            builder.Services.AddTransient<ReservationHistoryPage>();
+            builder.Services.AddTransient<ReservationHistoryViewModel>();
 
 
             builder.Services.AddHttpClient<IReservationService, ReservationService>(client =>
+            {
+                var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
+                client.BaseAddress = new Uri(apiSettings.BaseUrl);
+            });
+
+            builder.Services.AddHttpClient<ISportService, SportService>(client =>
             {
                 var apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>();
                 client.BaseAddress = new Uri(apiSettings.BaseUrl);

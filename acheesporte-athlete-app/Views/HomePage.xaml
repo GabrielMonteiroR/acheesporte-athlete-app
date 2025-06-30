@@ -1,91 +1,115 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                  x:Class="acheesporte_athlete_app.Views.HomePage"
-                  Shell.NavBarIsVisible="False"
-                  Shell.PresentationMode="Animated"
-                  NavigationPage.HasNavigationBar="False"
-                  Shell.TabBarIsVisible="True"
-                  BackgroundColor="#200937">
+    <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+                 x:Class="acheesporte_athlete_app.Views.HomePage"  
+                 Shell.NavBarIsVisible="True"  
+                 BackgroundColor="AliceBlue"  
+                 Shell.BackgroundColor="AliceBlue"  
+                 Shell.TabBarBackgroundColor="AliceBlue"  
+                 Title="Inicio">  
 
-    <Grid RowDefinitions="Auto, *" Padding="24">
-        <!-- TOPO: Boas-vindas + imagem de perfil -->
-        <Grid Grid.Row="0" ColumnSpacing="16" Margin="0,0,0,16">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+        <Grid RowDefinitions="Auto,*" Padding="12,2,12,12">  
 
-            <StackLayout VerticalOptions="Center">
-                <Label Text="Bem-vindo," FontSize="18" FontAttributes="Bold" TextColor="White" />
-                <Label Text="{Binding UserName}" FontSize="20" FontAttributes="Bold" TextColor="#FF851B" />
-            </StackLayout>
+            <ScrollView Grid.Row="1">  
+                <StackLayout Spacing="24">  
 
-            <Frame Grid.Column="1"
-                        HeightRequest="56" WidthRequest="56"
-                        Padding="0" CornerRadius="28"
-                        BorderColor="Transparent" BackgroundColor="Transparent" HasShadow="False">
-                <Image Source="{Binding ProfileImageUrl}" Aspect="AspectFill" HeightRequest="56" WidthRequest="56" />
-            </Frame>
-        </Grid>
+                    <Frame CornerRadius="16" HasShadow="True" BackgroundColor="White"  
+                           IsVisible="{Binding NextReservation, Converter={StaticResource NullToFalseConverter}}">  
 
-        <!-- SEARCH BAR + BUTTON -->
-        <StackLayout Spacing="8" Grid.Row="1">
-            <Frame Padding="0" CornerRadius="8" BorderColor="#FF851B" HasShadow="False" BackgroundColor="White" HeightRequest="64">
-                <SearchBar Placeholder="Buscar locais..." BackgroundColor="Transparent" HeightRequest="44" />
-            </Frame>
-            <Button Text="Abrir Mapa"
-                         BackgroundColor="BlueViolet"
-                         TextColor="White"
-                         CornerRadius="8"
-                         FontAttributes="Bold"
-                         HeightRequest="44" />
-        </StackLayout>
+                        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="12" VerticalOptions="Center">  
 
-        <!-- MAIN CONTENT -->
-        <ScrollView Grid.Row="2" VerticalOptions="Center">
-            <StackLayout Spacing="24">
+                            <VerticalStackLayout Spacing="4" Grid.Column="0">  
 
-                <!-- CARD: Próximo jogo (menor) -->
-                <Frame BackgroundColor="White" CornerRadius="16" HasShadow="True" Padding="12" HeightRequest="90" BorderColor="Transparent">
-                    <StackLayout Spacing="2" VerticalOptions="Center">
-                        <Label Text="Próximo jogo" FontSize="15" FontAttributes="Bold" TextColor="#200937" />
-                        <Label Text="Arena Central - Quadra 3" FontSize="13" TextColor="#444" />
-                        <Label Text="Sábado, 01/06 às 10:00" FontSize="12" TextColor="#888" />
-                    </StackLayout>
-                </Frame>
+                                <Label Text="Próximo jogo"  
+                                       FontAttributes="Bold"  
+                                       TextColor="#E94560"  
+                                       FontSize="14"/>  
 
-                <!-- RESUMO DE AGENDAMENTOS -->
-                <Frame BackgroundColor="White" CornerRadius="16" HasShadow="True" Padding="16" Margin="0,8,0,0">
-                    <StackLayout Spacing="12">
-                        <Label Text="Resumo de agendamentos" FontSize="13" FontAttributes="Bold" TextColor="#888" HorizontalOptions="Center" />
-                        <Grid ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <StackLayout Grid.Column="0" HorizontalOptions="Center">
-                                <Label Text="Semana" FontSize="13" TextColor="#888" HorizontalOptions="Center" />
-                                <Label Text="2" FontSize="20" FontAttributes="Bold" TextColor="#200937" HorizontalOptions="Center" />
-                            </StackLayout>
-                            <StackLayout Grid.Column="1" HorizontalOptions="Center">
-                                <Label Text="Mês" FontSize="13" TextColor="#888" HorizontalOptions="Center" />
-                                <Label Text="4" FontSize="20" FontAttributes="Bold" TextColor="#200937" HorizontalOptions="Center" />
-                            </StackLayout>
-                            <StackLayout Grid.Column="2" HorizontalOptions="Center">
-                                <Label Text="Total" FontSize="13" TextColor="#888" HorizontalOptions="Center" />
-                                <Label Text="23" FontSize="20" FontAttributes="Bold" TextColor="#200937" HorizontalOptions="Center" />
-                            </StackLayout>
-                        </Grid>
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="6">
-                            <Image Source="fire.gif" HeightRequest="24" WidthRequest="24" />
-                            <Label Text="4" FontSize="16" FontAttributes="Bold" TextColor="#FF851B" VerticalOptions="Center" />
-                            <Label Text="semanas seguidas praticando!" FontSize="13" TextColor="#888" VerticalOptions="Center" />
-                        </StackLayout>
-                    </StackLayout>
-                </Frame>
+                                <Label Text="{Binding NextReservation.Venue.Name}"  
+                                       FontSize="13"  
+                                       TextColor="#444"/>  
 
-            </StackLayout>
-        </ScrollView>
-    </Grid>
-</ContentPage>
+                                <Label Text="{Binding NextReservation.VenueAvailabilityTime.StartDate,  
+                                              StringFormat='{0:dddd, dd/MM} às {0:HH\\:mm}'}"  
+                                       FontSize="12"  
+                                       TextColor="#888"/>  
+
+                                <Label Text="{Binding NextReservation.VenueAvailabilityTime.Price,  
+                                              StringFormat='Valor: R$ {0:F2}'}"  
+                                       FontSize="12"  
+                                       TextColor="#888"/>  
+
+                                <Button CornerRadius="10" HeightRequest="36"  
+                                        Padding="8,0"  
+                                        BackgroundColor="#E94560"  
+                                        TextColor="White"  
+                                        FontSize="13"  
+                                        Text="{Binding NextReservation.IsPaid,  
+                                                       Converter={StaticResource BoolToTextConverter},  
+                                                       ConverterParameter='Ver rota|Pagar com PIX'}">  
+                                    <Button.Command>  
+                                        <MultiBinding Converter="{StaticResource ReservationActionSelector}">  
+                                            <Binding Path="NextReservation"/>  
+                                        </MultiBinding>  
+                                    </Button.Command>  
+                                </Button>  
+
+                            </VerticalStackLayout>  
+
+                            <Border Grid.Column="1"  
+                                    WidthRequest="120"  
+                                    HeightRequest="120"  
+                                    StrokeThickness="0"  
+                                    StrokeShape="RoundRectangle 16">  
+                                <Image Source="{Binding NextReservation.Venue.ImageUrls[0]}"  
+                                       Aspect="AspectFill"/>  
+                            </Border>  
+
+                        </Grid>  
+                    </Frame>  
+
+                    <Border Stroke="Transparent" StrokeThickness="1" BackgroundColor="White" Padding="12">  
+                        <StackLayout Spacing="8">  
+
+                            <Label Text="Sua sequência"  
+                                   FontAttributes="Bold"  
+                                   FontSize="14"  
+                                   TextColor="#888888"  
+                                   HorizontalOptions="Center"/>  
+
+                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">  
+                                <Image Source="fire.png" HeightRequest="24" WidthRequest="24"/>  
+                                <Label Text="{Binding StreakMessage}"  
+                                       FontSize="14"  
+                                       FontAttributes="Bold"  
+                                       TextColor="#E94560"  
+                                       HorizontalTextAlignment="Center"  
+                                       HorizontalOptions="Center"/>  
+                            </HorizontalStackLayout>  
+
+                            <Image Source="rat.png"  
+                                   MaximumHeightRequest="220"  
+                                   MaximumWidthRequest="220"  
+                                   HorizontalOptions="Center"/>  
+
+                            <Label Text="Continue firme!"  
+                                   FontSize="14"  
+                                   FontAttributes="Italic"  
+                                   TextColor="#888888"  
+                                   HorizontalOptions="Center"/>  
+
+                        </StackLayout>  
+                    </Border>  
+
+                    <Button Text="Buscar Locais"  
+                            BackgroundColor="#E94560"  
+                            TextColor="White"  
+                            CornerRadius="8"  
+                            FontAttributes="Bold"  
+                            HeightRequest="58"  
+                            Margin="0,22,0,0"  
+                            Command="{Binding NavigateToMapCommand}" />  
+
+                </StackLayout>  
+            </ScrollView>  
+        </Grid>  
+    </ContentPage>

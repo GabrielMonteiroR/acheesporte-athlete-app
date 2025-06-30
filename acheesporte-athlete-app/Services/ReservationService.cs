@@ -1,8 +1,12 @@
 ﻿using acheesporte_athlete_app.Configuration;
+using acheesporte_athlete_app.Dtos;
 using acheesporte_athlete_app.Dtos.ReservationDtos;
 using acheesporte_athlete_app.Interfaces;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
+using static System.Net.WebRequestMethods;
 
 namespace acheesporte_athlete_app.Services;
 
@@ -11,55 +15,127 @@ public class ReservationService : IReservationService
     private readonly HttpClient _httpClient;
     private readonly ApiSettings _apiSettings;
 
-    public ReservationService(HttpClient httpClient, ApiSettings apiSettings)
+    public ReservationService(HttpClient http, ApiSettings settings)
     {
-        _httpClient = httpClient;
-        _apiSettings = apiSettings;
+        _httpClient = http;
+        _apiSettings = settings;
     }
 
-    public async Task<ReservationResponseDto> GetReservationsByUserAsync(ReservationRequestDto requestDto)
+    public async Task<ReservationsByUserResponseDto> GetReservationsByUserAsync(int userId)
+    {
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.GetReservationsByUserIdEndpoint}{userId}";
+        var token = await SecureStorage.GetAsync("auth_token");
+
+        using var req = new HttpRequestMessage(HttpMethod.Get, url);
+        if (!string.IsNullOrWhiteSpace(token))
+            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        using var res = await _httpClient.SendAsync(req);
+        var body = await res.Content.ReadAsStringAsync();
+
+        if (!res.IsSuccessStatusCode)
+            throw new Exception($"API error {(int)res.StatusCode}: {body}");
+
+        return JsonSerializer.Deserialize<ReservationsByUserResponseDto>(
+                   body,
+                   new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+               ?? new ReservationsByUserResponseDto();
+    }
+
+    public async Task<ReservationDto?> CreateReservationAsync(CreateReservationDto dto)
     {
         try
         {
-            var requestUrl = $"{_apiSettings.ReservationEndpoint}/{requestDto.UserId}";
-
-            if (requestDto.Status.HasValue)
-            {
-                requestUrl += $"?status={requestDto.Status.Value}";
-            }
-
+            var url = _apiSettings.BaseUrl + _apiSettings.ReservationsEndpoint;
             var token = await SecureStorage.GetAsync("auth_token");
 
-            var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var request = new HttpRequestMessage(HttpMethod.Post, url);
+            if (!string.IsNullOrWhiteSpace(token))
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var json = JsonSerializer.Serialize(dto);
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.SendAsync(request);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
+            if (!response.IsSuccessStatusCode)
+                return null;
 
-                var reservationResponse = JsonSerializer.Deserialize<ReservationResponseDto>(json, options);
-
-                return reservationResponse ?? new ReservationResponseDto
-                {
-                    Message = "No reservations found.",
-                    Reservations = new List<ReservationDto>()
-                };
-            }
-            else
-            {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                throw new Exception($"Failed to fetch reservations: {response.StatusCode} - {errorContent}");
-            }
+            return await response.Content.ReadFromJsonAsync<ReservationDto>();
         }
         catch (Exception ex)
         {
-            throw new Exception("An error occurred while fetching reservations.", ex);
+            throw new Exception("Erro ao criar reserva.", ex);
         }
     }
+
+    public async Task<ReservationsByUserResponseDto> GetHistoryByUserAsync(int userId)
+    {
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.GetHistoryByUserIdEndpoint}{userId}";
+        var token = await SecureStorage.GetAsync("auth_token");
+
+        using var req = new HttpRequestMessage(HttpMethod.Get, url);
+        if (!string.IsNullOrWhiteSpace(token))
+            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        using var res = await _httpClient.SendAsync(req); 
+        var body = await res.Content.ReadAsStringAsync();
+
+        if (!res.IsSuccessStatusCode)
+            throw new Exception($"API error {(int)res.StatusCode}: {body}");
+
+        return JsonSerializer.Deserialize<ReservationsByUserResponseDto>(
+            body,
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+            ?? new ReservationsByUserResponseDto();
+    }
+
+    public async Task<ReservationsByUserResponseDto> GetNextReservationByUserAsync(int userId)
+    {
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.GetNextReservationByUserIdEndpoint}{userId}";
+        var token = await SecureStorage.GetAsync("auth_token");
+
+        using var req = new HttpRequestMessage(HttpMethod.Get, url);
+        if (!string.IsNullOrWhiteSpace(token))
+            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        using var res = await _httpClient.SendAsync(req);
+        var body = await res.Content.ReadAsStringAsync();
+
+        if (!res.IsSuccessStatusCode)
+            throw new Exception($"API error {(int)res.StatusCode}: {body}");
+
+        return JsonSerializer.Deserialize<ReservationsByUserResponseDto>(
+                   body,
+                   new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+               ?? new ReservationsByUserResponseDto();
+    }
+
+    public async Task<StreakDto?> GetUserStreakAsync(int userId)
+    {
+        try
+        {
+            var url = $"{_apiSettings.BaseUrl}{_apiSettings.GetUserCurrentStreakEndpoint}{userId}";
+            var token = await SecureStorage.GetAsync("auth_token");
+
+            using var req = new HttpRequestMessage(HttpMethod.Get, url);
+            if (!string.IsNullOrWhiteSpace(token))
+                req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            using var res = await _httpClient.SendAsync(req);
+            var content = await res.Content.ReadAsStringAsync();
+
+            if (!res.IsSuccessStatusCode)
+                throw new Exception($"API error {(int)res.StatusCode}: {content}");
+
+            return JsonSerializer.Deserialize<StreakDto>(
+                content,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
+
 }

@@ -4,14 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"    
     xmlns:view="clr-namespace:acheesporte_athlete_app.Views"
 
-    Shell.TabBarBackgroundColor="#200937"  
-    Shell.TabBarForegroundColor="Purple"  
-    Shell.TabBarTitleColor="Purple"  
-    Shell.TabBarUnselectedColor="#CCCCCC"  
-    Shell.TabBarDisabledColor="#888888"  
-    Shell.BackgroundColor="#200937"  
+    Shell.TabBarBackgroundColor="AliceBlue"  
+    Shell.TabBarForegroundColor="#E94560"  
+    Shell.TitleColor="#E94560"
+    Shell.TabBarTitleColor="#E94560"  
+    Shell.TabBarUnselectedColor="DarkGrey"  
+    Shell.TabBarDisabledColor="DarkGrey"
+    Shell.BackgroundColor="AliceBlue"
+    Shell.ForegroundColor="#E94560"
     Shell.NavBarIsVisible="False">
-
     <!-- <ShellContent Route="SplashPage" ContentTemplate="{DataTemplate auth:SplashPage}" /> -->
     <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate view:HomePage}" />
     <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate view:HomePage}" />
@@ -31,11 +32,17 @@
             ContentTemplate="{DataTemplate view:ReservationPage}"/>
 
         <ShellContent
-    Title="Histórico"
-    Route="TestPage"
-    Icon="history.png"
-    ContentTemplate="{DataTemplate view:TestPage}"/>
-        
+        Route="ReservationHistoryPage"
+        Title="Histórico"
+        Icon="history.png"
+        ContentTemplate="{DataTemplate view:ReservationHistoryPage}"/>
+
+        <ShellContent
+    Title="Perfil"
+    Route="UserProfilePage"
+    Icon="user.png"
+    ContentTemplate="{DataTemplate view:UserProfilePage}"/>
+
     </TabBar>
 
 </Shell>

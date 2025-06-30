@@ -1,19 +1,20 @@
-﻿using acheesporte_athlete_app.Dtos.User;
-using acheesporte_athlete_app.Interfaces;
+﻿using acheesporte_athlete_app;
+using acheesporte_athlete_app.Dtos;
 using acheesporte_athlete_app.Helpers;
+using acheesporte_athlete_app.Interfaces;
+using acheesporte_athlete_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using acheesporte_athlete_app.Views;
 
 namespace acheesporte_athlete_app.ViewModels;
 
 public partial class LoginViewModel : ObservableObject
 {
-    private readonly IUserService _userService;
+    private readonly IUserService _userInterface;
 
     public LoginViewModel(IUserService userService)
     {
-        _userService = userService;
+        _userInterface = userService;
     }
 
     [ObservableProperty]
@@ -44,15 +45,15 @@ public partial class LoginViewModel : ObservableObject
                 return;
             }
 
-            var dto = new LoginRequestDto
+            var dto = new SignInRequestDto
             {
                 Email = Email,
                 Password = Password
             };
 
-            await _userService.SignInUserAsync(dto);
+            await _userInterface.SignInUserAsync(dto);
 
-            var currentUser = await _userService.GetCurrentUserAsync();
+            var currentUser = await _userInterface.GetCurrentUserAsync();
 
             if (currentUser == null)
             {
@@ -88,12 +89,15 @@ public partial class LoginViewModel : ObservableObject
 
         try
         {
+            Application.Current.MainPage = new NavigationPage(new LoginPage());
             await Application.Current.MainPage.Navigation.PushAsync(App.Services.GetService<RegisterPage>());
+
 
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Erro", ex.Message, "OK");
+            await Application.Current.MainPage.DisplayAlert("Erro", ex.Message, "OK");
+
         }
         finally
         {

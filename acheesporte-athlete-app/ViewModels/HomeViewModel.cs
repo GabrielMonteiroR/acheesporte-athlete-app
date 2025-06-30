@@ -1,42 +1,59 @@
-﻿using acheesporte_athlete_app.Helpers;
+﻿using acheesporte_athlete_app.Dtos.ReservationDtos;
+using acheesporte_athlete_app.Helpers;
 using acheesporte_athlete_app.Interfaces;
+using acheesporte_athlete_app.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Threading.Tasks;
-
-namespace acheesporte_athlete_app.ViewModels;
 
 public partial class HomeViewModel : ObservableObject
 {
     private readonly IUserService _userService;
+    private readonly IReservationService _reservationService;
 
-    [ObservableProperty]
-    private string userName;
-
-    [ObservableProperty]
-    private string profileImageUrl;
-
-    public HomeViewModel(IUserService userService)
+    public HomeViewModel(IUserService userService,
+                         IReservationService reservationService)
     {
         _userService = userService;
+        _reservationService = reservationService;
     }
 
+    /* ─── próxima reserva ─── */
+    [ObservableProperty] private ReservationDto? nextReservation;
+    [ObservableProperty] private bool isLoadingNextReservation;
+
+    /* ─── streak ─── */
+    [ObservableProperty] private string streakMessage = "Sem streak ativo no momento.";
+
+    /* ─── navegação para o mapa ─── */
     [RelayCommand]
-    public async Task LoadUserAsync()
+    private Task NavigateToMapAsync() =>
+        Shell.Current.GoToAsync(nameof(SelectVenueMapPage));
+
+    /* ─── carregar dados do usuário + próxima reserva + streak ─── */
+    [RelayCommand]
+    public async Task LoadDataAsync()
     {
         try
         {
             var user = await _userService.GetCurrentUserAsync();
             UserSession.CurrentUser = user;
-            UserName = user.FirstName;
-            ProfileImageUrl = string.IsNullOrWhiteSpace(user.ProfileImage)
-                ? "profile.png"
-                : user.ProfileImage;
+
+            IsLoadingNextReservation = true;
+
+            var dto = await _reservationService.GetNextReservationByUserAsync(user.Id);
+            NextReservation = dto.Reservations.FirstOrDefault();
+
+            var streak = await _reservationService.GetUserStreakAsync(user.Id);
+            StreakMessage = streak?.Message ?? "Sem streak ativo no momento.";
         }
         catch
         {
-            UserName = "Atleta";
-            ProfileImageUrl = "profile.png";
+            NextReservation = null;
+            StreakMessage = "Sem streak ativo no momento.";
+        }
+        finally
+        {
+            IsLoadingNextReservation = false;
         }
     }
 }

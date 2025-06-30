@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace acheesporte_athlete_app.Dtos.User;
+namespace acheesporte_athlete_app.Dtos;
 
-public class LoginResponseDto
+public class SignInResponseDto
 {
     [JsonPropertyName("token")]
     public string Token { get; set; }

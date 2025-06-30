@@ -1,96 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                 xmlns:vm="clr-namespace:acheesporte_athlete_app.ViewModels"
-                 x:Class="acheesporte_athlete_app.Views.ReservationPage"
-                 BackgroundColor="#200937"
-                 Title="Minhas Reservas">
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+             xmlns:vm="clr-namespace:acheesporte_athlete_app.ViewModels"  
+             xmlns:reservationDtos="clr-namespace:acheesporte_athlete_app.Dtos.ReservationDtos"  
+             x:Class="acheesporte_athlete_app.Views.ReservationPage"  
+             x:Name="ReservationPageView"  
+             x:DataType="vm:MyReservationsViewModel"  
+             BackgroundColor="AliceBlue"  
+             Title="Minhas Reservas"
+            Shell.NavBarIsVisible="true"
+             Shell.TitleColor="DeepPink"
+>  
 
-    <Grid Padding="16">
-        <!-- Loading -->
-        <ActivityIndicator IsRunning="{Binding IsBusy}" 
-                               IsVisible="{Binding IsBusy}"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"
-                               Color="White" />
+    <Grid Padding="16">  
 
-        <!-- Lista de reservas -->
-        <CollectionView ItemsSource="{Binding Reservations}"
-                            IsVisible="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame BackgroundColor="White"
-                               CornerRadius="20"
-                               Padding="0"
-                               Margin="0,8"
-                               HasShadow="True">
-                        <Grid ColumnDefinitions="Auto,*,Auto"
-                                  RowDefinitions="Auto,Auto,Auto,Auto"
-                                  Padding="16">
-                            <!-- Sticker/Icon -->
-                            <Image Source="sticker_ball.png"
-                                       WidthRequest="48"
-                                       HeightRequest="48"
-                                       Grid.RowSpan="4"
-                                       VerticalOptions="Start"
-                                       Margin="0,0,12,0"/>
-                            <!-- Início -->
-                            <Label Text="{Binding StartDate, StringFormat='Início: {0:dd/MM/yyyy HH:mm}'}"
-                                       TextColor="#200937"
-                                       FontAttributes="Bold"
-                                       FontSize="16"
-                                       Grid.Column="1"
-                                       Grid.Row="0"/>
-                            <!-- Status do Pagamento (sticker) -->
-                            <Image Source="{Binding PaymentStatus, Converter={StaticResource PaymentStatusToStickerConverter}}"
-                                       WidthRequest="32"
-                                       HeightRequest="32"
-                                       Grid.Column="2"
-                                       Grid.Row="0"
-                                       VerticalOptions="Start"
-                                       Margin="8,0,0,0"/>
-                            <!-- Fim -->
-                            <Label Text="{Binding EndDate, StringFormat='Fim: {0:dd/MM/yyyy HH:mm}'}"
-                                       TextColor="#4B4B4B"
-                                       FontSize="14"
-                                       Grid.Column="1"
-                                       Grid.Row="1"
-                                       Grid.ColumnSpan="2"/>
-                            <!-- Valor -->
-                            <Label Text="{Binding TotalAmount, StringFormat='Valor: R$ {0:F2}'}"
-                                       TextColor="#4B4B4B"
-                                       FontSize="14"
-                                       Grid.Column="1"
-                                       Grid.Row="2"
-                                       Grid.ColumnSpan="2"/>
-                            <!-- Status do Pagamento (texto) -->
-                            <Label Text="{Binding PaymentStatus, StringFormat='Status do Pagamento: {0}'}"
-                                       TextColor="#4B4B4B"
-                                       FontSize="14"
-                                       Grid.Column="1"
-                                       Grid.Row="3"
-                                       Grid.ColumnSpan="2"/>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <ActivityIndicator IsRunning="{Binding IsLoading}"  
+                           IsVisible="{Binding IsLoading}"  
+                           HorizontalOptions="Center"  
+                           VerticalOptions="Center"  
+                           Color="#E94560"/>  
 
-        <!-- Mensagem e imagem quando vazio -->
-        <VerticalStackLayout
-                Spacing="12"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                IsVisible="{Binding Reservations.Count, Converter={StaticResource ZeroToBoolConverter}}">
-            <Image Source="football.png"
-                       WidthRequest="80"
-                       HeightRequest="80"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
-            <Label Text="Nenhuma reserva encontrada."
-                       TextColor="White"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
-        </VerticalStackLayout>
-    </Grid>
+        <CollectionView ItemsSource="{Binding Reservations}"  
+                        IsVisible="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}">  
+
+            <CollectionView.EmptyView>  
+                <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">  
+                    <Image Source="football.png" WidthRequest="80" HeightRequest="80"/>  
+                    <Label Text="Nenhuma reserva encontrada." TextColor="#888" />  
+                </StackLayout>  
+            </CollectionView.EmptyView>  
+
+            <CollectionView.ItemTemplate>  
+                <DataTemplate x:DataType="reservationDtos:ReservationDto">  
+                    <Border StrokeThickness="1"  
+                            Stroke="Transparent"  
+                            StrokeShape="RoundRectangle 16"  
+                            BackgroundColor="White"  
+                            Margin="0,8">  
+
+                        <StackLayout>  
+  
+                            <Image Source="{Binding Venue.ImageUrls[0]}"  
+                                   HeightRequest="160"  
+                                   Aspect="AspectFill" />  
+ 
+                            <Grid Padding="12" ColumnSpacing="16">  
+                                <Grid.ColumnDefinitions>  
+                                    <ColumnDefinition Width="*" />  
+                                    <ColumnDefinition Width="110" />  
+                                </Grid.ColumnDefinitions>  
+ 
+                                <StackLayout Spacing="6">  
+                                    <Label Text="{Binding Venue.Name}"  
+                                           FontSize="18"  
+                                           FontAttributes="Bold"  
+                                           TextColor="#E94560"/>  
+
+                                    <Label Text="{Binding VenueAvailabilityTime.StartDate, StringFormat='Início: {0:dd/MM/yyyy HH:mm}'}"  
+                                           FontSize="14" TextColor="#222"/>  
+
+                                    <Label Text="{Binding VenueAvailabilityTime.EndDate, StringFormat='Fim: {0:dd/MM/yyyy HH:mm}'}"  
+                                           FontSize="14" TextColor="#222"/>  
+
+                                    <Label Text="{Binding VenueAvailabilityTime.Price, StringFormat='Preço: R$ {0:F2}'}"  
+                                           FontSize="14" TextColor="#222"/>  
+
+                                    <Label Text="{Binding IsPaid, Converter={StaticResource BoolToPaidConverter}}"  
+                                           FontSize="14" FontAttributes="Bold"  
+                                           TextColor="{Binding IsPaid, Converter={StaticResource PaidColorConverter}}"/>  
+                                </StackLayout>  
+
+                                <VerticalStackLayout Grid.Column="1"  
+                                                     Spacing="4"  
+                                                     HorizontalOptions="Center">  
+                                    <Border HeightRequest="64" WidthRequest="64"  
+                                            StrokeThickness="0"  
+                                            StrokeShape="RoundRectangle 32">  
+                                        <Image Source="{Binding Locator.ProfileImageUrl}" Aspect="AspectFill"/>  
+                                    </Border>  
+
+                                    <Label Text="{Binding Locator.FirstName, StringFormat='{0} {1}', ConverterParameter={Binding Locator.LastName}}"  
+                                           FontSize="12"  
+                                           FontAttributes="Bold"  
+                                           HorizontalTextAlignment="Center"  
+                                           TextColor="#444"/>  
+
+                                    <Label Text="{Binding Locator.Email}"  
+                                           FontSize="10"  
+                                           HorizontalTextAlignment="Center"  
+                                           TextColor="#888"/>  
+
+                                    <Label Text="{Binding Locator.Phone}"  
+                                           FontSize="10"  
+                                           HorizontalTextAlignment="Center"  
+                                           TextColor="#888"/>  
+                                </VerticalStackLayout>  
+                            </Grid>  
+
+                            <Border BackgroundColor="#E94560"  
+                                    StrokeThickness="0"  
+                                    StrokeShape="RoundRectangle 8"  
+                                    Padding="88,18,88,18"  
+                                    Margin="0,8,0,14"  
+                                    HorizontalOptions="Center">  
+                                <Border.GestureRecognizers>  
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MyReservationsViewModel}}, Path=ReservationActionCommand}"  
+                                                          CommandParameter="{Binding .}" />  
+                                </Border.GestureRecognizers>  
+
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">  
+                                    <Image Source="{Binding IsPaid, Converter={StaticResource BoolToIconConverter}}"  
+                                           WidthRequest="20"  
+                                           HeightRequest="20"  
+                                           VerticalOptions="Center"/>  
+                                    <Label Text="{Binding IsPaid, Converter={StaticResource BoolToTextConverter}}"  
+                                           TextColor="White"  
+                                           FontSize="14"  
+                                           FontAttributes="Bold"/>  
+                                </HorizontalStackLayout>  
+                            </Border>  
+
+                        </StackLayout>  
+                    </Border>  
+                </DataTemplate>  
+            </CollectionView.ItemTemplate>  
+        </CollectionView>  
+    </Grid>  
 </ContentPage>

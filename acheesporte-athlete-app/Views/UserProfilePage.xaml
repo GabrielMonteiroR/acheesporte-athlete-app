@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+             xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"  
+             x:Class="acheesporte_athlete_app.Views.UserProfilePage"  
+             x:DataType="viewmodels:UserProfileViewModel"  
+             BackgroundColor="AliceBlue"  
+             Shell.NavBarIsVisible="True"
+             Title="Perfil"
+             Shell.TitleColor="#E94560">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="25">
+
+
+            <Frame Padding="0" CornerRadius="60" HasShadow="True"  
+                   HeightRequest="120" WidthRequest="120"  
+                   HorizontalOptions="Center" BackgroundColor="Transparent">
+                <Image Source="{Binding ProfileImageUrl}"  
+                       WidthRequest="140"  
+                       HeightRequest="140"  
+                       Aspect="AspectFill"  
+                       HorizontalOptions="Center"  
+                       VerticalOptions="Center"  
+                       Clip="100,0,140,140" />
+            </Frame>
+
+            <Button Text="Trocar foto"  
+                    Margin="60,0,60,20"  
+                    Command="{Binding ChangeProfileImageCommand}"  
+                    BackgroundColor="#E94560"  
+                    TextColor="White"  
+                    CornerRadius="20"  
+                    FontSize="16" />
+
+            <Entry Placeholder="Nome"  
+                   Text="{Binding FirstName}"  
+                   TextColor="Black"  
+                   BackgroundColor="White"  
+                   PlaceholderColor="#808080"  
+                   FontSize="16"  />
+
+            <Entry Placeholder="Sobrenome"  
+                   Text="{Binding LastName}"  
+                   TextColor="Black"  
+                   BackgroundColor="White"  
+                   PlaceholderColor="#808080"  
+                   FontSize="16"   />
+
+            <Entry Placeholder="E-mail"  
+                   Text="{Binding Email}"  
+                   Keyboard="Email"  
+                   TextColor="Black"  
+                   BackgroundColor="White"  
+                   PlaceholderColor="#808080"  
+                   FontSize="16"  />
+
+            <Entry Placeholder="Telefone"  
+                   Text="{Binding Phone}"  
+                   Keyboard="Telephone"  
+                   TextColor="Black"  
+                   BackgroundColor="White"  
+                   PlaceholderColor="#808080"  
+                   FontSize="16"  />
+
+            <Button Text="Salvar"  
+                    Command="{Binding SaveCommand}"  
+                    BackgroundColor="#E94560"  
+                    TextColor="White"  
+                    CornerRadius="20"  
+                    FontSize="18"  
+                    HeightRequest="55" />
+            <Button Text="Sair da conta"
+        BackgroundColor="#444"
+        TextColor="White"
+        CornerRadius="12"
+        HeightRequest="50"
+        Command="{Binding LogoutCommand}" />
+
+            <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" Color="#FF1493" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

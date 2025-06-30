@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:acheesporte_athlete_app.ViewModels"
+    x:Class="acheesporte_athlete_app.Views.ReservationCreatePage"
+    x:DataType="viewmodels:ReservationCreateViewModel"
+    Shell.TabBarIsVisible="False"
+    Shell.NavBarIsVisible="True"
+    Title="Nova Reserva"
+    BackgroundColor="AliceBlue">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20">
+
+            <Label Text="{Binding Venue.Name}" FontSize="20" FontAttributes="Bold" TextColor="#200937"/>
+            <Label Text="{Binding Venue.Address}" FontSize="15" TextColor="#555"/>
+
+            <Label Text="Escolha a data:" FontSize="16" TextColor="#333"/>
+            <Picker Title="Data"
+                    ItemsSource="{Binding AvailableDates}"
+                    SelectedItem="{Binding SelectedDate}"
+                    ItemDisplayBinding="{Binding ., StringFormat='{0:dd/MM/yyyy}'}"
+                    TextColor="#333"/>
+
+            <Label Text="Horários disponíveis:" FontSize="16" TextColor="#333"
+                   IsVisible="{Binding DayAvailabilities.Count, Converter={StaticResource ZeroToFalseConverter}}"/>
+            <Picker Title="Horários"
+                    ItemsSource="{Binding DayAvailabilities}"
+                    SelectedItem="{Binding SelectedAvailability}"
+                    ItemDisplayBinding="{Binding ., Converter={StaticResource AvailabilityToStringConverter}}"
+                    IsVisible="{Binding DayAvailabilities.Count, Converter={StaticResource ZeroToFalseConverter}}"
+                    TextColor="#333"/>
+
+            <Frame BackgroundColor="White" CornerRadius="12" Padding="12" HasShadow="True"
+                   IsVisible="{Binding SelectedAvailability, Converter={StaticResource NullToFalseConverter}}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="{Binding SelectedAvailability.StartDate, StringFormat='Início: {0:dd/MM/yyyy HH:mm}'}"/>
+                    <Label Text="{Binding SelectedAvailability.EndDate, StringFormat='Fim: {0:dd/MM/yyyy HH:mm}'}"/>
+                    <Label Text="{Binding SelectedAvailability.Price, StringFormat='Preço: R$ {0:F2}'}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Forma de pagamento:" FontSize="16" TextColor="#333"/>
+            <Label Text="PIX" FontSize="16" FontAttributes="Bold" TextColor="#200937"/>
+
+            <Button Text="Confirmar Reserva"
+                    Command="{Binding SubmitCommand}"
+                    IsEnabled="{Binding SelectedAvailability, Converter={StaticResource NullToFalseConverter}}"
+                    BackgroundColor="#E94560"
+                    TextColor="White"
+                    CornerRadius="12"/>
+
+            <ActivityIndicator IsRunning="{Binding IsSubmitting}"
+                               IsVisible="{Binding IsSubmitting}"
+                               Color="#200937"/>
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource NullToFalseConverter}}"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

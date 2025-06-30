@@ -13,7 +13,7 @@ namespace acheesporte_athlete_app
 
             Services = serviceProvider;
 
-            var splash = App.Services.GetService<SelectVenueMapPage>();
+            var splash = App.Services.GetService<SplashPage>();
             MainPage = new NavigationPage(splash);
 
         }

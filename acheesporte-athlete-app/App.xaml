@@ -9,10 +9,14 @@
             <converters:ZeroToFalseConverter x:Key="ZeroToFalseConverter"/>
             <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
             <converters:BoolToSimNaoConverter x:Key="BoolToSimNaoConverter" />
-            <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="#200937" />
-                <Setter Property="BarTextColor" Value="DeepPink" />
-            </Style>
+            <converters:IsEmptyConverter x:Key="IsEmptyConverter"/>
+            <converters:BoolToPaidConverter x:Key="BoolToPaidConverter" />
+            <converters:PaidColorConverter x:Key="PaidColorConverter" />
+            <converters:NullToFalseConverter x:Key="NullToFalseConverter" />
+            <converters:BoolToTextConverter x:Key="BoolToTextConverter"/>
+            <converters:ReservationActionSelector x:Key="ReservationActionSelector" />
+            <converters:BoolToIconConverter x:Key="BoolToIconConverter"/>
+            <converters:AvailabilityToStringConverter x:Key="AvailabilityToStringConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
